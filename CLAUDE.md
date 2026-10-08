@@ -1,9 +1,19 @@
 # Context for Claude – Performance Marketing & CRM at Plug and Play
 
 ## Who and what
-- Felipe Cárdenas, Performance Marketing & CRM Associate (started early October 2026). Reports to Tereza Pigova, Growth Marketing Director.
+- Felipe Cárdenas, Performance Marketing & CRM Associate (started early October 2026).
+- **Manager: Raul (Raúl).** Tereza Pigova (Growth Marketing Director) is Raul's manager.
+- Thiago "Toco" runs paid media until 30 Oct 2026 (leaving; handover doc due end of October).
 - Platforms: Meta Ads, Google Ads (mostly Search), LinkedIn Ads (no spend since October 2025), ChatGPT (OpenAI) Ads, HubSpot (marketing CRM), Salesforce (sales), Playbook / Looker Studio (reporting).
-- Living checklist (Claude Docs): https://claude.ai/code/artifact/c6deff91-4a61-4e7b-88ab-bcde7c269a1c
+- Living to-do tracker (Claude Docs, includes the 30/60/90 plan and who's who): https://claude.ai/code/artifact/c6deff91-4a61-4e7b-88ab-bcde7c269a1c
+- Paid media best-practice research (Meta, Google, measurement): `research/Paid_Media_Playbook_2026.md`. Use it as the yardstick for audits and new campaign angles.
+
+## 30/60/90-day plan (set by Raul) – key points
+- **30 days:** learn PnP, its audience and the paid channel. Onboarding by area: brand (Amanda), ICP, content (Natalia, Anto), email (Raul, Rosa, vertical newsletter owners), paid (syncs with Raul and Toco, audit of 2026 paid accounts, budget per location, keyword positioning), landing pages (Aly, Rosa), HubSpot (lifecycle stages map), 10-day ChatGPT BOFU test for Startup Scouting, first talking head video, EMEA priority market calls, meet Andrew and Alex.
+- **60 days:** own the channels. Take over the weekly paid performance report by week 3 (CPL, CPC, ROAS, MQLs by channel, based on Toco's report); vertical newsletters; audit location newsletters/LNS and nurture workflows; newsletter subscription project; launch talking head ads; AI Max / PMax test; keyword optimisation; competitor benchmark (paid + email); 2027 paid plan for YouTube and LinkedIn; GEO; first monthly leadership summary (what worked, what didn't, what's next).
+- **90 days:** event emails audit (Sara), LinkedIn test, subscription types cleanup and compliance, LNS revamp, Paid Plan 2027 (Google, Meta, ChatGPT, YouTube, LinkedIn), 2026 funnel attribution report, Email marketing plan 2027.
+- **KPIs by end of 2026:** Meta CPL −20%; MQLs from paid search +15%; MQLs converted with last source Email Marketing +25%.
+- **Tools:** Google Ads, GTM, HubSpot, Matomo and OpenAI Ads OK. Meta Ads via Tereza. LinkedIn waiting for account restore. Salesforce and Semrush pending.
 
 ## Rules for every deliverable
 - Keep it simple and fact-only, with no fluff and no assumptions. Fact-check every number before the final version.
