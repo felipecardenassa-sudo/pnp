@@ -29,8 +29,8 @@
 - The "90k Google / 180k Meta" figures were **spend so far**, not budgets (Google €89.7k, Meta $178.1k at 30 Sep). The old EUR-based €270k assumption is wrong and its spreadsheet was removed.
 - Report everything in USD. Meta bills in USD; Google Ads and ChatGPT Ads bill in EUR. Exchange rate used: 1 EUR = 1.1177 USD (live rate on 13 Oct 2026, from Felipe); monthly rates can be set on the tracker's Settings tab if Finance provides them.
 - Counted toward the budget (to confirm): ChatGPT Ads and FR_Alibaba (a Meta campaign run by PnP's internal team, $3.7k in Sep).
-- Status at 30 Sep (platform data): $278,601 spent (93% of $300k). After the 18–21 Sep cuts the pace is ≈ $1,861/week (agency reports W/C 21 Sep – 5 Oct) → forecast ≈ $303k at year end. Landing on $300k needs ≈ $1,628/week; the $320k maximum allows ≈ $3,150/week.
-- The agency's Notion reports don't reconcile with the platforms (Google € shown as $ before 21 Sep, three doubled Google weeks, July report converted Google at £1=$1.28, H1 $182.5k vs $205.4k on the platforms). Platform exports are the source of truth.
+- Status at 12 Oct (daily platform exports): $282,524 spent (94% of $300k). Current pace ≈ $1,861/week (last 3 full weeks 21 Sep – 11 Oct, campaigns still running; FR_Alibaba ended 5 Oct and is left out) → forecast ≈ $303.8k at year end (≈ $3.8k over budget, ≈ $16.2k under the maximum). Landing on $300k needs ≈ $1,529/week; the $320k maximum allows ≈ $3,279/week. FR_Alibaba (PnP's internal team) spent $4,491 from 10 Sep to 5 Oct.
+- The agency's Notion reports, checked week by week against the platforms: Meta matches within $5 in 31 of 33 weeks (agency left FR_Alibaba out from 7 Sep); Google matched in only 11 of 32 weeks (10 converted to dollars at ≈1.15, 3 exactly doubled, 8 lower). H1: agency $182.5k vs $205.4k on the platforms. Platform exports are the source of truth.
 
 ## ICP (Buyer Persona 2024)
 - Primary: corporates with 10,000+ employees and $100M+ revenue (Head of Innovation, R&D, CDO, or C-level), plus governments. A $500M threshold is under discussion.
@@ -44,7 +44,7 @@
 - Key markets: France, UK, Germany, Spain, Italy. Local content beats generic content 3:1 on cost per lead.
 
 ## Files in this repo
-- `PNP_Paid_Media_Spend_Tracker_2026.xlsx`: the weekly-updated spend tracker (USD, $300k budget / $320k maximum). `PNP_Paid_Media_Spend_2026.pdf`: 3-page summary for Tereza and Raúl (13 Oct 2026).
+- `PNP_Paid_Media_Spend_Tracker_2026.xlsx`: the weekly-updated spend tracker (USD, $300k budget / $320k maximum). `PNP_Paid_Media_Spend_2026.pdf`: 3-page summary for Tereza and Raúl (data to 12 Oct 2026).
 - `PNP_HubSpot_Newsletter_Audit.pdf` / `.xlsx`: newsletter audit covering locations, newsletter map, metrics, workflows and industry newsletters (Oct 2025 – Sep 2026).
 - `PNP_ICP_vs_Conversions.pdf` / `.xlsx`: JTP Contact us and content-download converters compared with the ICP (aggregates only).
-- `tools/spend_tracker/`: generator for the tracker and the PDF (`build_tracker.py OUT.xlsx YYYY-MM-DD`, then recalc, then `build_spend_pdf.py TRACKER.xlsx OUT.html` and print to PDF with Chromium). Data model: campaign × day per platform, spend as billed; Jan–Sep history is one 'Month total' row per campaign per month (weekly views use daily rows only). `agency/` holds the parsed agency weekly reports. Still to do: paste daily platform exports (1 Jan – last Sunday) so the Weekly tab covers the whole year.
+- `tools/spend_tracker/`: generator for the tracker and the PDF. Run `python build_tracker.py OUT.xlsx YYYY-MM-DD META_EXPORT.csv GOOGLE_REPORT.csv`, recalc, then `python build_spend_pdf.py TRACKER.xlsx OUT.html` and print to PDF with Chromium. The data tabs match each platform's export (Meta: Ads Manager CSV, 19 columns, campaign × day; Google: report editor 'PnP spend tracker' – Campaign, Day, Currency code, Cost, Impr., Clicks, Conversions, UTF-16 tab-separated), so weekly exports paste straight in. Campaigns tab Status 'Ended' takes a campaign out of the current pace. `agency/` holds the parsed agency weekly reports. Last update: data to 12 Oct 2026.

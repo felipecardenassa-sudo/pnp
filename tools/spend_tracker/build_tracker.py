@@ -43,14 +43,33 @@ S_FX = "Settings!$B$29:$B$40"
 S_FXAVG = "Settings!$B$41"
 
 
+import load_daily as LD
+
+GENERIC = ["Date", "Campaign", "Spend", "Impressions", "Clicks", "Conversions"]
+TABS = {  # column letters per data tab; each tab matches its platform's export so it can be pasted as-is
+    "Meta data": dict(cols=LD.META_COLS, date="A", camp="C", spend="K", impr="L", clicks="O", conv="P", rtype="T", check="U", rep="V"),
+    "Google data": dict(cols=LD.GOOGLE_COLS, date="B", camp="A", spend="D", impr="E", clicks="F", conv="G", rtype="H", check="I", rep="J"),
+    "ChatGPT data": dict(cols=GENERIC, date="A", camp="B", spend="C", impr="D", clicks="E", conv="F", rtype="G", check="H", rep="I"),
+    "LinkedIn data": dict(cols=GENERIC, date="A", camp="B", spend="C", impr="D", clicks="E", conv="F", rtype="G", check="H", rep="I"),
+}
+
+
 def counts(row):
     return f'(Settings!$C${row}="Yes")'
 
 
-def sumifs(tab, col, lo, hi, extra="", daily=False):
-    rng = lambda c: f"'{tab}'!${c}$3:${c}${DMAX}"
-    d = f',{rng("G")},"<>Month total"' if daily else ""
-    return f'SUMIFS({rng(col)},{rng("A")},">="&{lo},{rng("A")},"<="&{hi}{extra}{d})'
+def rng(tab, col):
+    return f"'{tab}'!${col}$3:${col}${DMAX}"
+
+
+def sumifs(tab, field, lo, hi, extra="", daily=False):
+    t = TABS[tab]
+    d = f',{rng(tab, t["rtype"])},"<>Month total"' if daily else ""
+    return f'SUMIFS({rng(tab, t[field])},{rng(tab, t["date"])},">="&{lo},{rng(tab, t["date"])},"<="&{hi}{extra}{d})'
+
+
+def by_camp(tab, ref):
+    return f",{rng(tab, TABS[tab]['camp'])},{ref}"
 
 
 def CUR(x):
@@ -62,7 +81,7 @@ def to_usd(r):
 
 
 # ---------------------------------------------------------------------------------------------
-def build(out, upto, rows, agency_weeks=(), agency_totals=(), source_note=""):
+def build(out, upto, raw, rows, agency_weeks=(), agency_totals=(), source_note="", status=None):
     wb = Workbook()
     names = ["Dashboard", "Weekly", "Monthly", "By location & type", "Campaigns", "Agency reports",
              "Settings", "How to update", "Meta data", "Google data", "ChatGPT data", "LinkedIn data", "Calc"]
@@ -75,8 +94,8 @@ def build(out, upto, rows, agency_weeks=(), agency_totals=(), source_note=""):
         w.sheet_properties.tabColor = tabcol[n]
     notes = {w["start"]: w.get("notes") for w in agency_weeks}
     settings(ws["Settings"], upto)
-    data_tabs(ws, rows)
-    campaigns(ws["Campaigns"], rows)
+    data_tabs(ws, raw)
+    campaigns(ws["Campaigns"], rows, status)
     arow = agency_tab(ws["Agency reports"], agency_weeks, agency_totals)
     calc(ws["Calc"], arow)
     monthly(ws["Monthly"])
@@ -151,57 +170,61 @@ def settings(s, upto):
 
 
 # ---------------------------------------------------------------------------------------------
-def data_tabs(ws, rows):
-    spec = {
-        "Meta": ("Meta Ads – daily spend by campaign, as billed (USD)",
-                 "Columns A–F, in this order: Day · Campaign name · Amount spent · Impressions · Link clicks · Website registrations completed"),
-        "Google Ads": ("Google Ads – daily spend by campaign, as billed (EUR)",
-                       "Columns A–F, in this order: Day · Campaign · Cost · Impr. · Clicks · Conversions"),
-        "ChatGPT Ads": ("ChatGPT Ads – daily spend by campaign, as billed (EUR)",
-                        "Columns A–F, in this order: date · campaign_name · spend · impressions · clicks · conversions"),
-        "LinkedIn Ads": ("LinkedIn Ads – daily spend by campaign, as billed",
-                         "Columns A–F, in this order: Start date · Campaign name · Total spent · Impressions · Clicks · Conversions"),
+def data_tabs(ws, raw):
+    """raw: {tab: list of rows in that tab's export column order (+ optional row type as the last item for generic tabs)}"""
+    how = {
+        "Meta data": "Paste the Meta Ads Manager export as it comes (19 columns, 'Reporting starts' … 'Results (initial) indicator'), campaign × day, from column A.",
+        "Google data": "Paste the Google Ads report 'PnP spend tracker' as it comes (Campaign, Day, Currency code, Cost, Impr., Clicks, Conversions), from column A. Skip its two title lines and header.",
+        "ChatGPT data": "Columns A–F: date · campaign_name · spend · impressions · clicks · conversions (one row per campaign per day).",
+        "LinkedIn data": "Columns A–F: date · campaign name · total spent · impressions · clicks · conversions (one row per campaign per day).",
     }
-    by_ch = collections.defaultdict(list)
-    for r in rows:
-        by_ch[r["channel"]].append(r)
     for name, tab, srow, bill, *_ in CHANNELS:
         w = ws[tab]
-        t, how = spec[name]
-        cell(w, "A1", t + " — paste each week's export under the last row (columns A–F only).", bold=True, color=NAVY, border=False)
-        w.merge_cells("A1:I1")
-        header(w, 2, 1, ["Date", "Campaign", f"Spend ({bill})", "Impressions", "Clicks", "Conversions", "Row type",
-                         "In campaign list?", '="Spend ("&Settings!$C$6&")"'], fill=INPUT, color=INK)
-        data = sorted(by_ch.get(name, []), key=lambda r: (r["date"], r["campaign"]))
-        for i, r in enumerate(data):
+        t = TABS[tab]
+        ncol = len(t["cols"])
+        last_col = L(ncol + 3)
+        cell(w, "A1", f"{name} – daily spend by campaign, as billed ({bill}). {how[tab]} Columns {t['rtype']}–{t['rep']} are filled in by the sheet.",
+             bold=True, color=NAVY, border=False)
+        w.merge_cells(f"A1:{last_col}1")
+        header(w, 2, 1, list(t["cols"]), fill=INPUT, color=INK, height=40)
+        header(w, 2, ncol + 1, ["Row type", "In campaign list?", '="Spend ("&Settings!$C$6&")"'], height=40)
+        rows = raw.get(tab, [])
+        dcol = ord(t["date"]) - 64
+        for i, r in enumerate(rows):
             n = 3 + i
-            w.cell(n, 1, r["date"]).number_format = "yyyy-mm-dd"
-            w.cell(n, 2, r["campaign"])
-            w.cell(n, 3, round(r["spend"], 2)).number_format = "#,##0.00"
-            w.cell(n, 4, int(r["impr"])).number_format = "#,##0"
-            w.cell(n, 5, int(r["clicks"])).number_format = "#,##0"
-            w.cell(n, 6, round(r["conv"], 2)).number_format = "#,##0.##"
-            if r.get("rowtype"):
-                w.cell(n, 7, r["rowtype"])
+            for j, v in enumerate(r):
+                if v is None:
+                    continue
+                c = w.cell(n, j + 1, v)
+                if isinstance(v, datetime.date):
+                    c.number_format = "yyyy-mm-dd"
+                elif j + 1 == ord(t["spend"]) - 64:
+                    c.number_format = "#,##0.00"
         last = HELPER_ROWS if name in ("Meta", "Google Ads") else 2000
+        cc, sc, dc = t["camp"], t["spend"], t["date"]
         for n in range(3, last + 1):
-            w.cell(n, 8, f'=IF(B{n}="","",IF(COUNTIF(Campaigns!$A${CAMP_FIRST}:$A${CAMP_LAST},B{n})>0,"✓","⚠ add to Campaigns tab"))')
-            f = f"INDEX({S_FX},MONTH(A{n}))"
-            c = w.cell(n, 9, f'=IF(C{n}="","",C{n}*IF(Settings!$B${srow}=Settings!$C$6,1,IF(Settings!$B${srow}="USD",1/{f},{f})))')
+            w[f"{t['check']}{n}"] = (f'=IF({cc}{n}="","",IF(COUNTIF(Campaigns!$A${CAMP_FIRST}:$A${CAMP_LAST},{cc}{n})>0,"✓",'
+                                     f'IF(N({sc}{n})=0,"– no spend","⚠ add to Campaigns tab")))')
+            f = f"INDEX({S_FX},MONTH({dc}{n}))"
+            c = w[f"{t['rep']}{n}"]
+            c.value = f'=IF({sc}{n}="","",{sc}{n}*IF(Settings!$B${srow}=Settings!$C$6,1,IF(Settings!$B${srow}="USD",1/{f},{f})))'
             c.number_format = "#,##0.00"
-        w.conditional_formatting.add(f"H3:H{last}", FormulaRule(formula=['LEFT(H3,1)="⚠"'], font=font(bold=True, color=RED)))
+        w.conditional_formatting.add(f"{t['check']}3:{t['check']}{last}",
+                                     FormulaRule(formula=[f'LEFT({t["check"]}3,1)="⚠"'], font=font(bold=True, color=RED)))
         w.freeze_panes = "A3"
-        widths(w, {"A": 12, "B": 62, "C": 14, "D": 13, "E": 11, "F": 12, "G": 12, "H": 22, "I": 14})
-        note(w, "K2", how)
-        note(w, "K3", "Row type: leave empty for daily rows. 'Month total' marks the Jan–Sep history (one row per campaign per month); "
-                      "if you ever paste daily rows for those months, delete their 'Month total' rows first.")
+        for k in range(1, ncol + 4):
+            w.column_dimensions[L(k)].width = 12
+        w.column_dimensions[cc].width = 58
+        w.column_dimensions[t["check"]].width = 22
+        note(w, f"{L(ncol + 5)}2", "Row type: leave empty. 'Month total' marks a row that is a total, not a single day (weekly figures skip it).")
 
 
 # ---------------------------------------------------------------------------------------------
-def campaigns(c, rows):
+def campaigns(c, rows, status=None):
+    status = status or {}
     title(c, "A1", "Campaigns – market, region, type and spend by month",
-          "Every campaign in the data tabs needs a row here. Yellow = type it in when a new campaign starts. "
-          "Market and region come from the location code in the campaign name.", "A2")
+          "Every campaign in the data tabs needs a row here. Yellow = typed by you: add new campaigns at the bottom, "
+          "and set Status to 'Ended' when a campaign stops for good (it then drops out of the current pace).", "A2")
     for i in range(12):
         col = L(6 + i)
         cell(c, f"{col}3", f"=DATE({S_YEAR},{i + 1},1)", "d mmm", size=8, color=MUTED, border=False, align="center")
@@ -211,8 +234,9 @@ def campaigns(c, rows):
     cell(c, "E3", '=IF(ABS(D3)<0.5,"✓ all listed","⚠ add the campaigns flagged in the data tabs")', bold=True, border=False, size=9)
     c.conditional_formatting.add("E3", FormulaRule(formula=['LEFT(E3,1)="⚠"'], font=font(bold=True, color=RED)))
     hdr = ["Campaign", "Channel", "Market", "Region", "Type"] + [f'=TEXT({L(6 + i)}3,"mmm")' for i in range(12)] + \
-          [f'="Total ("&{S_CUR}&")"', "Clicks", "Conversions", "Cost per conversion"]
+          [f'="Total ("&{S_CUR}&")"', "Clicks", "Conversions", "Cost per conversion", "Status", "Last 3 full weeks", "Last full week"]
     header(c, 5, 1, hdr)
+    c["V5"].fill = PatternFill("solid", fgColor=INPUT); c["V5"].font = font(9, True, INK)
     cell(c, "A6", "Total – all campaigns listed", bold=True, fill=TOTAL)
     for col in "BCDE":
         cell(c, f"{col}6", "", fill=TOTAL)
@@ -220,12 +244,22 @@ def campaigns(c, rows):
         col = L(j)
         cell(c, f"{col}6", f"=SUM({col}{CAMP_FIRST}:{col}{CAMP_LAST})", AMT if j < 19 else "#,##0", bold=True, fill=TOTAL)
     cell(c, "U6", '=IF(T6=0,"",R6/T6)', AMT2, bold=True, fill=TOTAL)
+    cell(c, "V6", "", fill=TOTAL)
+    for col in "WX":
+        cell(c, f"{col}6", f"=SUM({col}{CAMP_FIRST}:{col}{CAMP_LAST})", AMT, bold=True, fill=TOTAL)
     tot = collections.OrderedDict()
     for r in rows:
         k = (r["channel"], r["campaign"])
         tot[k] = tot.get(k, 0) + to_usd(r)
     order = {n: i for i, (n, *_) in enumerate(CHANNELS)}
     camps = sorted(tot, key=lambda k: (order[k[0]], -tot[k]))
+
+    def chain(field_expr):
+        f = "0"
+        for name_, tab, *_ in reversed(CHANNELS):
+            f = f'IF($B{{r}}="{name_}",{field_expr(tab)},{f})'
+        return f
+
     for i in range(len(camps) + 40):
         r = CAMP_FIRST + i
         if i < len(camps):
@@ -238,25 +272,27 @@ def campaigns(c, rows):
             cell(c, f"{L(1 + j)}{r}", v, fill=INPUT, color="0000FF" if v else INK)
         for m in range(12):
             col = L(6 + m)
-            f = "0"
-            for name_, tab, *_ in reversed(CHANNELS):
-                expr = sumifs(tab, "I", f"{col}$3", f"{col}$4", f",'{tab}'!$B$3:$B${DMAX},$A{r}")
-                f = f'IF($B{r}="{name_}",{expr},{f})'
+            f = chain(lambda tab: sumifs(tab, "rep", f"{col}$3", f"{col}$4", by_camp(tab, f"$A{r}"))).replace("{r}", str(r))
             cell(c, f"{col}{r}", f'=IF($A{r}="","",{f})', AMT)
         cell(c, f"R{r}", f'=IF($A{r}="","",SUM(F{r}:Q{r}))', AMT, bold=True)
-        for colx, src in (("S", "E"), ("T", "F")):
-            f = "0"
-            for name_, tab, *_ in reversed(CHANNELS):
-                f = f"IF($B{r}=\"{name_}\",SUMIFS('{tab}'!${src}$3:${src}${DMAX},'{tab}'!$B$3:$B${DMAX},$A{r}),{f})"
+        for colx, field in (("S", "clicks"), ("T", "conv")):
+            f = chain(lambda tab: f"SUMIFS({rng(tab, TABS[tab][field])}{by_camp(tab, f'$A{r}')})").replace("{r}", str(r))
             cell(c, f"{colx}{r}", f'=IF($A{r}="","",{f})', "#,##0")
         cell(c, f"U{r}", f'=IF(OR($A{r}="",T{r}=0),"",R{r}/T{r})', AMT2)
+        cell(c, f"V{r}", status.get(vals[0]) if vals[0] else None, fill=INPUT, color="0000FF", align="center")
+        for colx, lo in (("W", "Calc!$C$15"), ("X", "Calc!$C$14")):
+            f = chain(lambda tab: sumifs(tab, "rep", lo, "Calc!$C$13", by_camp(tab, f"$A{r}"), daily=True)).replace("{r}", str(r))
+            cell(c, f"{colx}{r}", f'=IF($A{r}="","",{f})', AMT)
     dv = DataValidation(type="list", formula1='"Meta,Google Ads,ChatGPT Ads,LinkedIn Ads"', allow_blank=True)
     c.add_data_validation(dv); dv.add(f"B{CAMP_FIRST}:B{CAMP_LAST}")
     dv2 = DataValidation(type="list", formula1='"' + ",".join(REGIONS) + '"', allow_blank=True)
     c.add_data_validation(dv2); dv2.add(f"D{CAMP_FIRST}:D{CAMP_LAST}")
+    dv3 = DataValidation(type="list", formula1='"Running,Paused,Ended"', allow_blank=True)
+    c.add_data_validation(dv3); dv3.add(f"V{CAMP_FIRST}:V{CAMP_LAST}")
+    c.conditional_formatting.add(f"A{CAMP_FIRST}:X{CAMP_LAST}", FormulaRule(formula=[f'$V{CAMP_FIRST}="Ended"'], font=font(color=MUTED)))
     c.freeze_panes = "B6"
     widths(c, {"A": 58, "B": 12, "C": 26, "D": 13, "E": 32, **{L(6 + i): 9.5 for i in range(12)},
-               "R": 12, "S": 10, "T": 12, "U": 12})
+               "R": 12, "S": 10, "T": 12, "U": 12, "V": 10, "W": 12, "X": 12})
     note(c, f"A{CAMP_FIRST + len(camps) + 41}",
          "How market and region were set: from the location code in the campaign name (e.g. 'Geo:EMEA', 'Geo:FR', 'Texas_EN_…'). "
          "Geo:SA = Middle East (Saudi Arabia), as in the 2026/09 location file; Geo:NA = US & Canada; "
@@ -265,16 +301,17 @@ def campaigns(c, rows):
 
 # ---------------------------------------------------------------------------------------------
 def agency_tab(a, weeks, totals):
-    title(a, "A1", "Agency weekly reports (Notion) – as written, with the issues found", None)
+    title(a, "A1", "Agency weekly reports (Notion) – as written, checked against the platforms", None)
     note(a, "A2", "Source: the agency's weekly reports in Notion, read on 13 Oct 2026 (nothing edited). Spend, leads and CPL are copied as the agency wrote them; "
                   "lead definitions change over the year, so leads and CPL are not comparable week to week. The official spend numbers are the platform exports.")
-    section(a, "A4", "WEEK BY WEEK", "ABCDEFGHIJKLMNO")
+    section(a, "A4", "WEEK BY WEEK", "ABCDEFGHIJKLMNOPQR")
     hdr = ["Week starts", "Week ends", "Meta spend (agency, $)", "Meta leads (agency)", "Meta lead definition", "Meta CPL (agency)",
            "Google spend (agency, as written)", "Google currency (as written)", "Google leads (agency)", "Google CPL (agency)",
-           "Issues found", "What the agency did or recommended", "Meta – platform, same week (USD)", "Google – platform, same week (EUR)",
-           "Meta: agency − platform"]
-    header(a, 5, 1, hdr, height=44)
+           "Issues found", "What the agency did or recommended", "Meta – platform (USD)", "Meta – platform excl. FR_Alibaba (USD)",
+           "Meta: agency − platform excl. FR_Alibaba", "Google – platform (EUR)", "Google: agency ÷ platform", "What the Google difference looks like", "Chart label"]
+    header(a, 5, 1, hdr, height=54)
     first = 6
+    mt, gt = "Meta data", "Google data"
     for i, w in enumerate(weeks):
         r = first + i
         cell(a, f"A{r}", w["start"], DATE_F)
@@ -289,12 +326,21 @@ def agency_tab(a, weeks, totals):
         cell(a, f"J{r}", w.get("google_cpl"), size=9, align="right")
         cell(a, f"K{r}", w.get("flags"), size=8, wrap=True, color=RED if w.get("flags") else INK)
         cell(a, f"L{r}", w.get("notes"), size=8, wrap=True)
-        cell(a, f"M{r}", f"={sumifs('Meta data', 'C', f'$A{r}', f'$B{r}', daily=True)}", AMT2)
-        cell(a, f"N{r}", f"={sumifs('Google data', 'C', f'$A{r}', f'$B{r}', daily=True)}", AMT2)
-        cell(a, f"O{r}", f'=IF(OR(C{r}="",M{r}=0),"",C{r}-M{r})', AMT2)
+        cell(a, f"M{r}", f"={sumifs(mt, 'spend', f'$A{r}', f'$B{r}', daily=True)}", AMT2)
+        cell(a, f"N{r}", f"=M{r}-{sumifs(mt, 'spend', f'$A{r}', f'$B{r}', by_camp(mt, chr(34) + 'FR_Alibaba Campaign' + chr(34)), daily=True)}", AMT2)
+        cell(a, f"O{r}", f'=IF(OR(C{r}="",N{r}=0),"",C{r}-N{r})', AMT2)
+        cell(a, f"P{r}", f"={sumifs(gt, 'spend', f'$A{r}', f'$B{r}', daily=True)}", AMT2)
+        cell(a, f"Q{r}", f'=IF(OR(G{r}="",P{r}=0),"",G{r}/P{r})', "0.00", align="center")
+        cell(a, f"R{r}", f'=IF(Q{r}="","",IF(ABS(Q{r}-1)<0.01,"Same as the platform (so the figure is in euros)",IF(ABS(Q{r}-2)<0.02,"Exactly double the platform",'
+                         f'IF(AND(Q{r}>1.1,Q{r}<1.2),"About ×"&TEXT(Q{r},"0.00")&": looks converted to dollars",IF(Q{r}<1,TEXT(1-Q{r},"0%")&" lower than the platform",TEXT(Q{r}-1,"0%")&" higher than the platform")))))',
+             size=8, wrap=True)
+        cell(a, f"S{r}", f'=TEXT(A{r},"d mmm")', size=8, color=MUTED, align="center")
         a.row_dimensions[r].height = 54
     last = first + len(weeks) - 1
-    note(a, f"A{last + 1}", "Platform columns fill in once daily platform exports are pasted in the data tabs (they only use daily rows).")
+    a.conditional_formatting.add(f"O{first}:O{last}", FormulaRule(formula=[f"AND(ISNUMBER(O{first}),ABS(O{first})>5)"], font=font(bold=True, color=RED)))
+    a.conditional_formatting.add(f"Q{first}:R{last}", FormulaRule(formula=[f"AND(ISNUMBER($Q{first}),ABS($Q{first}-1)>=0.01)"], font=font(9, True, RED)))
+    note(a, f"A{last + 1}", "Platform columns use the daily rows in the data tabs. From W/C 7 Sep the agency left FR_Alibaba out of its Meta figures, "
+                            "so compare the agency's Meta figure with the 'excl. FR_Alibaba' column.")
     top = last + 3
     section(a, f"A{top}", "WHAT THE AGENCY SAID IN TOTAL vs. THE PLATFORM EXPORTS", "ABCDEFGHIJKLMNO")
     header(a, top + 1, 1, ["Period", "", "What the agency wrote", "", "Agency figure ($)", "Platform – Meta (USD)", "Platform – Google (EUR)",
@@ -307,11 +353,9 @@ def agency_tab(a, weeks, totals):
         cell(a, f"E{r}", t["agency"], AMT2, color="0000FF")
         lo, hi = t["lo"], t["hi"]
         dlo, dhi = f"DATE({lo.year},{lo.month},{lo.day})", f"DATE({hi.year},{hi.month},{hi.day})"
-        meta_u = sumifs("Meta data", "I", dlo, dhi)
-        goog_u = sumifs("Google data", "I", dlo, dhi)
-        cell(a, f"F{r}", f"={sumifs('Meta data', 'C', dlo, dhi)}" if t["chan"] in ("both", "meta") else None, AMT2)
-        cell(a, f"G{r}", f"={sumifs('Google data', 'C', dlo, dhi)}" if t["chan"] in ("both", "google") else None, AMT2)
-        parts = ([meta_u] if t["chan"] in ("both", "meta") else []) + ([goog_u] if t["chan"] in ("both", "google") else [])
+        cell(a, f"F{r}", f"={sumifs(mt, 'spend', dlo, dhi)}" if t["chan"] in ("both", "meta") else None, AMT2)
+        cell(a, f"G{r}", f"={sumifs(gt, 'spend', dlo, dhi)}" if t["chan"] in ("both", "google") else None, AMT2)
+        parts = ([sumifs(mt, "rep", dlo, dhi)] if t["chan"] in ("both", "meta") else []) + ([sumifs(gt, "rep", dlo, dhi)] if t["chan"] in ("both", "google") else [])
         cell(a, f"H{r}", "=" + "+".join(parts), AMT2, bold=True)
         cell(a, f"I{r}", f'=IF({S_CUR}="USD",E{r}-H{r},"")', AMT2, bold=True)
         cell(a, f"J{r}", f'=IF(OR({S_CUR}<>"USD",H{r}=0),"",E{r}/H{r}-1)', '+0%;-0%;0%', align="center", size=9)
@@ -326,21 +370,18 @@ def agency_tab(a, weeks, totals):
                       "The agency's July report converted Google with \"£1 = $1.28\" although the Google Ads account is in euros.")
     a.freeze_panes = "C6"
     widths(a, {"A": 12, "B": 12, "C": 12, "D": 10, "E": 16, "F": 12, "G": 13, "H": 12, "I": 12, "J": 10, "K": 34, "L": 52,
-               "M": 13, "N": 13, "O": 12})
+               "M": 13, "N": 13, "O": 12, "P": 13, "Q": 10, "R": 26, "S": 8})
     ctop = nr + 3
-    section(a, f"A{ctop}", "WEEKLY SPEND AS THE AGENCY REPORTED IT", "ABCDEFGHIJ")
+    section(a, f"A{ctop}", "GOOGLE ADS: WHAT THE AGENCY REPORTED vs. THE PLATFORM, WEEK BY WEEK", "ABCDEFGHIJ")
     ch = BarChart(); ch.type = "col"; ch.grouping = "clustered"; ch.gapWidth = 40
-    ch.add_data(Reference(a, min_col=3, min_row=5, max_row=last), titles_from_data=True)
     ch.add_data(Reference(a, min_col=7, min_row=5, max_row=last), titles_from_data=True)
-    ch.set_categories(Reference(a, min_col=16, min_row=first, max_row=last))
-    style_bar(ch, [CH_COLORS["Meta"], CH_COLORS["Google Ads"]])
+    ch.add_data(Reference(a, min_col=16, min_row=5, max_row=last), titles_from_data=True)
+    ch.set_categories(Reference(a, min_col=19, min_row=first, max_row=last))
+    style_bar(ch, [CH_COLORS["Google Ads"], SLATE])
     ch.width, ch.height = 30, 9
     a.add_chart(ch, f"A{ctop + 1}")
-    note(a, f"A{ctop + 19}", "Meta in $ as reported (excludes FR_Alibaba from 7 Sep). Google as written: labelled $ before 21 Sep, but later "
-                             "reports show the same numbers in €, so treat them as euros. Weeks without a bar had no spend in the report.")
-    for i in range(len(weeks)):
-        cell(a, f"P{first + i}", f'=TEXT(A{first + i},"d mmm")', size=8, color=MUTED, align="center")
-    cell(a, "P5", "Chart label", bold=True, color=WHITE, fill=NAVY, align="center", size=9)
+    note(a, f"A{ctop + 19}", "Bars that match = the agency's figure was the platform's euros (often labelled $). "
+                             "×2 = doubled week; ≈ ×1.15 = converted to dollars; shorter orange bars = lower than the platform.")
     idx = [first + i for i, w in enumerate(weeks) if w.get("meta_spend") and w.get("google_cur") == "€"][-3:]
     return dict(first=first, last=last, pace_rows=idx)
 
@@ -375,11 +416,11 @@ def calc(k, arow):
         r = 20 + i
         cell(k, f"B{r}", name, bold=True)
         cell(k, f"C{r}", f"=Settings!C{srow}", align="center")
-        cell(k, f"D{r}", f"={sumifs(tab, 'I', '$C$4', 'MIN($C$3,$C$5)')}", AMT)
-        cell(k, f"E{r}", f"={sumifs(tab, 'I', '$C$11', '$C$10')}", AMT)
-        cell(k, f"F{r}", f"={sumifs(tab, 'I', '$C$12', '$C$10')}", AMT)
-        cell(k, f"G{r}", f"={sumifs(tab, 'I', '$C$14', '$C$13', daily=True)}", AMT)
-        cell(k, f"H{r}", f"={sumifs(tab, 'I', '$C$15', '$C$13', daily=True)}", AMT)
+        cell(k, f"D{r}", f"={sumifs(tab, 'rep', '$C$4', 'MIN($C$3,$C$5)')}", AMT)
+        cell(k, f"E{r}", f"={sumifs(tab, 'rep', '$C$11', '$C$10')}", AMT)
+        cell(k, f"F{r}", f"={sumifs(tab, 'rep', '$C$12', '$C$10')}", AMT)
+        cell(k, f"G{r}", f"={sumifs(tab, 'rep', '$C$14', '$C$13', daily=True)}", AMT)
+        cell(k, f"H{r}", f"={sumifs(tab, 'rep', '$C$15', '$C$13', daily=True)}", AMT)
         cell(k, f"I{r}", f'=IF($D$25=0,"",D{r}/$D$25)', "0.0%")
     cell(k, "B24", "Total – counts toward budget", bold=True, fill=TOTAL)
     cell(k, "B25", "Total – all channels", bold=True, fill=TOTAL)
@@ -410,18 +451,21 @@ def calc(k, arow):
         (34, "% of maximum used", '=IF(C28=0,"",C30/C28)', "0.0%"),
         (35, "Should have spent by now (budget spread evenly by day)", "=C27*C9", AMT),
         (36, "Ahead (+) / behind (−) that even pace", "=C30-C35", AMT),
-        (37, "Weekly pace – platform, last 3 full weeks (budget channels)", "=H24/3", AMT),
+        (37, "Weekly pace – platforms, last 3 full weeks, campaigns not marked Ended", "=(" + "+".join(
+            f'SUMIFS(Campaigns!$W${CAMP_FIRST}:$W${CAMP_LAST},Campaigns!$B${CAMP_FIRST}:$B${CAMP_LAST},"{n}",Campaigns!$V${CAMP_FIRST}:$V${CAMP_LAST},"<>Ended")*{counts(sr)}'
+            for n, t, sr, *_ in CHANNELS) + ")/3", AMT),
         (38, "Weekly pace – agency reports, last 3 clean weeks", agency_pace, AMT),
         (39, "Current weekly pace used", "=IF(C37>0,C37,C38)", AMT),
-        (40, "Source of the current pace", '=IF(C37>0,"the platform exports, last 3 full weeks",C41)', None),
+        (40, "Source of the current pace", '=IF(C37>0,"the platform exports: last 3 full weeks ("&TEXT(C15,"d mmm")&" – "&TEXT(C13,"d mmm")&"), campaigns still running",C41)', None),
         (41, "Agency weeks used", agency_label, None),
         (42, "Forecast year-end at the current pace", "=C30+C39*C16", AMT),
         (43, "Allowed per week to land on the budget", "=IF(C16<=0,0,C31/C16)", AMT),
         (44, "Allowed per week to land on the maximum", "=IF(C16<=0,0,C32/C16)", AMT),
         (45, "Last full month (budget channels)", "=E24", AMT),
-        (46, "All spend in the data tabs (any date)", "=" + "+".join(f"SUM('{t}'!$I$3:$I${DMAX})" for n, t, *_ in CHANNELS), AMT),
+        (46, "All spend in the data tabs (any date)", "=" + "+".join(f"SUM({rng(t, TABS[t]['rep'])})" for n, t, *_ in CHANNELS), AMT),
         (47, "Forecast year-end at last month's pace", "=C30+E24/C17*C8", AMT),
         (48, "Last full week, budget channels (daily rows)", "=G24", AMT),
+        (49, "Left out of the pace: last 3 full weeks of campaigns marked Ended", "=MAX(0,H24-C37*3)", AMT),
     ]
     for r, lab, f, fmt in rows:
         cell(k, f"B{r}", lab)
@@ -446,7 +490,7 @@ def monthly(m):
         cell(m, f"A{r}", f"=DATE({S_YEAR},{i + 1},1)", MON_F, bold=True)
         cell(m, f"B{r}", f'="Q"&ROUNDUP(MONTH(A{r})/3,0)', align="center")
         for j, (name, tab, srow, *_) in enumerate(CHANNELS):
-            cell(m, f"{L(3 + j)}{r}", f"={sumifs(tab, 'I', f'$A{r}', f'EOMONTH($A{r},0)')}", AMT)
+            cell(m, f"{L(3 + j)}{r}", f"={sumifs(tab, 'rep', f'$A{r}', f'EOMONTH($A{r},0)')}", AMT)
         cell(m, f"G{r}", f"=SUM(C{r}:F{r})", AMT, bold=True)
         cell(m, f"H{r}", "=" + "+".join(f"{L(3 + j)}{r}*{counts(srow)}" for j, (n, t, srow, *_) in enumerate(CHANNELS)), AMT)
         cell(m, f"I{r}", f"={S_BUDGET}*MAX(0,MIN(EOMONTH($A{r},0),{S_PEND})-MAX($A{r},{S_PSTART})+1)/({S_PEND}-{S_PSTART}+1)", AMT)
@@ -456,8 +500,8 @@ def monthly(m):
         cell(m, f"M{r}", f"={S_MAX}", AMT, color=INK2)
         cell(m, f"N{r}", f'=IF(OR(K{r}="",{S_BUDGET}=0),"",K{r}/{S_BUDGET})', PCT, align="center")
         cell(m, f"O{r}", f'=IF(EOMONTH($A{r},0)<={S_UPTO},"Complete",IF($A{r}<={S_UPTO},"In progress","Not started"))', align="center", size=9)
-        cell(m, f"P{r}", f"={sumifs('Meta data', 'C', f'$A{r}', f'EOMONTH($A{r},0)')}", AMT)
-        cell(m, f"Q{r}", f"={sumifs('Google data', 'C', f'$A{r}', f'EOMONTH($A{r},0)')}", AMT)
+        cell(m, f"P{r}", f"={sumifs('Meta data', 'spend', f'$A{r}', f'EOMONTH($A{r},0)')}", AMT)
+        cell(m, f"Q{r}", f"={sumifs('Google data', 'spend', f'$A{r}', f'EOMONTH($A{r},0)')}", AMT)
         cell(m, f"R{r}", f"=INDEX({S_FX},MONTH(A{r}))", "0.0000", align="center", size=9)
         cell(m, f"S{r}", f'=TEXT(A{r},"mmm")', size=8, color=MUTED, align="center")
     cell(m, "A17", "Total", bold=True, fill=TOTAL)
@@ -484,8 +528,8 @@ def monthly(m):
         for g, (name, tab, scol) in enumerate(groups):
             c0 = 2 + g * 4
             cl, cv, cpc, cpl = L(c0), L(c0 + 1), L(c0 + 2), L(c0 + 3)
-            cell(m, f"{cl}{r}", f"={sumifs(tab, 'E', f'$A{r}', f'EOMONTH($A{r},0)')}", "#,##0")
-            cell(m, f"{cv}{r}", f"={sumifs(tab, 'F', f'$A{r}', f'EOMONTH($A{r},0)')}", "#,##0")
+            cell(m, f"{cl}{r}", f"={sumifs(tab, 'clicks', f'$A{r}', f'EOMONTH($A{r},0)')}", "#,##0")
+            cell(m, f"{cv}{r}", f"={sumifs(tab, 'conv', f'$A{r}', f'EOMONTH($A{r},0)')}", "#,##0")
             cell(m, f"{cpc}{r}", f'=IF({cl}{r}=0,"",{scol}{5 + i}/{cl}{r})', AMT2)
             cell(m, f"{cpl}{r}", f'=IF({cv}{r}=0,"",{scol}{5 + i}/{cv}{r})', AMT2)
     cell(m, "A36", "Total", bold=True, fill=TOTAL)
@@ -511,8 +555,8 @@ def weekly(w, notes):
     cell(w, "C3", f"={S_UPTO}", DATE_F, size=8, color=MUTED, border=False)
     cell(w, "D3", "Last full week ends:", size=8, color=MUTED, border=False)
     cell(w, "F3", "=Calc!C13", DATE_F, size=8, color=MUTED, border=False)
-    cell(w, "H3", "Spend before October fills in once the daily platform exports are pasted. Until then, the agency's weekly figures are on "
-                  "the 'Agency reports' tab and their notes are in column R.", size=9, bold=True, color=AMBER, border=False)
+    cell(w, "H3", "Spend comes from the daily platform exports. Notes marked 'Agency:' summarise the agency's weekly reports (until W/C 5 Oct).",
+         size=9, color=INK2, border=False, italic=True)
     hdr = ["Week", "Starts (Mon)", "Ends (Sun)", "Meta", "Google Ads", "ChatGPT Ads", "LinkedIn Ads", "Total – all channels",
            "Counts toward budget", "Plan (budget spread evenly by day)", "Over (+) / under (−) plan",
            "Meta conversions", "Meta cost per conversion", "Google conversions", "Google cost per conversion",
@@ -527,14 +571,14 @@ def weekly(w, notes):
         cell(w, f"B{r}", f"={S_W1}+7*(A{r}-1)", DAY_F)
         cell(w, f"C{r}", f"=B{r}+6", DAY_F)
         for j, (name, tab, srow, *_) in enumerate(CHANNELS):
-            cell(w, f"{L(4 + j)}{r}", f"={sumifs(tab, 'I', f'$B{r}', f'$C{r}', daily=True)}", AMT)
+            cell(w, f"{L(4 + j)}{r}", f"={sumifs(tab, 'rep', f'$B{r}', f'$C{r}', daily=True)}", AMT)
         cell(w, f"H{r}", f"=SUM(D{r}:G{r})", AMT, bold=True)
         cell(w, f"I{r}", "=" + "+".join(f"{L(4 + j)}{r}*{counts(srow)}" for j, (n, t, srow, *_) in enumerate(CHANNELS)), AMT)
         cell(w, f"J{r}", f"={S_BUDGET}*MAX(0,MIN(C{r},{S_PEND})-MAX(B{r},{S_PSTART})+1)/({S_PEND}-{S_PSTART}+1)", AMT)
         cell(w, f"K{r}", f'=IF(OR(C{r}>$C$3,I{r}=0),"",I{r}-J{r})', AMT)
-        cell(w, f"L{r}", f"={sumifs('Meta data', 'F', f'$B{r}', f'$C{r}', daily=True)}", "#,##0")
+        cell(w, f"L{r}", f"={sumifs('Meta data', 'conv', f'$B{r}', f'$C{r}', daily=True)}", "#,##0")
         cell(w, f"M{r}", f'=IF(L{r}=0,"",D{r}/L{r})', AMT2)
-        cell(w, f"N{r}", f"={sumifs('Google data', 'F', f'$B{r}', f'$C{r}', daily=True)}", "#,##0")
+        cell(w, f"N{r}", f"={sumifs('Google data', 'conv', f'$B{r}', f'$C{r}', daily=True)}", "#,##0")
         cell(w, f"O{r}", f'=IF(N{r}=0,"",E{r}/N{r})', AMT2)
         cell(w, f"P{r}", None, "#,##0", fill=INPUT, color="0000FF")
         cell(w, f"Q{r}", None, "#,##0", fill=INPUT, color="0000FF")
@@ -655,28 +699,24 @@ def how_to(h, source_note):
     title(h, "A1", "How to update this tracker", None)
     lines = [
         ("EVERY MONDAY (about 15 minutes)", None),
-        ("1", "Google Ads → Reports → open the saved report 'PnP spend tracker' (Campaign × Day: Cost, Impr., Clicks, Conversions). "
-              "Date range: last week (Mon–Sun). Download as CSV."),
-        ("2", "Copy the rows (without the header) and paste them under the last row of the 'Google data' tab, starting in column A. "
-              "Leave column G (Row type) empty."),
-        ("3", "Meta Ads Manager → Campaigns → same date range → Breakdown: By time → Day → saved columns 'PnP spend tracker' "
-              "(Campaign name, Amount spent, Impressions, Link clicks, Website registrations completed) → Export table data (CSV). "
-              "Paste under the last row of 'Meta data'."),
-        ("4", "If ChatGPT Ads or LinkedIn Ads ran, do the same for their tabs."),
+        ("1", "Google Ads → Reports → open the saved report 'PnP spend tracker' (Campaign, Day, Currency code, Cost, Impr., Clicks, Conversions). "
+              "Date range: last week (Mon–Sun). Download, open the file and copy the data rows (not the two title lines or the header)."),
+        ("2", "Paste them in the 'Google data' tab at the first empty row, column A. Columns H–J fill in by themselves."),
+        ("3", "Meta Ads Manager → Campaigns → same date range → Breakdown: By time → Day → the same columns as the 13 Oct export "
+              "(19 columns, 'Reporting starts' … 'Results (initial) indicator') → Export table data (CSV). Paste the rows (not the header) "
+              "in the 'Meta data' tab at the first empty row, column A."),
+        ("4", "If ChatGPT Ads or LinkedIn Ads ran, add their rows to their tabs (columns A–F)."),
         ("5", "Settings tab → change 'Platform data up to' to last Sunday."),
-        ("6", "In the data tabs, column H must show ✓. If it says '⚠ add to Campaigns tab', add that campaign at the bottom of the "
-              "Campaigns tab with its channel, market, region and type."),
-        ("7", "Weekly tab → write 1–2 lines in 'Notes' for the week (launches, pauses, budget changes, anything unusual). "
+        ("6", "Check the 'In campaign list?' column in the data tabs: ✓ or '– no spend' is fine. '⚠ add to Campaigns tab' means a new campaign: "
+              "add it at the bottom of the Campaigns tab with its channel, market, region and type."),
+        ("7", "Campaigns tab → if a campaign has stopped for good, set its Status to 'Ended' so it drops out of the current pace."),
+        ("8", "Weekly tab → write 1–2 lines in 'Notes' for the week (launches, pauses, budget changes, anything unusual). "
               "Optional: add MQLs by channel from HubSpot."),
-        ("8", "Dashboard → check the budget check rows and the forecast. Flag anything red to Raúl."),
+        ("9", "Dashboard → check the budget check rows and the forecast. Flag anything red to Raúl."),
         ("ONCE A MONTH (first Monday)", None),
-        ("9", "Check last month's totals on the Monthly tab (columns 'Meta as billed' and 'Google as billed') against the billing pages "
-              "(Meta: Billing & payments; Google Ads: Billing → Summary)."),
-        ("10", "If Finance gives monthly EUR→USD rates, put them in the exchange-rate table on the Settings tab."),
-        ("ONE-TIME SETUP", None),
-        ("11", "Save the two reports described in steps 1 and 3, with the columns in exactly that order, so every week the export pastes straight in."),
-        ("12", "Recommended: export Campaign × Day for 1 Jan – last Sunday once, delete the 'Month total' rows and paste the daily rows, "
-               "so the Weekly tab shows the whole year from platform data."),
+        ("10", "Check last month's totals on the Monthly tab (columns 'Meta as billed' and 'Google as billed') against the billing pages "
+               "(Meta: Billing & payments; Google Ads: Billing → Summary)."),
+        ("11", "If Finance gives monthly EUR→USD rates, put them in the exchange-rate table on the Settings tab."),
         ("RULES OF THE WORKBOOK", None),
         ("•", "Yellow cells = typed by you. White cells = formulas; don't type over them."),
         ("•", "Paste spend exactly as each platform bills it (Meta in USD, Google Ads and ChatGPT Ads in EUR). The workbook converts."),
@@ -722,7 +762,7 @@ def dashboard(d):
          f'=IF(Calc!C31<0,"Budget already used up","≈ "&{CUR("Calc!C43")}&" a week until "&TEXT(Calc!C5,"d mmm"))'),
         ('="LEFT UP TO THE MAXIMUM"', f'=IF(Calc!C32<0,"–"&{CUR("-Calc!C32")},{CUR("Calc!C32")})',
          f'=IF(Calc!C32<0,"Maximum already passed","≈ "&{CUR("Calc!C44")}&" a week until "&TEXT(Calc!C5,"d mmm"))'),
-        ('="CURRENT PACE PER WEEK"', f"={CUR('Calc!C39')}", '=IF(Calc!C37>0,"Platforms, last 3 full weeks","Agency reports, last 3 weeks (after the cuts)")'),
+        ('="CURRENT PACE PER WEEK"', f"={CUR('Calc!C39')}", '=IF(Calc!C37>0,"Last 3 full weeks ("&TEXT(Calc!C15,"d mmm")&" – "&TEXT(Calc!C13,"d mmm")&"), campaigns still running","Agency reports, last 3 weeks (after the cuts)")'),
         ('="FORECAST YEAR-END"', f"={CUR('Calc!C42')}",
          f'=IF(Calc!C42>Calc!C27,"▲ "&{CUR("Calc!C42-Calc!C27")}&" over budget","▼ "&{CUR("Calc!C27-Calc!C42")}&" under budget")&" · "&IF(Calc!C42>Calc!C28,"over","within")&" the maximum"'),
     ]
@@ -808,7 +848,9 @@ def dashboard(d):
         cell(d, f"{col}{r}", f, PCT if col == "E" else AMT, bold=True, fill=TOTAL, align="center" if col == "E" else "right")
     for col in "IJKLM":
         cell(d, f"{col}{r}", None, fill=TOTAL)
-    note(d, "B22", "'Last full week' needs daily platform rows: it shows – until the daily exports are pasted.")
+    d.merge_cells("B22:M22")
+    cell(d, "B22", f'="Last full week = "&TEXT(Calc!C14,"d mmm")&" – "&TEXT(Calc!C13,"d mmm")&". Left out of the current pace: "&{CUR("Calc!C49")}&" spent in the last 3 full weeks by campaigns marked Ended on the Campaigns tab."',
+         size=9, color=INK2, border=False, italic=True)
 
     m = d.parent["Monthly"]
     section(d, "B24", "SPEND BY MONTH AND CHANNEL vs. PLAN", ["B", "C", "D", "E", "F", "G"])
@@ -963,15 +1005,21 @@ if __name__ == "__main__":
     here = os.path.dirname(os.path.abspath(__file__))
     sys.path.insert(0, os.path.join(here, "agency") if os.path.isdir(os.path.join(here, "agency")) else os.path.join(here, "..", "agency"))
     import load_monthly as LM, agency_weeks as AW
-    out, upto = sys.argv[1], datetime.date.fromisoformat(sys.argv[2])
+    out, upto, meta_csv, google_csv = sys.argv[1], datetime.date.fromisoformat(sys.argv[2]), sys.argv[3], sys.argv[4]
     DRAFT = "--draft" in sys.argv
-    rows = LM.all_rows()
-    for r in rows:
+    mraw, mrows = LD.meta(meta_csv)
+    graw, grows = LD.google(google_csv)
+    gpt = LM.chatgpt()
+    for r in gpt:
         r["rowtype"] = "Month total"
-    src = ("Platform data: Meta ('Plug and Play Tech Center – Dollars' ad account, USD) and Google Ads (EUR) exports by campaign and month, "
-           "1 Jan – 30 Sep 2026, exported 8 Oct 2026; each month is one 'Month total' row per campaign. ChatGPT Ads: 'Test 1', 23 Sep – 2 Oct 2026, "
-           "€229.56 in total, put on its start date.\n"
+    raw = {"Meta data": mraw, "Google data": graw,
+           "ChatGPT data": [[r["date"], r["campaign"], r["spend"], int(r["impr"]), int(r["clicks"]), r["conv"], "Month total"] for r in gpt]}
+    status = {"FR_Alibaba Campaign": "Ended", "Test 1": "Ended"}
+    src = ("Platform data: Meta Ads Manager export ('Plug and Play Tech Center – Dollars' ad account, USD) and Google Ads report (EUR), campaign × day, "
+           "1 Jan – 12 Oct 2026, exported 13 Oct 2026. For Jan–Sep they match the earlier monthly exports (Meta to the cent; Google within €0.43 of rounding).\n"
+           "ChatGPT Ads: 'Test 1', 23 Sep – 2 Oct 2026, €229.56 in total, kept as one total row on its start date (Row type 'Month total').\n"
+           "FR_Alibaba (run by PnP's internal team, last spend 5 Oct) and ChatGPT 'Test 1' (ended 2 Oct) are marked Ended on the Campaigns tab, so they are left out of the current pace.\n"
            "Agency figures: the agency's weekly reports in Notion (W/C 29 Dec 2025 – 5 Oct 2026), read with Claude in Chrome on 13 Oct 2026, copied as written.\n"
            "Budget: Tereza, 13 Oct 2026 – $300k for 2026 (originally $350k), up to $320k at most. Exchange rate: 1 EUR = 1.1177 USD (live rate on 13 Oct 2026).")
-    build(out, upto, rows, AW.weeks(), AGENCY_TOTALS, src)
+    build(out, upto, raw, mrows + grows + gpt, AW.weeks(), AGENCY_TOTALS, src, status)
     print("saved", out)

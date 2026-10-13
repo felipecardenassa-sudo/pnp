@@ -7,6 +7,7 @@ import openpyxl
 E = html.escape
 BLUE, ORANGE, AQUA, NAVY, INK, INK2, MUTED, GRID, RED, GREEN, SLATE = (
     "#2a78d6", "#eb6834", "#1baf7a", "#1f3864", "#0b0b0b", "#52514e", "#8a8984", "#e6e5e1", "#c42f2f", "#0a7d0a", "#6b7a8f")
+VIOLET = "#6250d6"
 
 wb = openpyxl.load_workbook(sys.argv[1], data_only=True)
 calc, mon, dash, agency, loc = wb["Calc"], wb["Monthly"], wb["Dashboard"], wb["Agency reports"], wb["By location & type"]
@@ -27,14 +28,29 @@ q = [(sum(meta_m[i:i + 3]), sum(goog_m[i:i + 3]), sum(gpt_m[i:i + 3]), sum(plan_
 meta_t, goog_t, gpt_t = calc["D20"].value, calc["D21"].value, calc["D22"].value
 regions = [(loc[f"A{r}"].value, loc[f"N{r}"].value, loc[f"O{r}"].value) for r in range(6, 9)]
 
-# agency weeks around the September cuts (W/C 31 Aug – 5 Oct): Meta $ as reported, Google treated as € (later reports show € for these weeks)
-aw = []
+# platform weeks around the September cuts (W/C 31 Aug – 5 Oct), from the Agency tab's platform columns:
+# N = Meta excl. FR_Alibaba (USD), M − N = FR_Alibaba (USD), P = Google (EUR, converted here)
+aw, meta_n, meta_ok, gq = [], 0, 0, []
 for r in range(6, 200):
     a = agency[f"A{r}"].value
     if not isinstance(a, datetime.datetime):
         continue
+    M, N, P = agency[f"M{r}"].value or 0, agency[f"N{r}"].value or 0, agency[f"P{r}"].value or 0
     if a.date() >= datetime.date(2026, 8, 31):
-        aw.append((a.date(), agency[f"C{r}"].value or 0, (agency[f"G{r}"].value or 0) * fx))
+        aw.append((a.date(), N, M - N, P * fx))
+    if isinstance(agency[f"C{r}"].value, (int, float)) and N:
+        meta_n += 1
+        meta_ok += abs(agency[f"O{r}"].value) <= 5
+    if isinstance(agency[f"Q{r}"].value, (int, float)):
+        gq.append(agency[f"Q{r}"].value)
+g_same = sum(1 for x in gq if abs(x - 1) < 0.01)
+g_double = sum(1 for x in gq if abs(x - 2) < 0.02)
+g_conv = sum(1 for x in gq if 1.1 < x < 1.2)
+g_lower = sum(1 for x in gq if x < 0.99)
+fr_weeks = [(m, f, g) for d, m, f, g in aw if datetime.date(2026, 9, 7) <= d <= datetime.date(2026, 9, 28)]
+fr_4w, all_4w = sum(f for m, f, g in fr_weeks), sum(m + f + g for m, f, g in fr_weeks)
+fr_total = sum(f for d, m, f, g in aw)
+h1_platform = sum(mon[f"G{r}"].value or 0 for r in range(5, 11))
 tot_rows = []
 for r in range(40, 80):
     p = agency[f"A{r}"].value
@@ -63,7 +79,7 @@ def budget_bar(w=700, h=118):
     s.append(f'<rect x="{pl}" y="{top}" width="{iw}" height="{bh}" rx="4" fill="#f1f0ec"/>')
     s.append(f'<rect x="{pl}" y="{top}" width="{X(spent) - pl:.1f}" height="{bh}" rx="4" fill="{NAVY}"/>')
     s.append(f'<rect x="{X(spent) + 1.5:.1f}" y="{top}" width="{X(fc) - X(spent) - 1.5:.1f}" height="{bh}" fill="{NAVY}" opacity=".35"/>')
-    for v, lab, col, dash, anchor, dy in [(even, f"Even pace by {upto:%-d %b}: {usd(even, True)}", INK2, "2,2", "middle", -8),
+    for v, lab, col, dash, anchor, dy in [(even, f"Even pace by {upto:%-d %b}: {usd(even, True)}", INK2, "2,2", "middle", bh + 18),
                                           (budget, f"Budget {usd(budget, True)}", INK, "", "end", -22),
                                           (maxi, f"Maximum {usd(maxi, True)}", RED, "3,2", "end", -8)]:
         s.append(f'<line x1="{X(v):.1f}" x2="{X(v):.1f}" y1="{top - 4}" y2="{top + bh + 4}" stroke="{col}" stroke-width="2" stroke-dasharray="{dash}"/>')
@@ -98,7 +114,8 @@ def monthly_chart(w=700, h=230):
                 base += val
         s.append(f'<text x="{X(i):.1f}" y="{h - 12}" text-anchor="middle" class="ax">{months[i]:%b}</text>')
         if i < nmon and (tot_m[i] == max(tot_m[:nmon]) or i == nmon - 1):
-            s.append(f'<text x="{X(i):.1f}" y="{Y(tot_m[i]) - 5:.1f}" text-anchor="middle" class="lbl">{usd(tot_m[i], True)}</text>')
+            part = "*" if i == nmon - 1 and upto.day < 28 else ""
+            s.append(f'<text x="{X(i):.1f}" y="{Y(tot_m[i]) - 5:.1f}" text-anchor="middle" class="lbl">{usd(tot_m[i], True)}{part}</text>')
     pts = " ".join(f"{X(i):.1f},{Y(plan_m[i]):.1f}" for i in range(n))
     s.append(f'<polyline points="{pts}" fill="none" stroke="{INK2}" stroke-width="1.8" stroke-dasharray="5,4"/>')
     s.append(f'<text x="{X(n - 1) + 2:.1f}" y="{Y(plan_m[-1]) - 6:.1f}" text-anchor="end" class="lbl" fill="{INK2}">Even pace ≈ {usd(plan_m[-1], True)}/month</text>')
@@ -124,7 +141,8 @@ def cumulative_chart(w=700, h=270):
     for i in range(nmon):
         cum += tot_m[i]
         end = (months[i].replace(month=months[i].month % 12 + 1, day=1) - datetime.timedelta(days=1)) if months[i].month < 12 else datetime.date(2026, 12, 31)
-        pts.append((X(end.date() if hasattr(end, "date") else end), Y(cum)))
+        end = end.date() if hasattr(end, "date") else end
+        pts.append((X(min(end, upto.date())), Y(cum)))
     s.append(f'<polyline points="{" ".join(f"{a:.1f},{b:.1f}" for a, b in pts)}" fill="none" stroke="{NAVY}" stroke-width="2.6" stroke-linejoin="round"/>')
     for a, b in pts[1:]:
         s.append(f'<circle cx="{a:.1f}" cy="{b:.1f}" r="3" fill="{NAVY}" stroke="#fff" stroke-width="1.5"/>')
@@ -148,7 +166,7 @@ def cumulative_chart(w=700, h=270):
 def weekly_chart(w=700, h=200):
     pl, pr, pt, pb = 46, 12, 22, 30
     iw, ih = w - pl - pr, h - pt - pb
-    ymax = 5000
+    ymax = 6000
     n = len(aw)
     bw = iw / n * 0.55
     X = lambda i: pl + iw * (i + 0.5) / n
@@ -161,11 +179,15 @@ def weekly_chart(w=700, h=200):
     xc = (X(cut_i - 1) + X(cut_i)) / 2
     s.append(f'<line x1="{xc:.1f}" x2="{xc:.1f}" y1="{pt - 6}" y2="{pt + ih}" stroke="{RED}" stroke-width="1.4" stroke-dasharray="3,3"/>'
              f'<text x="{xc + 5:.1f}" y="{pt + 2}" class="lbl" fill="{RED}">Budgets cut 18–21 Sep</text>')
-    for i, (d, m, g) in enumerate(aw):
-        for val, base, col in ((m, 0, BLUE), (g, m, ORANGE)):
+    for i, (d, m, f, g) in enumerate(aw):
+        base = 0
+        for val, col in ((m, BLUE), (f, VIOLET), (g, ORANGE)):
+            if val <= 0:
+                continue
             y0, y1 = Y(base), Y(base + val)
             s.append(f'<rect x="{X(i) - bw / 2:.1f}" y="{y1:.1f}" width="{bw:.1f}" height="{max(0.8, y0 - y1 - 1.5):.1f}" fill="{col}" rx="1.5"/>')
-        s.append(f'<text x="{X(i):.1f}" y="{Y(m + g) - 5:.1f}" text-anchor="middle" class="lbl">{usd(m + g, True)}</text>')
+            base += val
+        s.append(f'<text x="{X(i):.1f}" y="{Y(base) - 5:.1f}" text-anchor="middle" class="lbl">{usd(base, True)}</text>')
         s.append(f'<text x="{X(i):.1f}" y="{h - 12}" text-anchor="middle" class="ax">W/C {d:%-d %b}</text>')
     s.append("</svg>")
     return "".join(s)
@@ -207,6 +229,7 @@ th {{ text-align: left; color: {INK2}; font-weight: 600; font-size: 8.3pt; borde
 td {{ border-bottom: 1px solid {GRID}; padding: 3px 6px; font-size: 8.9pt; vertical-align: top; }}
 th.num, td.num {{ text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }}
 tr.tot td {{ font-weight: 700; border-top: 1.5px solid {INK}; }}
+td:first-child {{ white-space: nowrap; }}
 .mb {{ height: 11px; background: #f1f0ec; border-radius: 4px; width: 210px; }}
 .mbf {{ height: 11px; background: {SLATE}; border-radius: 4px; }}
 .legend {{ font-size: 8.3pt; color: {INK2}; margin: 2px 0 0; }}
@@ -223,19 +246,20 @@ over_b = fc - budget
 under_m = maxi - fc
 LEG = (f'<div class="legend"><span class="sw" style="background:{BLUE};margin-left:0"></span>Meta'
        f'<span class="sw" style="background:{ORANGE}"></span>Google Ads<span class="sw" style="background:{AQUA}"></span>ChatGPT Ads'
-       f'<span class="sw" style="background:none;border-top:2px dashed {INK2};height:0;border-radius:0;margin-bottom:3px"></span>Even pace for {usd(budget, True)}</div>')
+       f'<span class="sw" style="background:none;border-top:2px dashed {INK2};height:0;border-radius:0;margin-bottom:3px"></span>Even pace for {usd(budget, True)}'
+       f'<span style="margin-left:12px">* {upto:%B} = 1–{upto:%-d %b} only</span></div>')
 
 p1 = f"""
 <div class="page">
 <div class="kicker">Paid media · budget check</div>
 <h1>Paid Media Spend 2026 vs. the {usd(budget, True)} budget</h1>
-<div class="meta">Platform data to {upto:%-d %b %Y} · agency weekly reports to 11 Oct 2026 · USD (Google Ads converted at 1 EUR = {fx:.4f} USD) · prepared 13 Oct 2026 by Felipe Cárdenas</div>
+<div class="meta">Platform data to {upto:%-d %b %Y} (Meta and Google Ads exports, day by day) · USD (Google Ads converted at 1 EUR = {fx:.4f} USD) · prepared 13 Oct 2026 by Felipe Cárdenas</div>
 <div class="tiles">
  <div class="tile"><div class="l">Budget 2026</div><div class="v">{usd(budget)}</div><div class="d">Maximum {usd(maxi)} · originally {usd(orig)}</div></div>
  <div class="tile"><div class="l">Spent to {upto:%-d %b}</div><div class="v">{usd(spent)}</div><div class="d">{pct(spent / budget)} of the budget · {pct(C(9))} of the year gone</div></div>
  <div class="tile"><div class="l">Left in the budget</div><div class="v">{usd(left_b)}</div><div class="d">≈ {usd(allow_b)} a week to 31 Dec</div></div>
  <div class="tile"><div class="l">Left up to the maximum</div><div class="v">{usd(left_m)}</div><div class="d">≈ {usd(allow_m)} a week to 31 Dec</div></div>
- <div class="tile"><div class="l">Current pace</div><div class="v">{usd(pace)}<span style="font-size:10pt;font-weight:600"> /week</span></div><div class="d">Since the 18–21 Sep cuts (agency reports, last 3 weeks)</div></div>
+ <div class="tile"><div class="l">Current pace</div><div class="v">{usd(pace)}<span style="font-size:10pt;font-weight:600"> /week</span></div><div class="d">Last 3 full weeks ({C(15):%-d %b} – {C(13):%-d %b}), campaigns still running</div></div>
  <div class="tile"><div class="l">Forecast year-end</div><div class="v">{usd(fc)}</div><div class="d"><span class="red">≈ {usd(over_b)} over the budget</span> · ≈ {usd(under_m)} under the maximum</div></div>
 </div>
 {budget_bar()}
@@ -243,18 +267,29 @@ p1 = f"""
 <ul class="list flag">
  <li><b>Spending ran ahead of an even pace.</b> {usd(spent)} was spent by {upto:%-d %b}, {usd(ahead)} more than spreading {usd(budget, True)} evenly over the year ({usd(even)}). Q1 was the biggest quarter ({usd(sum(q[0][:3]))}).</li>
  <li><b>At the current pace, 2026 ends at ≈ {usd(fc)}</b>: ≈ {usd(over_b)} over the budget and ≈ {usd(under_m)} under the maximum. Landing exactly on {usd(budget, True)} means ≈ {usd(allow_b)} a week ({pct(1 - allow_b / pace)} less than now).</li>
- <li><b>The agency's reports don't match the platforms.</b> Their H1 total is $182,516; the platforms show {usd(sum(tot_m[:6]))}. Their July report converted Google's euros with a £→$ rate (×1.28), and three Google weeks look doubled.</li>
+ <li><b>The agency's Google figures don't match the platform.</b> Checked week by week, they matched in only {g_same} of {len(gq)} weeks: {g_conv} look converted to dollars, {g_double} are exactly doubled and {g_lower} are lower. Their H1 total is $182,516; the platforms show {usd(h1_platform)}.</li>
  <li><b>Lead numbers can't be compared over time.</b> The agency changed the lead definition several times (leads, welcome conversions, proxy events), tracking was down ~15 Jul–11 Aug, and MQL/SQL reporting stopped after January.</li>
- <li><b>Two budget questions are open:</b> whether FR_Alibaba (run by PnP's internal team; $3,693 on Meta in September) and ChatGPT Ads ({usd(gpt_t)}) count toward the {usd(budget, True)}. Both are included here.</li>
+ <li><b>FR_Alibaba, run by PnP's internal team, spent {usd(fr_total)} on Meta from 10 Sep to 5 Oct</b>, {pct(fr_4w / all_4w)} of all spend in W/C 7–28 Sep. It counts in spend so far but is left out of the current pace because it has ended. Open: do FR_Alibaba and ChatGPT Ads ({usd(gpt_t)}) count toward the {usd(budget, True)}?</li>
 </ul>
 </div>
 """
 
+qs = []
+for i, (m, g, c, p) in enumerate(q):
+    qstart = datetime.date(2026, 3 * i + 1, 1)
+    if qstart > upto.date():
+        continue
+    qend = (datetime.date(2026, 3 * i + 4, 1) - datetime.timedelta(days=1)) if i < 3 else datetime.date(2026, 12, 31)
+    lab = f"Q{i + 1}"
+    if upto.date() < qend:
+        p = budget * ((upto.date() - qstart).days + 1) / 365
+        lab = f"Q{i + 1} (to {upto:%-d %b})"
+    qs.append((lab, m, g, c, p))
 qrows = "".join(
-    f'<tr><td>Q{i + 1}</td><td class="num">{usd(m)}</td><td class="num">{usd(g)}</td><td class="num">{usd(c) if c else "–"}</td>'
+    f'<tr><td>{lab}</td><td class="num">{usd(m)}</td><td class="num">{usd(g)}</td><td class="num">{usd(c) if c else "–"}</td>'
     f'<td class="num"><b>{usd(m + g + c)}</b></td><td class="num">{usd(p)}</td><td class="num {"red" if m + g + c - p > 0 else ""}">'
     f'{("+" if m + g + c - p > 0 else "−") + usd(abs(m + g + c - p))}</td></tr>'
-    for i, (m, g, c, p) in enumerate(q[:3]))
+    for lab, m, g, c, p in qs)
 qrows += (f'<tr class="tot"><td>Total</td><td class="num">{usd(meta_t)}</td><td class="num">{usd(goog_t)}</td><td class="num">{usd(gpt_t)}</td>'
           f'<td class="num">{usd(spent)}</td><td class="num">{usd(even)}</td><td class="num red">+{usd(ahead)}</td></tr>')
 
@@ -287,20 +322,20 @@ trows = "".join(
     f'{("+" if dfx > 0 else "−") + usd(abs(dfx)) if abs(dfx) >= 0.5 else "0"}</td><td>{E(nt)}</td></tr>'
     for p, a, pl, dfx, nt in tot_rows)
 
-before = sum(m + g for d, m, g in aw if d < datetime.date(2026, 9, 21)) / max(1, sum(1 for d, *_ in aw if d < datetime.date(2026, 9, 21)))
+before = sum(m + g for d, m, f, g in aw if d < datetime.date(2026, 9, 21)) / max(1, sum(1 for d, *_ in aw if d < datetime.date(2026, 9, 21)))
 p3 = f"""
 <div class="page">
-<h2 style="margin-top:0">Weekly spend around the September cuts (agency reports)</h2>
+<h2 style="margin-top:0">Weekly spend around the September cuts (platform data)</h2>
 {weekly_chart()}
-<div class="legend"><span class="sw" style="background:{BLUE};margin-left:0"></span>Meta ($, excludes FR_Alibaba)<span class="sw" style="background:{ORANGE}"></span>Google Ads (€ converted at {fx:.4f})</div>
+<div class="legend"><span class="sw" style="background:{BLUE};margin-left:0"></span>Meta (without FR_Alibaba)<span class="sw" style="background:{VIOLET}"></span>FR_Alibaba (Meta, PnP's internal team)<span class="sw" style="background:{ORANGE}"></span>Google Ads (€ converted at {fx:.4f})</div>
 <h2>The agency's totals vs. the platform exports</h2>
 <table class="tight"><tr><th>Period</th><th class="num">Agency said</th><th class="num">Platforms</th><th class="num">Difference</th><th>Note</th></tr>{trows}</table>
 <div class="two" style="margin-top:6px">
  <div>
   <h2>What's working</h2>
   <ul class="list work">
-   <li>The 18–21 Sep budget cuts took weekly spend from ≈ {usd(before)} to ≈ {usd(pace)} (agency reports).</li>
-   <li>Meta spend matches the agency's monthly figures for May–July, so the Meta history is solid.</li>
+   <li>The 18–21 Sep budget cuts took weekly spend (without FR_Alibaba) from ≈ {usd(before)} to ≈ {usd(pace)}.</li>
+   <li>The agency's weekly Meta figures match Meta's own numbers within $5 in {meta_ok} of {meta_n} weeks, so the Meta history is solid.</li>
    <li>The new tracker uses one source (the platform exports), one currency (USD) and one budget, and will be updated every Monday.</li>
   </ul>
   <h2>What can be improved</h2>
@@ -316,13 +351,13 @@ p3 = f"""
    <li>Decide the Q4 pace with Tereza and Raúl: hold ≈ {usd(pace)}/week (≈ {usd(fc, True)}), trim to ≈ {usd(allow_b)}/week ({usd(budget, True)}), or go up to ≈ {usd(allow_m)}/week ({usd(maxi, True)}) where results justify it.</li>
    <li>Confirm whether FR_Alibaba and ChatGPT Ads count toward the budget.</li>
    <li>Ask Thiago before 30 Oct: Google's currency before 21 Sep, the doubled weeks, which H1 total is right, and the approved monthly caps.</li>
-   <li>Paste the daily platform exports (1 Jan – last Sunday) so the weekly view shows the whole year from platform data.</li>
+   <li>Update the tracker every Monday from the platform exports (about 15 minutes) and send Raúl the dashboard.</li>
   </ol>
  </div>
 </div>
-<div class="note" style="margin-top:10px">Sources: Meta ('Plug and Play Tech Center – Dollars' ad account, USD) and Google Ads (EUR) exports by campaign and month, 1 Jan – 30 Sep 2026; ChatGPT Ads 'Test 1' (23 Sep – 2 Oct, €229.56).
-Agency figures: weekly reports in Notion (W/C 29 Dec 2025 – 5 Oct 2026), copied as written; Google figures labelled $ before 21 Sep are treated as € because later reports show the same numbers in €.
-Budget: Tereza, 13 Oct 2026. Forecast = spent to {upto:%-d %b} + current weekly pace × {C(16):.1f} weeks left. Full detail: PNP_Paid_Media_Spend_Tracker_2026.xlsx.</div>
+<div class="note" style="margin-top:10px">Sources: Meta Ads Manager ('Plug and Play Tech Center – Dollars' ad account, USD) and Google Ads (EUR) exports by campaign and day, 1 Jan – 12 Oct 2026 (they match the earlier monthly exports for Jan–Sep); ChatGPT Ads 'Test 1' (23 Sep – 2 Oct, €229.56).
+Agency figures: weekly reports in Notion (W/C 29 Dec 2025 – 5 Oct 2026), copied as written and compared with the platforms week by week.
+Budget: Tereza, 13 Oct 2026. Forecast = spent to {upto:%-d %b} + current weekly pace × {C(16):.1f} weeks left; the pace leaves out campaigns that have ended (FR_Alibaba, ChatGPT 'Test 1'). Full detail: PNP_Paid_Media_Spend_Tracker_2026.xlsx.</div>
 </div>
 """
 
