@@ -15,7 +15,7 @@ C = lambda r: calc[f"C{r}"].value
 budget, maxi, orig, spent = C(27), C(28), C(29), C(30)
 left_b, left_m, even, ahead = C(31), C(32), C(35), C(36)
 pace, fc, allow_b, allow_m = C(39), C(42), C(43), C(44)
-fx = wb["Settings"]["B41"].value
+fx = wb["Settings"]["B39"].value
 upto = C(3)
 months = [mon[f"A{r}"].value for r in range(5, 17)]
 meta_m = [mon[f"C{r}"].value or 0 for r in range(5, 17)]
@@ -351,7 +351,7 @@ p3 = f"""
    <li>Decide the Q4 pace with Tereza and Raúl: hold ≈ {usd(pace)}/week (≈ {usd(fc, True)}), trim to ≈ {usd(allow_b)}/week ({usd(budget, True)}), or go up to ≈ {usd(allow_m)}/week ({usd(maxi, True)}) where results justify it.</li>
    <li>Confirm whether FR_Alibaba and ChatGPT Ads count toward the budget.</li>
    <li>Ask Thiago before 30 Oct: Google's currency before 21 Sep, the doubled weeks, which H1 total is right, and the approved monthly caps.</li>
-   <li>Update the tracker every Monday from the platform exports (about 15 minutes) and send Raúl the dashboard.</li>
+   <li>Update the tracker every Monday from the platform exports (two exports, about 10 minutes) and send Raúl the dashboard.</li>
   </ol>
  </div>
 </div>
