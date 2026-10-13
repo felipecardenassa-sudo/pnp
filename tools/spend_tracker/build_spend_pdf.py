@@ -10,18 +10,18 @@ BLUE, ORANGE, AQUA, NAVY, INK, INK2, MUTED, GRID, RED, GREEN, SLATE = (
 VIOLET = "#6250d6"
 
 wb = openpyxl.load_workbook(sys.argv[1], data_only=True)
-calc, mon, dash, agency, loc = wb["Calc"], wb["Monthly"], wb["Dashboard"], wb["Agency reports"], wb["By location & type"]
+calc, mon, dash, agency, loc = wb["Calc"], wb["Monthly"], wb["Dashboard"], wb["Agency check"], wb["By location"]
 C = lambda r: calc[f"C{r}"].value
 budget, maxi, orig, spent = C(27), C(28), C(29), C(30)
 left_b, left_m, even, ahead = C(31), C(32), C(35), C(36)
 pace, fc, allow_b, allow_m = C(39), C(42), C(43), C(44)
 fx = wb["Settings"]["B39"].value
 upto = C(3)
-months = [mon[f"A{r}"].value for r in range(5, 17)]
-meta_m = [mon[f"C{r}"].value or 0 for r in range(5, 17)]
-goog_m = [mon[f"D{r}"].value or 0 for r in range(5, 17)]
-gpt_m = [mon[f"E{r}"].value or 0 for r in range(5, 17)]
-plan_m = [mon[f"I{r}"].value or 0 for r in range(5, 17)]
+months = [mon[f"A{r}"].value for r in range(21, 33)]
+meta_m = [mon[f"B{r}"].value or 0 for r in range(21, 33)]
+goog_m = [mon[f"C{r}"].value or 0 for r in range(21, 33)]
+gpt_m = [mon[f"D{r}"].value or 0 for r in range(21, 33)]
+plan_m = [mon[f"G{r}"].value or 0 for r in range(21, 33)]
 tot_m = [a + b + c for a, b, c in zip(meta_m, goog_m, gpt_m)]
 nmon = sum(1 for m in months if m <= upto)
 q = [(sum(meta_m[i:i + 3]), sum(goog_m[i:i + 3]), sum(gpt_m[i:i + 3]), sum(plan_m[i:i + 3])) for i in (0, 3, 6, 9)]
@@ -31,7 +31,7 @@ regions = [(loc[f"A{r}"].value, loc[f"N{r}"].value, loc[f"O{r}"].value) for r in
 # platform weeks around the September cuts (W/C 31 Aug – 5 Oct), from the Agency tab's platform columns:
 # N = Meta excl. FR_Alibaba (USD), M − N = FR_Alibaba (USD), P = Google (EUR, converted here)
 aw, meta_n, meta_ok, gq = [], 0, 0, []
-for r in range(6, 200):
+for r in range(5, 200):
     a = agency[f"A{r}"].value
     if not isinstance(a, datetime.datetime):
         continue
@@ -50,7 +50,7 @@ g_lower = sum(1 for x in gq if x < 0.99)
 fr_weeks = [(m, f, g) for d, m, f, g in aw if datetime.date(2026, 9, 7) <= d <= datetime.date(2026, 9, 28)]
 fr_4w, all_4w = sum(f for m, f, g in fr_weeks), sum(m + f + g for m, f, g in fr_weeks)
 fr_total = sum(f for d, m, f, g in aw)
-h1_platform = sum(mon[f"G{r}"].value or 0 for r in range(5, 11))
+h1_platform = sum(mon[f"F{r}"].value or 0 for r in range(21, 27))
 tot_rows = []
 for r in range(40, 80):
     p = agency[f"A{r}"].value
