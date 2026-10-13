@@ -24,10 +24,13 @@
   - Deliverables contain aggregates only, with counts of 1–4 shown as "<5".
   - Raw contact exports stay in the scratchpad and are deleted afterwards. Never commit them.
 
-## Budget 2026 (EUR)
-- Google €90k + Meta €180k = €270k. A €350k stretch is not confirmed yet.
-- Meta bills in USD and is converted at 1 EUR = 1.16 USD (cell Summary!B3 in the spend sheet). Google and ChatGPT bill in EUR.
-- ChatGPT Ads are outside the €270k. The territory file is informative only.
+## Budget 2026 (USD) – confirmed by Tereza, 13 Oct 2026
+- **Budget: $300k for 2026, in USD** (PnP talks budget in USD). Originally $350k; cut because performance wasn't good enough. **Maximum $320k, "ideally not more".**
+- The "90k Google / 180k Meta" figures were **spend so far**, not budgets (Google €89.7k, Meta $178.1k at 30 Sep). The old EUR-based €270k assumption is wrong and its spreadsheet was removed.
+- Report everything in USD. Meta bills in USD; Google Ads and ChatGPT Ads bill in EUR. Exchange rate used: 1 EUR = 1.1177 USD (live rate on 13 Oct 2026, from Felipe); monthly rates can be set on the tracker's Settings tab if Finance provides them.
+- Counted toward the budget (to confirm): ChatGPT Ads and FR_Alibaba (a Meta campaign run by PnP's internal team, $3.7k in Sep).
+- Status at 30 Sep (platform data): $278,601 spent (93% of $300k). After the 18–21 Sep cuts the pace is ≈ $1,861/week (agency reports W/C 21 Sep – 5 Oct) → forecast ≈ $303k at year end. Landing on $300k needs ≈ $1,628/week; the $320k maximum allows ≈ $3,150/week.
+- The agency's Notion reports don't reconcile with the platforms (Google € shown as $ before 21 Sep, three doubled Google weeks, July report converted Google at £1=$1.28, H1 $182.5k vs $205.4k on the platforms). Platform exports are the source of truth.
 
 ## ICP (Buyer Persona 2024)
 - Primary: corporates with 10,000+ employees and $100M+ revenue (Head of Innovation, R&D, CDO, or C-level), plus governments. A $500M threshold is under discussion.
@@ -41,7 +44,7 @@
 - Key markets: France, UK, Germany, Spain, Italy. Local content beats generic content 3:1 on cost per lead.
 
 ## Files in this repo
-- `PNP_Paid_Ads_Spend_2026.xlsx`: Q3 and full-year 2026 spend vs budget, in EUR.
+- `PNP_Paid_Media_Spend_Tracker_2026.xlsx`: the weekly-updated spend tracker (USD, $300k budget / $320k maximum). `PNP_Paid_Media_Spend_2026.pdf`: 3-page summary for Tereza and Raúl (13 Oct 2026).
 - `PNP_HubSpot_Newsletter_Audit.pdf` / `.xlsx`: newsletter audit covering locations, newsletter map, metrics, workflows and industry newsletters (Oct 2025 – Sep 2026).
 - `PNP_ICP_vs_Conversions.pdf` / `.xlsx`: JTP Contact us and content-download converters compared with the ICP (aggregates only).
-- `tools/spend_tracker/`: generator for the new Paid Media Spend Tracker (Dashboard, Weekly, Monthly, By location & type, Campaigns, Agency reports, Settings, data tabs). Run `python build_tracker.py OUT.xlsx YYYY-MM-DD` from that folder (`--draft` adds the draft banner). Data model: campaign × day per platform, spend as billed; budgets, currency and FX live on the Settings tab. Status (13 Oct 2026): draft built from the Jan–Sep monthly exports; waiting for the daily exports, the agency's Notion weekly reports and Tereza's budget answer (full year? EUR or USD?).
+- `tools/spend_tracker/`: generator for the tracker and the PDF (`build_tracker.py OUT.xlsx YYYY-MM-DD`, then recalc, then `build_spend_pdf.py TRACKER.xlsx OUT.html` and print to PDF with Chromium). Data model: campaign × day per platform, spend as billed; Jan–Sep history is one 'Month total' row per campaign per month (weekly views use daily rows only). `agency/` holds the parsed agency weekly reports. Still to do: paste daily platform exports (1 Jan – last Sunday) so the Weekly tab covers the whole year.
