@@ -40,7 +40,8 @@ CG_HDR, CG_CAMP, CG_DAY, CG_COST, CG_CLK, CG_CONV, CG_CUR = (f"Calc!$C${r}" for 
 CK_FIRST, CK_N, CK_COUNT = 86, 6, "Calc!$C$93"
 EN_FIRST = 96
 CODE0, MK0, TY0 = 109, 172, 215
-M_FIRST = 21   # Monthly tab: first month row
+M_FIRST = 5    # Monthly tab: first month row (header on row 4)
+W_FIRST = 5    # Weekly tab: first week row (header on row 4)
 TYPES = ["Meta – lead ads, prospecting", "Meta – lead ads, retargeting", "Meta – traffic", "Meta – other",
          "Google – Search, non-brand", "Google – Search, brand", "Google – Search, coworking", "Google – Performance Max",
          "Google – YouTube video", "Google – Demand Gen / YouTube reach", "Google – other", "ChatGPT Ads", "LinkedIn Ads"]
@@ -464,12 +465,13 @@ def monthly(m):
     title(m, "A1", "Monthly spend", None)
     cell(m, "A2", f'="USD · Google Ads and ChatGPT Ads converted from EUR with the Settings rates · data up to "&TEXT({S_UPTO},"d mmm yyyy")',
          size=9, color=INK2, border=False, italic=True)
+    cell(m, "S2", "Data up to:", size=8, color=MUTED, border=False, align="right"); cell(m, "T2", f"={S_UPTO}", DATE_F, size=8, color=MUTED, border=False)
     hdr = ["Month", "Meta", "Google Ads", "ChatGPT Ads", "LinkedIn Ads", "Total", "Plan (budget spread evenly)", "Over (+) / under (−) plan",
            "Spent so far (cumulative)", "Plan so far", "% of budget used", "Budget used so far", "Status", "Quarter",
            "", "", "Meta as billed (USD)", "Google as billed (EUR)", "EUR → USD rate", "Label"]
-    header(m, 20, 1, hdr, height=42)
+    header(m, M_FIRST - 1, 1, hdr, height=42)
     for col in "OP":
-        m[f"{col}20"].fill = PatternFill(fill_type=None)
+        m[f"{col}{M_FIRST - 1}"].fill = PatternFill(fill_type=None)
     f0 = M_FIRST
     for i in range(12):
         r = f0 + i
@@ -502,9 +504,9 @@ def monthly(m):
                           "Bars = % of the annual budget used so far. 'As billed' = the figures to check against the invoices.")
     m.conditional_formatting.add(f"H{f0}:H{tr}", FormulaRule(formula=[f'AND(ISNUMBER(H{f0}),H{f0}>0)'], font=font(bold=True, color=RED)))
     m.conditional_formatting.add(f"L{f0}:L{tr - 1}", FormulaRule(formula=[f'AND(ISNUMBER(K{f0}),K{f0}>=1)'], font=font(8, False, RED)))
-    m.conditional_formatting.add(f"A{f0}:T{tr - 1}", FormulaRule(formula=[f'$A{f0}>{S_UPTO}'], font=font(color=MUTED)))
+    m.conditional_formatting.add(f"A{f0}:T{tr - 1}", FormulaRule(formula=[f'$A{f0}>$T$2'], font=font(color=MUTED)))
 
-    top = tr + 4   # 38
+    top = 38
     section(m, f"A{top}", "CLICKS, CONVERSIONS AND COSTS – as reported by each platform", "ABCDEFGHIJKLM")
     groups = [("Meta", "B", lambda lo, hi: xsum(MX, CM_CLK, CM_DATE, lo, hi), lambda lo, hi: xsum(MX, CM_CONV, CM_DATE, lo, hi)),
               ("Google Ads", "C", lambda lo, hi: xsum(GX, CG_CLK, CG_DAY, lo, hi), lambda lo, hi: xsum(GX, CG_CONV, CG_DAY, lo, hi)),
@@ -537,24 +539,24 @@ def monthly(m):
         cell(m, f"{cpl}{rt}", f'=IF({cv}{rt}=0,"",{scol}{tr}/{cv}{rt})', AMT2, bold=True, fill=TOTAL)
     note(m, f"A{rt + 1}", "Conversions use each platform's own definition: Meta = 'Website registrations completed' (clicks = unique link clicks); "
                           "Google Ads = 'Conversions' (its primary conversion actions, which the agency changed during the year). Compare each channel with itself.")
-    m.conditional_formatting.add(f"A{top + 3}:M{rt - 1}", FormulaRule(formula=[f'$A{top + 3}>{S_UPTO}'], font=font(color=MUTED)))
-    m.freeze_panes = f"B{f0}"
+    m.conditional_formatting.add(f"A{top + 3}:M{rt - 1}", FormulaRule(formula=[f'$A{top + 3}>$T$2'], font=font(color=MUTED)))
+    m.freeze_panes = f"A{f0}"
     widths(m, {"A": 11, **{c: 12 for c in "BCDEFGHIJK"}, "L": 24, "M": 11, "N": 8, "O": 2, "P": 2, "Q": 13, "R": 13, "S": 10, "T": 6})
-    section(m, "A4", "SPEND BY MONTH AND CHANNEL", "ABCDEFG"); section(m, "I4", "SPENT SO FAR vs. PLAN", "IJKLMN")
+    section(m, "A20", "SPEND BY MONTH AND CHANNEL", "ABCDEFG"); section(m, "I20", "SPENT SO FAR vs. PLAN", "IJKLMN")
     bar = BarChart(); bar.type = "col"; bar.grouping = "stacked"; bar.overlap = 100; bar.gapWidth = 60
     for j in range(4):
-        bar.add_data(Reference(m, min_col=2 + j, min_row=20, max_row=f0 + 11), titles_from_data=True)
+        bar.add_data(Reference(m, min_col=2 + j, min_row=f0 - 1, max_row=f0 + 11), titles_from_data=True)
     bar.set_categories(Reference(m, min_col=20, min_row=f0, max_row=f0 + 11))
     style_bar(bar, [CH_COLORS[n] for n, *_ in CHANNELS])
     bar.width, bar.height = 18, 7.6
-    m.add_chart(bar, "A5")
+    m.add_chart(bar, "A21")
     cum = BarChart(); cum.type = "col"; cum.grouping = "clustered"; cum.gapWidth = 60
-    cum.add_data(Reference(m, min_col=9, min_row=20, max_row=f0 + 11), titles_from_data=True)
-    cum.add_data(Reference(m, min_col=10, min_row=20, max_row=f0 + 11), titles_from_data=True)
+    cum.add_data(Reference(m, min_col=9, min_row=f0 - 1, max_row=f0 + 11), titles_from_data=True)
+    cum.add_data(Reference(m, min_col=10, min_row=f0 - 1, max_row=f0 + 11), titles_from_data=True)
     cum.set_categories(Reference(m, min_col=20, min_row=f0, max_row=f0 + 11))
     style_bar(cum, [NAVY, "C9D1DC"])
     cum.width, cum.height = 16, 7.6
-    m.add_chart(cum, "I5")
+    m.add_chart(cum, "I21")
 
 
 # ---------------------------------------------------------------- weekly
@@ -562,14 +564,16 @@ def weekly(w, notes):
     title(w, "A1", "Weekly spend", None)
     cell(w, "A2", '="Weeks run Monday to Sunday · USD · from the platform exports · green row = the last full week · yellow = typed by you"',
          size=9, color=INK2, border=False, italic=True)
+    cell(w, "A3", "Data up to:", size=8, color=MUTED, border=False); cell(w, "C3", f"={S_UPTO}", DATE_F, size=8, color=MUTED, border=False)
+    cell(w, "D3", "Last full week ends:", size=8, color=MUTED, border=False); cell(w, "F3", "=Calc!C13", DATE_F, size=8, color=MUTED, border=False)
     hdr = ["Week", "Starts", "Ends", "Meta", "Google Ads", "ChatGPT Ads", "LinkedIn Ads", "Total", "Plan per week", "Over (+) / under (−) plan", "Spend",
            "Meta registrations", "Meta cost per registration", "Google conversions", "Google cost per conversion",
            "MQLs – paid social (HubSpot, optional)", "MQLs – paid search (HubSpot, optional)", "Notes – what happened this week", "Label"]
-    header(w, 20, 1, hdr, height=54)
+    header(w, W_FIRST - 1, 1, hdr, height=54)
     for col in "PQR":
-        w[f"{col}20"].fill = PatternFill("solid", fgColor=INPUT); w[f"{col}20"].font = font(9, True, INK)
+        w[f"{col}{W_FIRST - 1}"].fill = PatternFill("solid", fgColor=INPUT); w[f"{col}{W_FIRST - 1}"].font = font(9, True, INK)
     for i in range(53):
-        r = 21 + i
+        r = W_FIRST + i
         lo, hi = f"$B{r}", f"$C{r}"
         cell(w, f"A{r}", i + 1, "0", bold=True, align="center")
         cell(w, f"B{r}", f"={S_W1}+7*(A{r}-1)", DAY_F); cell(w, f"C{r}", f"=B{r}+6", DAY_F)
@@ -580,7 +584,7 @@ def weekly(w, notes):
         cell(w, f"H{r}", f"=SUM(D{r}:G{r})", AMT, bold=True)
         cell(w, f"I{r}", f"={S_BUDGET}*MAX(0,MIN(C{r},{S_PEND})-MAX(B{r},{S_PSTART})+1)/({S_PEND}-{S_PSTART}+1)", AMT)
         cell(w, f"J{r}", f'=IF(OR(C{r}>{S_UPTO},H{r}=0),"",H{r}-I{r})', AMT)
-        cell(w, f"K{r}", f'=IF(H{r}=0,"",REPT("█",ROUND(H{r}/MAX($H$21:$H$73)*30,0)))', size=8, color=NAVY)
+        cell(w, f"K{r}", f'=IF(H{r}=0,"",REPT("█",ROUND(H{r}/MAX($H${W_FIRST}:$H${W_FIRST + 52})*30,0)))', size=8, color=NAVY)
         cell(w, f"L{r}", "=" + xsum(MX, CM_CONV, CM_DATE, lo, hi), "#,##0")
         cell(w, f"M{r}", f'=IF(L{r}=0,"",D{r}/L{r})', AMT2)
         cell(w, f"N{r}", "=" + xsum(GX, CG_CONV, CG_DAY, lo, hi), "#,##0")
@@ -590,21 +594,22 @@ def weekly(w, notes):
         cell(w, f"R{r}", ("Agency: " + txt) if txt else None, fill=INPUT, color=BLUE_T, wrap=True, size=8)
         cell(w, f"S{r}", f'=TEXT(B{r},"d mmm")', size=8, color=MUTED, align="center")
         w.row_dimensions[r].height = 36 if txt else 15
-    note(w, "A74", "Week 1 includes the last days of the previous year. Plan per week = the annual budget spread evenly over the year. "
+    note(w, f"A{W_FIRST + 53}", "Week 1 includes the last days of the previous year. Plan per week = the annual budget spread evenly over the year. "
                    "Notes marked 'Agency:' summarise the agency's weekly reports (until W/C 5 Oct) – add your own from W/C 12 Oct.")
-    w.conditional_formatting.add("A21:O73", FormulaRule(formula=[f"$B21>{S_UPTO}"], font=font(color=MUTED)))
-    w.conditional_formatting.add("A21:O73", FormulaRule(formula=["$C21=Calc!$C$13"], fill=PatternFill("solid", fgColor=GREENFILL), font=font(bold=True)))
-    w.conditional_formatting.add("J21:J73", FormulaRule(formula=["AND(ISNUMBER(J21),J21>0)"], font=font(bold=True, color=RED)))
-    w.freeze_panes = "D21"
+    a, z = W_FIRST, W_FIRST + 52
+    w.conditional_formatting.add(f"A{a}:O{z}", FormulaRule(formula=[f"$B{a}>$C$3"], font=font(color=MUTED)))
+    w.conditional_formatting.add(f"A{a}:O{z}", FormulaRule(formula=[f"$C{a}=$F$3"], fill=PatternFill("solid", fgColor=GREENFILL), font=font(bold=True)))
+    w.conditional_formatting.add(f"J{a}:J{z}", FormulaRule(formula=[f"AND(ISNUMBER(J{a}),J{a}>0)"], font=font(bold=True, color=RED)))
+    w.freeze_panes = f"D{W_FIRST}"
     widths(w, {"A": 6, "B": 11, "C": 11, **{c: 11 for c in "DEFGHIJ"}, "K": 26, **{c: 11 for c in "LMNO"}, "P": 12, "Q": 12, "R": 64, "S": 7})
-    section(w, "A4", "SPEND BY WEEK AND CHANNEL", "ABCDEFGHIJKLMNOP")
+    section(w, f"A{z + 3}", "SPEND BY WEEK AND CHANNEL", "ABCDEFGHIJKLMNOP")
     c = BarChart(); c.type = "col"; c.grouping = "stacked"; c.overlap = 100; c.gapWidth = 40
     for j in range(4):
-        c.add_data(Reference(w, min_col=4 + j, min_row=20, max_row=73), titles_from_data=True)
-    c.set_categories(Reference(w, min_col=19, min_row=21, max_row=73))
+        c.add_data(Reference(w, min_col=4 + j, min_row=a - 1, max_row=z), titles_from_data=True)
+    c.set_categories(Reference(w, min_col=19, min_row=a, max_row=z))
     style_bar(c, [CH_COLORS[n] for n, *_ in CHANNELS])
-    c.width, c.height = 34, 7.6
-    w.add_chart(c, "A5")
+    c.width, c.height = 34, 8
+    w.add_chart(c, f"A{z + 4}")
 
 
 def style_bar(c, colors):
@@ -858,14 +863,14 @@ def dashboard(d):
     section(d, "H24", "SPENT SO FAR vs. PLAN (CUMULATIVE)", ["H", "I", "J", "K", "L", "M"])
     bar = BarChart(); bar.type = "col"; bar.grouping = "stacked"; bar.overlap = 100; bar.gapWidth = 60
     for j in range(4):
-        bar.add_data(Reference(m, min_col=2 + j, min_row=20, max_row=M_FIRST + 11), titles_from_data=True)
+        bar.add_data(Reference(m, min_col=2 + j, min_row=M_FIRST - 1, max_row=M_FIRST + 11), titles_from_data=True)
     bar.set_categories(Reference(m, min_col=20, min_row=M_FIRST, max_row=M_FIRST + 11))
     style_bar(bar, [CH_COLORS[n] for n, *_ in CHANNELS])
     bar.width, bar.height = 16.2, 8.2
     d.add_chart(bar, "B25")
     cum = BarChart(); cum.type = "col"; cum.grouping = "clustered"; cum.gapWidth = 60
-    cum.add_data(Reference(m, min_col=9, min_row=20, max_row=M_FIRST + 11), titles_from_data=True)
-    cum.add_data(Reference(m, min_col=10, min_row=20, max_row=M_FIRST + 11), titles_from_data=True)
+    cum.add_data(Reference(m, min_col=9, min_row=M_FIRST - 1, max_row=M_FIRST + 11), titles_from_data=True)
+    cum.add_data(Reference(m, min_col=10, min_row=M_FIRST - 1, max_row=M_FIRST + 11), titles_from_data=True)
     cum.set_categories(Reference(m, min_col=20, min_row=M_FIRST, max_row=M_FIRST + 11))
     style_bar(cum, [NAVY, "C9D1DC"])
     cum.width, cum.height = 16.2, 8.2
