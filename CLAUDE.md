@@ -44,3 +44,4 @@
 - `PNP_Paid_Ads_Spend_2026.xlsx`: Q3 and full-year 2026 spend vs budget, in EUR.
 - `PNP_HubSpot_Newsletter_Audit.pdf` / `.xlsx`: newsletter audit covering locations, newsletter map, metrics, workflows and industry newsletters (Oct 2025 – Sep 2026).
 - `PNP_ICP_vs_Conversions.pdf` / `.xlsx`: JTP Contact us and content-download converters compared with the ICP (aggregates only).
+- `tools/spend_tracker/`: generator for the new Paid Media Spend Tracker (Dashboard, Weekly, Monthly, By location & type, Campaigns, Agency reports, Settings, data tabs). Run `python build_tracker.py OUT.xlsx YYYY-MM-DD` from that folder (`--draft` adds the draft banner). Data model: campaign × day per platform, spend as billed; budgets, currency and FX live on the Settings tab. Status (13 Oct 2026): draft built from the Jan–Sep monthly exports; waiting for the daily exports, the agency's Notion weekly reports and Tereza's budget answer (full year? EUR or USD?).
