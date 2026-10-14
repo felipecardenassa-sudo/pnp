@@ -247,7 +247,7 @@ slide("Summary", "The short version", f"""
             "<b>Google</b>: 60% of spend lands on the homepage, which has no form, and 37% pays for our own name."], bang())}
  </div>
  <div class="card col"><div class="ch blue">{go()}<h3>What we change</h3></div>
-  {bullets(["<b>Meta</b>: 3 campaigns, 5 ad sets, 8–15 different creatives per ad set, each with local-language versions.",
+  {bullets(["<b>Meta</b>: 3 campaigns, 5 ad sets, 8–15 creatives each in local languages; students and job seekers stop counting as results.",
             "<b>Google</b>: brand apart, corporate ad groups from new keyword research, a form behind every ad.",
             "<b>Pages and tests</b>: one corporate landing page, and a 90-day plan that tests new formats every two weeks."], go())}
  </div>
@@ -477,7 +477,7 @@ meta_grid = "".join([
     garrow(5, 6), gcell(5, 7, '<div class="win">Winners move to Prospecting after 7 days</div>'),
 ])
 slide("Meta · new structure", "New Meta structure: 3 campaigns, 5 ad sets, the creative does the targeting", f"""
-<div class="goal">{tick()}<span><b>Goal:</b> a corporate form sent (student and job-seeker answers don't count). Same rules in every ad set: location, language, age 25+, past leads excluded.</span></div>
+<div class="goal">{tick()}<span><b>Goal:</b> a lead form sent, with student and job-seeker answers left out (corporate and government only once there is volume). Every ad set: location, language, age 25+, exclusions, ICP job titles as suggestions.</span></div>
 <div class="mg">{meta_grid}</div>
 <div class="ba5">
  <div><span>Campaigns</span><b class="o">9</b>{arrow()}<b class="n">3</b></div>
@@ -487,7 +487,31 @@ slide("Meta · new structure", "New Meta structure: 3 campaigns, 5 ad sets, the 
  <div><span>Total budget</span><b class="n">$160</b><em>a day, same</em></div>
 </div>""", "s-meta")
 
-# 10 · Google findings
+
+# 10 · how broad still gets us our ICP
+def ctrl(n, kind, name, today, new):
+    return (f'<div class="ct"><div class="ctl">{num(n)}{ICON[kind]()}<b>{name}</b></div>'
+            f'<div class="card ctx bad">{bang()}<span>{today}</span></div><div class="swa">{arrow()}</div>'
+            f'<div class="card ctx good">{tick()}<span>{new}</span></div></div>')
+
+
+slide("Meta · our ICP", "How broad still gets us our ICP", f"""
+<div class="ct cth"><span>Control</span><span class="bad">Today</span><span></span><span class="good">New</span></div>
+{ctrl(1, "pin", "Who can see the ad", "Countries and age; CRM exclusion lists may not apply (custom-audience terms not accepted)",
+      "Countries, language, age 25+; customers, current leads, students and job seekers excluded")}
+{ctrl(2, "people", "Where Meta looks first", "Job titles and interests as suggestions (Advantage+ audience on), split across 30 small ad sets",
+      "The same ICP job titles and people like our corporate leads (lookalike) as suggestions, in one broad ad set")}
+{ctrl(3, "ad", "What the ad says", "Most-used headlines say what, not who it's for: “Access World-Class Startups”, “Join the Innovation Platform”",
+      "Every ad names the buyer: innovation, R&amp;D and digital leaders at 10,000+ companies, or governments")}
+{ctrl(4, "tag", "What counts as a result", "Any form sent on a welcome page, students and job seekers included",
+      "Now: students and job seekers stop counting. Next, as volume allows: corporate and government only, then CRM-qualified leads")}
+{ctrl(5, "report", "How we judge each ad", "Ranked by cost per lead",
+      "Every Monday: each ad's share of leads that fit the ICP (the ad name is in every lead's UTM); cut ads whose cheap leads don't")}
+<div class="band">Meta can't target company size or a list of companies. It finds more people like the ones who trigger the result,
+so <b>what we count as a result is our sharpest targeting</b>.</div>
+""", "s-icp")
+
+# 11 · Google findings
 # live structure: NA and EMEA Search 20260813 (cost in EUR since they started on 10 Aug) + the coworking campaign
 G_COST = 5256.66 + 4366.65
 G_AD_GROUPS = [("Brand", 2396.68 + 1208.63, "bad"), ("Startup collaboration", 2350.98 + 1656.44, "bad"),
@@ -529,7 +553,7 @@ slide("Google Search", "Google Search: what works and what doesn't", f"""
  </div>
 </div>""", "s-gfind")
 
-# 11 · new Google structure (mock-up)
+# 12 · new Google structure (mock-up)
 ag = lambda name: f'<div class="agc">{name}</div>'
 corp_groups = ag("Corporate innovation") + ag("Startup scouting") + ag("Open innovation &amp; pilots") + ag("Industry: supply chain, health, energy")
 google_grid = "".join([
@@ -556,7 +580,7 @@ slide("Google Search · new structure", "New Google structure: brand apart, corp
  <div><span>Total budget</span><b class="n">{eur(68)}</b><em>a day, same</em></div>
 </div>""", "s-goog")
 
-# 12 · landing pages today (annotated wireframes)
+# 13 · landing pages today (annotated wireframes)
 report_wf = wf("welcome…/embedded-ai-robotics",
                at(10, 6, 34, 7, "nav") + at(26, 30, 150, None, "hd", "How Embedded AI Robotics is Transforming Industries &amp; Daily Life")
                + lines(26, 84, 145, 3) + at(26, 116, 150, 144, "img") + form(186, 22, 148, 10, "Download now", step=20, hl=5)
@@ -589,7 +613,7 @@ slide("Landing pages", "Our landing pages today", f"""
            (3, "On phone, two chat pop-ups cover the headline", "bad"), (4, "156 links to leave the page", "bad")])}</div>
 </div>""")
 
-# 13 · proposed landing page
+# 14 · proposed landing page
 prop_wf = wf("welcome.plugandplaytechcenter.com/corporate-innovation",
              at(26, 12, 52, 10, "nav") + pin("A", 4, 8, "blue")
              + at(26, 50, 290, None, "hd xl", "Headline that names the buyer and the result") + lines(26, 120, 270, 3, gap=12)
@@ -624,7 +648,7 @@ slide("Landing pages · proposal", "The corporate landing page we propose", f"""
 </div>""")
 
 
-# 14 · 90-day plan
+# 15 · 90-day plan
 def tag(t):
     return f'<span class="tg {t.lower()}">{t}</span>'
 
@@ -637,17 +661,18 @@ def phase(days, name, tone, items):
 slide("Plan", "90-day plan: build, learn, test, scale", f"""
 <div class="g4">
  {phase("Days 1–7", "Build", "y", [
-     (["Meta"], "New 3-campaign structure with the proven creatives; pause the old campaigns, traffic and losing ads"),
-     (["Meta", "Google"], "Count only corporate forms"),
+     (["Meta"], "New 3-campaign structure with the proven ads; pause old campaigns, traffic and losing ads"),
+     (["Meta", "Google"], "Students and job seekers stop counting as results"),
      (["Google"], "Brand campaign apart, negatives, no startup or coworking extras, no homepage traffic"),
      (["Google"], "Semrush keyword research: US, UK, FR, DE, ES, IT"),
      (["Pages"], "Paid forms: drop student and job-seeker options; add company size")])}
  {phase("Days 8–30", "Learn", "b", [
      (["Meta"], "No changes for 7 days, then budget moves of 20% at most"),
-     (["Meta"], "French, German, Italian and Spanish versions of the best 3–4 ads, inside the same ads"),
+     (["Meta"], "FR, DE, IT and ES versions of the best 3–4 ads, inside the same ads"),
      (["Meta"], "Test 1: the same report as static, carousel and video"),
      (["Google"], "Corporate ad groups from the research; weekly search-term review"),
-     (["Pages"], "Build the corporate landing page")])}
+     (["Pages"], "Build the corporate landing page"),
+     (["Data"], "Weekly: ICP share of each ad's leads")])}
  {phase("Days 31–60", "Test", "p", [
      (["Meta"], "Test 2: talking head vs proof (case results, logos)"),
      (["Meta"], "Test 3: local topic and proof per market (partners, cases, events) vs global"),
@@ -904,7 +929,7 @@ b {{ color: {B.DARK_BLUE}; }}
 .phh b {{ display: block; font-size: 14pt; }}
 .phh span {{ font-size: 10.5pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }}
 .phh.y {{ background: #FBF8D0; }} .phh.b {{ background: {B.TINT}; }} .phh.p {{ background: #E7E7F7; }} .phh.g {{ background: #E2F0E4; }}
-.pi {{ margin: 0 0 3px; font-size: 11pt; line-height: 1.25; }}
+.pi {{ margin: 0 0 2px; font-size: 10.8pt; line-height: 1.24; }}
 .pi .tx {{ display: block; margin-top: 2px; }}
 .tg {{ display: inline-block; font-size: 8pt; font-weight: 700; border-radius: 8px; padding: 0 6px; margin-right: 3px; color: #fff; background: {B.GRAY}; }}
 .tg.meta {{ background: {B.BLUE}; }} .tg.google {{ background: {B.DARK_BLUE}; }} .tg.pages {{ background: {B.PURPLE}; }}
@@ -921,6 +946,15 @@ b {{ color: {B.DARK_BLUE}; }}
 .cover .scope div {{ color: {B.TINT_2}; font-size: 11pt; }}
 .cover .scope b {{ display: block; color: #fff; font-size: 22pt; }}
 .cover .by {{ position: absolute; left: .9in; bottom: .55in; color: {B.TINT_2}; font-size: 11.5pt; }}
+/* ICP controls */
+.ct {{ display: grid; grid-template-columns: 2.05in 1fr 30px 1.12fr; gap: 0 10px; align-items: stretch; }}
+.cth {{ font-size: 10pt; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: {B.GRAY}; margin-bottom: -6px; }}
+.cth .bad {{ color: {B.BAD}; }} .cth .good {{ color: {B.GOOD}; }}
+.ctl {{ display: flex; align-items: center; gap: 9px; }}
+.ctl .ico {{ width: 26px; height: 26px; }}
+.ctl b {{ font-size: 14.5pt; line-height: 1.15; }}
+.ctx {{ display: flex; gap: 10px; align-items: center; padding: .1in .14in; border-left: 5px solid {B.BAD}; font-size: 13pt; line-height: 1.25; }}
+.ctx.good {{ border-left-color: {B.GOOD}; }}
 /* local slide */
 .s-local .pnl {{ gap: 9px; }}
 .s-local .ph {{ margin-bottom: 0; }}
