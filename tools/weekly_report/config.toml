@@ -1,0 +1,73 @@
+# Settings for the weekly paid media report (build_weekly_report.py).
+# Budget, exchange rates and ended campaigns mirror the spend tracker's Settings tab:
+# when Felipe changes them in Google Sheets, change them here too.
+
+[budget]
+year = 2026
+budget_usd = 300000
+maximum_usd = 320000
+# 1 EUR = ? USD for each month, January to December (tracker: Settings → Exchange rate).
+eur_to_usd = [1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177, 1.1177]
+# Campaigns that stopped for good: left out of the weekly pace and the forecast, as in the tracker.
+ended_campaigns = ["FR_Alibaba Campaign", "Test 1"]
+
+[thresholds]
+change_pct = 20          # flag a cost-per-lead move of this many % against the 4-week average
+min_spend_usd = 50       # ...only for campaigns that spent at least this much in the week
+low_volume_leads = 10    # fewer leads than this in a week: changes are shown in grey as "low volume"
+zero_lead_spend_usd = 40 # a lead campaign that spent this much with no leads gets flagged
+crm_min_count = 5        # GDPR: CRM counts of 1–4 are shown as "<5"
+
+[meta]
+# Campaigns that never count as lead campaigns, whatever their result type.
+not_lead = ["FR_Alibaba Campaign"]
+
+[groups]
+# Named sets of campaigns (regular expressions on the exact campaign name).
+# Each group gets its own numbers in facts.json, e.g. {{group.us_prospecting.leads}}.
+us_prospecting = '^Geo:(US|USCA)[^_]*_Objective:lead_Type:prospecting_'
+
+[markets]
+# Location code at the start of a campaign name ("Geo:<code>_...") → the name shown in the report.
+"WW" = "Worldwide"
+"All" = "All markets"
+"EMEA" = "EMEA"
+"NA" = "North America"
+"USCA" = "US & Canada"
+"US" = "United States"
+"US-East-Coast" = "US East Coast"
+"US-EastCoast" = "US East Coast"
+"US-California" = "California"
+"California" = "California"
+"US-CA" = "California"
+"US-Middle-South" = "US Middle-South"
+"US-South-Central" = "US South-Central"
+"US-SV" = "Silicon Valley"
+"Middle-East" = "Middle East"
+"Western-Europe" = "Western Europe"
+"US-UK-FR-IT" = "US, UK, France, Italy"
+"FR" = "France"
+"IT" = "Italy"
+"UK" = "United Kingdom"
+"SA" = "Saudi Arabia"
+
+[types]
+# "Type:<value>" in a campaign name → the words shown after the market.
+"prospecting" = "prospecting"
+"prospecting-test" = "prospecting test"
+"retargeting" = "retargeting"
+"cold" = "cold traffic"
+"non-brand" = "non-brand Search"
+"coworking-startup" = "coworking (startups)"
+"ABO" = "welcome"
+
+[campaign_labels]
+# Full campaign name → label, for names that don't follow the Geo: naming rules.
+"FR_Alibaba Campaign" = "FR_Alibaba"
+"CFA | Amazon US batch 1" = "CFA Amazon US"
+"PNP_EMEA_YouTubeVideo_VideoViews" = "YouTube EMEA views"
+"PNP_US_YouTubeVideo_VideoViews" = "YouTube US views"
+
+[crm]
+# HubSpot original sources that count as paid, and the channel whose spend they are compared with.
+paid_sources = { "Paid social" = "meta", "Paid search" = "google_search", "Paid search / other" = "google_search" }

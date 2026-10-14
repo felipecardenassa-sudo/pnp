@@ -1,0 +1,160 @@
+# Weekly paid media report · inputs for the week of 5–11 Oct 2026 (folder name = the Monday).
+# Numbers in {{...}} are filled from the platform exports by build_weekly_report.py (keys: facts.json → fmt).
+# Rules: plain language, positives first, max 3 "worked", 3 "fix", 5 actions; HubSpot aggregates only.
+# TOML: keep every plain key above the first [[...]] or [...] section.
+
+prepared_by = "Prepared by Felipe Cárdenas, Performance Marketing & CRM"
+
+headline = "Leads rose {{leadgen.leads_vs_prev_abs}} to {{leadgen.leads}} at {{leadgen.cpl}} each, but paid MQLs halved to {{crm.paid}}."
+subhead = "Total spend fell {{total.spend_vs_prev_abs}} to {{total.spend}} because FR_Alibaba ended on 5 Oct; spend aimed at leads was almost flat ({{leadgen.spend_vs_prev}})."
+
+channel_notes = ["ChatGPT Ads: nothing ran this week. Test 1 (23 Sep – 2 Oct) spent €229.56 for 43 clicks and no conversions."]
+
+decisions = ["At {{budget.pace}} a week we end the year at about {{budget.forecast_k}}: {{budget.over_k}} over the {{budget.budget_k}} budget, {{budget.under_max_k}} under the {{budget.max_k}} maximum. Landing on {{budget.budget_k}} needs {{budget.allow}} a week, {{budget.gap}} less. Trim, or accept {{budget.forecast_k}}?"]
+
+items_source = "from the 13 Oct API report, not in the campaign exports"
+
+data_notes = [
+  "Ad, ad-group and search-term rows: 13 Oct API report, not in the exports, so not re-checked.",
+  "FR_Alibaba last spent on 5 Oct and shows as completed in the 13 Oct export.",
+  "Google's conversion goal changed around 14 Sep (agency notes): its 4-week average mixes two definitions.",
+]
+
+[[worked]]
+title = "Google Search: cheapest conversions since the 13 Aug rebuild."
+text = "{{google_search.leads}} at {{google_search.cpl}} each, against {{google_search.avg_leads}} a week at {{google_search.avg_cpl}} over the 4 weeks before. Spend was flat on last week ({{google_search.spend_vs_prev}})."
+
+[[worked]]
+title = "Meta US prospecting recovered."
+text = "{{group.us_prospecting.leads}} leads at {{group.us_prospecting.cpl}} each (last week {{group.us_prospecting.prev_leads}} at {{group.us_prospecting.prev_cpl}}), led by California and US Middle-South. Top ad: the Quantum Computing video."
+
+[[worked]]
+title = "EMEA prospecting is still the cheapest source."
+text = "{{camp.emea-prospecting.leads}} leads at {{camp.emea-prospecting.cpl}} each (4-week average {{camp.emea-prospecting.avg_cpl}})."
+
+[[fix]]
+title = "Leads are not turning into MQLs."
+text = "{{crm.paid_per100}} paid MQLs per 100 leads ({{crm.prev_paid_per100}} last week). Paid social fell from {{crm.mql.paid-social.prev}} to {{crm.mql.paid-social.cur}} while Direct rose from {{crm.mql.direct-traffic.prev}} to {{crm.mql.direct-traffic.cur}}: check the UTM tags on every ad."
+
+[[fix]]
+title = "Google and HubSpot don't match."
+text = "Google counted {{google_search.leads}} conversions; HubSpot shows {{crm.mql.paid-search-other.cur}} MQLs from paid search. Google is meant to count only HubSpot qualified leads since mid-September."
+
+[[fix]]
+title = "Western Europe prospecting slowed."
+text = "{{camp.western-europe-prospecting.leads}} leads at {{camp.western-europe-prospecting.cpl}} for a second week, against {{camp.western-europe-prospecting.avg_leads}} a week at {{camp.western-europe-prospecting.avg_cpl}} before."
+
+[[actions]]
+action = "Meta: test the Quantum video (PP-196) in US & Canada and Western Europe; move retargeting budget from PP-328 to PP-324."
+owner = "Felipe + Toco"
+due = "Wed 15 Oct"
+
+[[actions]]
+action = "Google: add the off-topic search terms (page 2) as negatives; move budget from North America to EMEA Startup Collaboration."
+owner = "Felipe + Toco"
+due = "Thu 16 Oct"
+
+[[actions]]
+action = "Ask Sales Ops for SQLs and MQLs by campaign; agree the restated MQL baseline."
+owner = "Felipe"
+due = "Wed 15 Oct"
+
+[[actions]]
+action = "Check UTM tags on every ad, and what Google's main conversion counts (browser audit)."
+owner = "Felipe"
+due = "Fri 17 Oct"
+
+[[actions]]
+action = "Western Europe prospecting: check frequency and add new ads."
+owner = "Felipe + Toco"
+due = "Fri 17 Oct"
+
+[[items]]
+item = "PP-196 · Quantum Computing video"
+where = "3 US campaigns"
+spend = 147.89
+currency = "USD"
+leads = 19
+note = "Top US ad: test it in more markets"
+
+[[items]]
+item = "PP-324 · “Plan to solve problem”"
+where = "Retargeting"
+spend = 88.28
+currency = "USD"
+leads = 10
+note = "Half PP-328's cost: give it more"
+
+[[items]]
+item = "PP-328 · BizJournals quote"
+where = "Retargeting"
+spend = 182.27
+currency = "USD"
+leads = 10
+note = "Move budget to PP-324"
+
+[[items]]
+item = "Startup Collaboration · EMEA"
+where = "EMEA Search"
+spend = 72.91
+currency = "EUR"
+leads = 7
+note = "Best ad group"
+
+[[items]]
+item = "Startup Collaboration · N. America"
+where = "North America Search"
+spend = 45.90
+currency = "EUR"
+leads = 1
+note = "Move budget to EMEA"
+
+[[items]]
+item = "Brand ad groups · both regions"
+where = "Both Search campaigns"
+spend = 244.88
+currency = "EUR"
+leads = 10
+note = "49% of all Search spend"
+
+[[negatives]]
+term = "web summit 2027"
+spend = 11.02
+currency = "EUR"
+
+[[negatives]]
+term = "dubai chamber of digital economy"
+spend = 10.44
+currency = "EUR"
+
+[[negatives]]
+term = "startup graveyard"
+
+[[negatives]]
+term = "startup rip"
+
+[[negatives]]
+term = "how to start business without money"
+
+[crm]
+note = "MQL table supplied by Felipe on 13 Oct. 28 Sep – 4 Oct restated from 38 to 41 MQLs (CRM sync). SQLs not supplied."
+weeks = ["2026-09-28", "2026-10-05"]
+
+[crm.mqls]
+"Direct traffic" = [12, 21]
+"Organic search" = [13, 20]
+"Paid social" = [9, 3]
+"Social media" = [3, 3]
+"Referrals" = [1, 2]
+"Paid search / other" = [3, 3]
+
+[crm.disqualified]
+"Direct traffic" = 8
+"Organic search" = 6
+"Paid social" = 0
+"Social media" = 0
+"Referrals" = 2
+"Paid search / other" = 1
+
+[crm.extra]
+"of which Watchleads" = [11, 9]
