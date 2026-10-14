@@ -1,0 +1,2660 @@
+{
+ "meta": {
+  "period": "form submissions 1 Oct 2025 – 30 Sep 2026",
+  "pulled": "2026-10-08",
+  "source": "HubSpot portal 3340630, read-only pull on 8 Oct 2026"
+ },
+ "summary": {
+  "Forms": {
+   "jtp": 8,
+   "content": 66
+  },
+  "Form submissions": {
+   "jtp": 13395,
+   "content": 17052
+  },
+  "Contacts": {
+   "jtp": 11881,
+   "content": 13385
+  },
+  "Contacts in both groups": {
+   "jtp": 290,
+   "content": 290
+  },
+  "Corporate profile": {
+   "jtp": 1149,
+   "content": 2744
+  },
+  "Corporate, 10,000+ employees (any role)": {
+   "jtp": 243,
+   "content": 853
+  },
+  "Strict ICP – Corporate (role + 10,000+)": {
+   "jtp": 24,
+   "content": 76
+  },
+  "ICP – Government": {
+   "jtp": 384,
+   "content": 544
+  },
+  "Startup profile (secondary ICP group)": {
+   "jtp": 9410,
+   "content": 2255
+  },
+  "Qualified / converted by sales": {
+   "jtp": 342,
+   "content": 106
+  },
+  "Disqualified by sales": {
+   "jtp": 1358,
+   "content": 892
+  },
+  "Contacts with a deal": {
+   "jtp": 63,
+   "content": 135
+  },
+  "Became customer": {
+   "jtp": 17,
+   "content": 72
+  },
+  "Job title empty": {
+   "jtp": 8018,
+   "content": 11112
+  },
+  "Company size unknown": {
+   "jtp": 5103,
+   "content": 373
+  }
+ },
+ "jtp": {
+  "by_profile": [
+   {
+    "Profile": "Startup",
+    "Contacts": 9410,
+    "Qualified / converted (sales)": 130,
+    "Disqualified (sales)": 205,
+    "With a deal": 11,
+    "Became customer": 8,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 8931,
+    "Qualified %": 0.01381509032943677,
+    "Disqualified %": 0.02178533475026568,
+    "With deal %": 0.001168969181721573,
+    "Customer %": 0.0008501594048884166
+   },
+   {
+    "Profile": "Corporate – smaller / unknown size",
+    "Contacts": 906,
+    "Qualified / converted (sales)": 59,
+    "Disqualified (sales)": 501,
+    "With a deal": 17,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 859,
+    "Qualified %": 0.06512141280353201,
+    "Disqualified %": 0.5529801324503312,
+    "With deal %": 0.01876379690949227,
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Investor / VC",
+    "Contacts": 471,
+    "Qualified / converted (sales)": 33,
+    "Disqualified (sales)": 96,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 432,
+    "Qualified %": 0.07006369426751592,
+    "Disqualified %": 0.2038216560509554,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Profile": "University",
+    "Contacts": 433,
+    "Qualified / converted (sales)": 17,
+    "Disqualified (sales)": 255,
+    "With a deal": 5,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 422,
+    "Qualified %": 0.03926096997690531,
+    "Disqualified %": 0.5889145496535797,
+    "With deal %": 0.0115473441108545,
+    "Customer %": 0
+   },
+   {
+    "Profile": "Government",
+    "Contacts": 384,
+    "Qualified / converted (sales)": 58,
+    "Disqualified (sales)": 185,
+    "With a deal": 14,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 384,
+    "Marketing contacts": 371,
+    "Qualified %": 0.1510416666666667,
+    "Disqualified %": 0.4817708333333333,
+    "With deal %": 0.03645833333333334,
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Corporate – 10,000+ employees",
+    "Contacts": 243,
+    "Qualified / converted (sales)": 43,
+    "Disqualified (sales)": 115,
+    "With a deal": 13,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 243,
+    "Strict ICP (corporate or government)": 24,
+    "Marketing contacts": 224,
+    "Qualified %": 0.1769547325102881,
+    "Disqualified %": 0.4732510288065844,
+    "With deal %": 0.05349794238683128,
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Other",
+    "Contacts": 26,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 0,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 25,
+    "Qualified %": "–",
+    "Disqualified %": 0,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Student",
+    "Contacts": 7,
+    "Qualified / converted (sales)": 0,
+    "Disqualified (sales)": "<5",
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 7,
+    "Qualified %": 0,
+    "Disqualified %": "–",
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "Profile": "Unknown",
+    "Contacts": "<5",
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 0,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": "<5",
+    "Qualified %": "–",
+    "Disqualified %": "–",
+    "With deal %": "–",
+    "Customer %": "–"
+   }
+  ],
+  "by_icp": [
+   {
+    "ICP result": "Partial – Startup (no job title)",
+    "Contacts": 6667,
+    "Qualified / converted (sales)": 55,
+    "Disqualified (sales)": 134,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 6306,
+    "Qualified %": 0.008249587520623968,
+    "Disqualified %": 0.02009899505024749,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "Secondary ICP – Startup founder",
+    "Contacts": 2225,
+    "Qualified / converted (sales)": 68,
+    "Disqualified (sales)": 56,
+    "With a deal": 7,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 2138,
+    "Qualified %": 0.03056179775280899,
+    "Disqualified %": 0.0251685393258427,
+    "With deal %": 0.003146067415730337,
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "Not ICP – Corporate (role or size)",
+    "Contacts": 1014,
+    "Qualified / converted (sales)": 85,
+    "Disqualified (sales)": 546,
+    "With a deal": 23,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 109,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 962,
+    "Qualified %": 0.08382642998027613,
+    "Disqualified %": 0.5384615384615384,
+    "With deal %": 0.02268244575936884,
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "Not ICP – Other profile",
+    "Contacts": 938,
+    "Qualified / converted (sales)": 52,
+    "Disqualified (sales)": 352,
+    "With a deal": 8,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 887,
+    "Qualified %": 0.05543710021321962,
+    "Disqualified %": 0.3752665245202559,
+    "With deal %": 0.008528784648187633,
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "Not ICP – Startup (other role)",
+    "Contacts": 518,
+    "Qualified / converted (sales)": 7,
+    "Disqualified (sales)": 15,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 487,
+    "Qualified %": 0.01351351351351351,
+    "Disqualified %": 0.02895752895752896,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "ICP – Government",
+    "Contacts": 384,
+    "Qualified / converted (sales)": 58,
+    "Disqualified (sales)": 185,
+    "With a deal": 14,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 384,
+    "Marketing contacts": 371,
+    "Qualified %": 0.1510416666666667,
+    "Disqualified %": 0.4817708333333333,
+    "With deal %": 0.03645833333333334,
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "Partial – Corporate (data missing)",
+    "Contacts": 111,
+    "Qualified / converted (sales)": 6,
+    "Disqualified (sales)": 68,
+    "With a deal": "<5",
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 110,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 97,
+    "Qualified %": 0.05405405405405406,
+    "Disqualified %": 0.6126126126126126,
+    "With deal %": "–",
+    "Customer %": 0
+   },
+   {
+    "ICP result": "ICP – Corporate",
+    "Contacts": 24,
+    "Qualified / converted (sales)": 11,
+    "Disqualified (sales)": "<5",
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 24,
+    "Strict ICP (corporate or government)": 24,
+    "Marketing contacts": 24,
+    "Qualified %": 0.4583333333333333,
+    "Disqualified %": "–",
+    "With deal %": "–",
+    "Customer %": "–"
+   }
+  ],
+  "by_source": [
+   {
+    "Original source": "Organic search",
+    "Contacts": 3852,
+    "Qualified / converted (sales)": 159,
+    "Disqualified (sales)": 359,
+    "With a deal": 28,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 77,
+    "Strict ICP (corporate or government)": 147,
+    "Marketing contacts": 3648,
+    "Qualified %": 0.04127725856697819,
+    "Disqualified %": 0.09319833852544133,
+    "With deal %": 0.007268951194184839,
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Direct traffic",
+    "Contacts": 3757,
+    "Qualified / converted (sales)": 105,
+    "Disqualified (sales)": 346,
+    "With a deal": 15,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 63,
+    "Strict ICP (corporate or government)": 93,
+    "Marketing contacts": 3542,
+    "Qualified %": 0.02794783071599681,
+    "Disqualified %": 0.09209475645461805,
+    "With deal %": 0.003992547245142401,
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Referrals",
+    "Contacts": 937,
+    "Qualified / converted (sales)": 21,
+    "Disqualified (sales)": 90,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 23,
+    "Strict ICP (corporate or government)": 48,
+    "Marketing contacts": 899,
+    "Qualified %": 0.0224119530416222,
+    "Disqualified %": 0.096051227321238,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Paid search",
+    "Contacts": 796,
+    "Qualified / converted (sales)": 14,
+    "Disqualified (sales)": 183,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 21,
+    "Strict ICP (corporate or government)": 29,
+    "Marketing contacts": 749,
+    "Qualified %": 0.01758793969849246,
+    "Disqualified %": 0.2298994974874372,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Offline sources",
+    "Contacts": 754,
+    "Qualified / converted (sales)": 10,
+    "Disqualified (sales)": "<5",
+    "With a deal": 11,
+    "Became customer": 9,
+    "Corporate, 10,000+ employees": 11,
+    "Strict ICP (corporate or government)": 14,
+    "Marketing contacts": 732,
+    "Qualified %": 0.01326259946949602,
+    "Disqualified %": "–",
+    "With deal %": 0.01458885941644562,
+    "Customer %": 0.01193633952254642
+   },
+   {
+    "Original source": "Paid social",
+    "Contacts": 665,
+    "Qualified / converted (sales)": 9,
+    "Disqualified (sales)": 269,
+    "With a deal": "<5",
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 19,
+    "Strict ICP (corporate or government)": 27,
+    "Marketing contacts": 650,
+    "Qualified %": 0.01353383458646617,
+    "Disqualified %": 0.4045112781954887,
+    "With deal %": "–",
+    "Customer %": 0
+   },
+   {
+    "Original source": "AI referrals",
+    "Contacts": 497,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 15,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 16,
+    "Strict ICP (corporate or government)": 18,
+    "Marketing contacts": 467,
+    "Qualified %": "–",
+    "Disqualified %": 0.03018108651911469,
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "Original source": "Organic social",
+    "Contacts": 367,
+    "Qualified / converted (sales)": 13,
+    "Disqualified (sales)": 55,
+    "With a deal": "<5",
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 5,
+    "Strict ICP (corporate or government)": 16,
+    "Marketing contacts": 347,
+    "Qualified %": 0.03542234332425068,
+    "Disqualified %": 0.1498637602179836,
+    "With deal %": "–",
+    "Customer %": 0
+   },
+   {
+    "Original source": "Other campaigns",
+    "Contacts": 230,
+    "Qualified / converted (sales)": 7,
+    "Disqualified (sales)": 34,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 8,
+    "Strict ICP (corporate or government)": 16,
+    "Marketing contacts": 212,
+    "Qualified %": 0.03043478260869565,
+    "Disqualified %": 0.1478260869565217,
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "Original source": "Email marketing",
+    "Contacts": 26,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": "<5",
+    "With a deal": "<5",
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 26,
+    "Qualified %": "–",
+    "Disqualified %": "–",
+    "With deal %": "–",
+    "Customer %": 0
+   }
+  ],
+  "persona_x_size": [
+   {
+    "Persona (corporate profile)": "C-level",
+    "Large (10,000+)": 10,
+    "Mid (1,000–9,999)": 8,
+    "Small (<1,000)": 73,
+    "Unknown": 0
+   },
+   {
+    "Persona (corporate profile)": "Empty",
+    "Large (10,000+)": 111,
+    "Mid (1,000–9,999)": 68,
+    "Small (<1,000)": 481,
+    "Unknown": 36
+   },
+   {
+    "Persona (corporate profile)": "Founder",
+    "Large (10,000+)": "<5",
+    "Mid (1,000–9,999)": 0,
+    "Small (<1,000)": 34,
+    "Unknown": "<5"
+   },
+   {
+    "Persona (corporate profile)": "Innovation / R&D / Digital",
+    "Large (10,000+)": 16,
+    "Mid (1,000–9,999)": 7,
+    "Small (<1,000)": "<5",
+    "Unknown": "<5"
+   },
+   {
+    "Persona (corporate profile)": "Other title",
+    "Large (10,000+)": 105,
+    "Mid (1,000–9,999)": 57,
+    "Small (<1,000)": 134,
+    "Unknown": "<5"
+   }
+  ],
+  "persona_all": [
+   {
+    "Persona": "Empty",
+    "Contacts (all profiles)": 8018
+   },
+   {
+    "Persona": "C-level",
+    "Contacts (all profiles)": 1780
+   },
+   {
+    "Persona": "Other title",
+    "Contacts (all profiles)": 1301
+   },
+   {
+    "Persona": "Founder",
+    "Contacts (all profiles)": 707
+   },
+   {
+    "Persona": "Innovation / R&D / Digital",
+    "Contacts (all profiles)": 71
+   },
+   {
+    "Persona": "Government / policy",
+    "Contacts (all profiles)": "<5"
+   }
+  ],
+  "size_all": [
+   {
+    "Company size": "Small (<1,000)",
+    "Contacts (all profiles)": 5591
+   },
+   {
+    "Company size": "Unknown",
+    "Contacts (all profiles)": 5103
+   },
+   {
+    "Company size": "Large (10,000+)",
+    "Contacts (all profiles)": 689
+   },
+   {
+    "Company size": "Mid (1,000–9,999)",
+    "Contacts (all profiles)": 498
+   }
+  ],
+  "fit_score": [
+   {
+    "ICP result vs HubSpot MQL fit score": "ICP – Corporate",
+    "High": 23,
+    "Low": 0,
+    "Medium": "<5"
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "ICP – Government",
+    "High": 92,
+    "Low": 27,
+    "Medium": 265
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "Not ICP – Corporate (role or size)",
+    "High": 203,
+    "Low": 329,
+    "Medium": 482
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "Not ICP – Other profile",
+    "High": 219,
+    "Low": 253,
+    "Medium": 466
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "Not ICP – Startup (other role)",
+    "High": 0,
+    "Low": 518,
+    "Medium": 0
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "Partial – Corporate (data missing)",
+    "High": 76,
+    "Low": 5,
+    "Medium": 30
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "Partial – Startup (no job title)",
+    "High": 0,
+    "Low": 6667,
+    "Medium": 0
+   },
+   {
+    "ICP result vs HubSpot MQL fit score": "Secondary ICP – Startup founder",
+    "High": 0,
+    "Low": 2225,
+    "Medium": 0
+   }
+  ],
+  "forms": [
+   {
+    "Form": "JTP | Startups Submission Form New",
+    "Submissions": 9690,
+    "Contacts": 8711
+   },
+   {
+    "Form": "JTP | All profiles - dependent fields",
+    "Submissions": 1244,
+    "Contacts": 1137
+   },
+   {
+    "Form": "JTP | Corporates Submission Form V2",
+    "Submissions": 726,
+    "Contacts": 691
+   },
+   {
+    "Form": "JTP | Universities Submission Form",
+    "Submissions": 424,
+    "Contacts": 408
+   },
+   {
+    "Form": "JTP | VCs Submission Form",
+    "Submissions": 392,
+    "Contacts": 370
+   },
+   {
+    "Form": "JTP | Governments Submission Form",
+    "Submissions": 357,
+    "Contacts": 345
+   },
+   {
+    "Form": "JTP | APAC All profiles",
+    "Submissions": 339,
+    "Contacts": 313
+   },
+   {
+    "Form": "JTP | Contact us | All profiles - dependent fields",
+    "Submissions": 223,
+    "Contacts": 207
+   }
+  ],
+  "job_titles": [
+   {
+    "Job title (lower case)": "chief executive officer",
+    "Contacts": 727,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "founder",
+    "Contacts": 454,
+    "Persona assigned": "Founder"
+   },
+   {
+    "Job title (lower case)": "ceo",
+    "Contacts": 184,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "co-founder",
+    "Contacts": 164,
+    "Persona assigned": "Founder"
+   },
+   {
+    "Job title (lower case)": "founder & ceo",
+    "Contacts": 132,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "director",
+    "Contacts": 66,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "student",
+    "Contacts": 54,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "co-founder & ceo",
+    "Contacts": 52,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief technology officer",
+    "Contacts": 39,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "managing director",
+    "Contacts": 35,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief operating officer",
+    "Contacts": 35,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "ceo & co-founder",
+    "Contacts": 32,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "founder and ceo",
+    "Contacts": 31,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "ceo & founder",
+    "Contacts": 26,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "president",
+    "Contacts": 24,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "founder & chief executive officer",
+    "Contacts": 18,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "partner",
+    "Contacts": 15,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "entrepreneur",
+    "Contacts": 15,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "owner",
+    "Contacts": 15,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "founder/ceo",
+    "Contacts": 14,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "managing partner",
+    "Contacts": 14,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "project manager",
+    "Contacts": 13,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "business development manager",
+    "Contacts": 13,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "coo",
+    "Contacts": 11,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "co-founder and ceo",
+    "Contacts": 11,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief financial officer",
+    "Contacts": 11,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "researcher",
+    "Contacts": 10,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "ceo and founder",
+    "Contacts": 10,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "analyst",
+    "Contacts": 10,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "executive director",
+    "Contacts": 9,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "consultant",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "professor",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "product manager",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "manager",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "ceo and co-founder",
+    "Contacts": 9,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "co-founder & coo",
+    "Contacts": 9,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "program manager",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "investor",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "advisor",
+    "Contacts": 8,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "co-founder and chief operating officer",
+    "Contacts": 8,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief product officer",
+    "Contacts": 8,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "cofounder",
+    "Contacts": 8,
+    "Persona assigned": "Founder"
+   },
+   {
+    "Job title (lower case)": "head of business development",
+    "Contacts": 7,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "founder, ceo",
+    "Contacts": 7,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief commercial officer",
+    "Contacts": 7,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "cto",
+    "Contacts": 7,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "sales manager",
+    "Contacts": 7,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "engineer",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "general manager",
+    "Contacts": 6,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "software engineer",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "senior software engineer",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "co-founder, ceo",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "associate",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "ceo, co-founder",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief operations officer",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "investment analyst",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "investment manager",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "founder | ceo",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "founder;ceo",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "president and chief executive officer",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "mba student",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "research associate",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "venture partner",
+    "Contacts": 5,
+    "Persona assigned": "Innovation / R&D / Digital"
+   }
+  ]
+ },
+ "content": {
+  "by_profile": [
+   {
+    "Profile": "Other",
+    "Contacts": 3783,
+    "Qualified / converted (sales)": 5,
+    "Disqualified (sales)": 39,
+    "With a deal": 6,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 3595,
+    "Qualified %": 0.001321702352630188,
+    "Disqualified %": 0.01030927835051546,
+    "With deal %": 0.001586042823156225,
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Startup",
+    "Contacts": 2255,
+    "Qualified / converted (sales)": 12,
+    "Disqualified (sales)": 36,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 2112,
+    "Qualified %": 0.005321507760532151,
+    "Disqualified %": 0.01596452328159645,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Corporate – smaller / unknown size",
+    "Contacts": 1891,
+    "Qualified / converted (sales)": 29,
+    "Disqualified (sales)": 298,
+    "With a deal": 56,
+    "Became customer": 29,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 1742,
+    "Qualified %": 0.01533580116340561,
+    "Disqualified %": 0.1575885774722369,
+    "With deal %": 0.029613960867266,
+    "Customer %": 0.01533580116340561
+   },
+   {
+    "Profile": "Investor / VC",
+    "Contacts": 1523,
+    "Qualified / converted (sales)": 10,
+    "Disqualified (sales)": 70,
+    "With a deal": 7,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 1399,
+    "Qualified %": 0.006565988181221274,
+    "Disqualified %": 0.04596191726854892,
+    "With deal %": 0.004596191726854892,
+    "Customer %": "–"
+   },
+   {
+    "Profile": "Job seeker",
+    "Contacts": 992,
+    "Qualified / converted (sales)": 0,
+    "Disqualified (sales)": 9,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 949,
+    "Qualified %": 0,
+    "Disqualified %": 0.009072580645161291,
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "Profile": "Corporate – 10,000+ employees",
+    "Contacts": 853,
+    "Qualified / converted (sales)": 32,
+    "Disqualified (sales)": 194,
+    "With a deal": 40,
+    "Became customer": 30,
+    "Corporate, 10,000+ employees": 853,
+    "Strict ICP (corporate or government)": 76,
+    "Marketing contacts": 807,
+    "Qualified %": 0.03751465416178194,
+    "Disqualified %": 0.2274325908558031,
+    "With deal %": 0.04689331770222743,
+    "Customer %": 0.03516998827667057
+   },
+   {
+    "Profile": "Student",
+    "Contacts": 803,
+    "Qualified / converted (sales)": 0,
+    "Disqualified (sales)": 8,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 753,
+    "Qualified %": 0,
+    "Disqualified %": 0.009962640099626401,
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "Profile": "University",
+    "Contacts": 732,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 158,
+    "With a deal": 7,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 687,
+    "Qualified %": "–",
+    "Disqualified %": 0.2158469945355191,
+    "With deal %": 0.009562841530054645,
+    "Customer %": 0
+   },
+   {
+    "Profile": "Government",
+    "Contacts": 544,
+    "Qualified / converted (sales)": 13,
+    "Disqualified (sales)": 80,
+    "With a deal": 15,
+    "Became customer": 5,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 544,
+    "Marketing contacts": 514,
+    "Qualified %": 0.02389705882352941,
+    "Disqualified %": 0.1470588235294118,
+    "With deal %": 0.02757352941176471,
+    "Customer %": 0.009191176470588236
+   },
+   {
+    "Profile": "Unknown",
+    "Contacts": 9,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 0,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": "<5",
+    "Qualified %": "–",
+    "Disqualified %": 0,
+    "With deal %": "–",
+    "Customer %": "–"
+   }
+  ],
+  "by_icp": [
+   {
+    "ICP result": "Not ICP – Other profile",
+    "Contacts": 7842,
+    "Qualified / converted (sales)": 20,
+    "Disqualified (sales)": 284,
+    "With a deal": 22,
+    "Became customer": 6,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 7386,
+    "Qualified %": 0.002550369803621525,
+    "Disqualified %": 0.03621525121142566,
+    "With deal %": 0.002805406783983678,
+    "Customer %": 0.0007651109410864575
+   },
+   {
+    "ICP result": "Not ICP – Corporate (role or size)",
+    "Contacts": 2070,
+    "Qualified / converted (sales)": 47,
+    "Disqualified (sales)": 334,
+    "With a deal": 78,
+    "Became customer": 42,
+    "Corporate, 10,000+ employees": 179,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 1906,
+    "Qualified %": 0.02270531400966183,
+    "Disqualified %": 0.1613526570048309,
+    "With deal %": 0.03768115942028986,
+    "Customer %": 0.02028985507246377
+   },
+   {
+    "ICP result": "Partial – Startup (no job title)",
+    "Contacts": 1773,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 23,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 1654,
+    "Qualified %": "–",
+    "Disqualified %": 0.01297236322617033,
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "ICP result": "Partial – Corporate (data missing)",
+    "Contacts": 598,
+    "Qualified / converted (sales)": 6,
+    "Disqualified (sales)": 148,
+    "With a deal": "<5",
+    "Became customer": 6,
+    "Corporate, 10,000+ employees": 598,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 572,
+    "Qualified %": 0.01003344481605351,
+    "Disqualified %": 0.2474916387959866,
+    "With deal %": "–",
+    "Customer %": 0.01003344481605351
+   },
+   {
+    "ICP result": "ICP – Government",
+    "Contacts": 544,
+    "Qualified / converted (sales)": 13,
+    "Disqualified (sales)": 80,
+    "With a deal": 15,
+    "Became customer": 5,
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 544,
+    "Marketing contacts": 514,
+    "Qualified %": 0.02389705882352941,
+    "Disqualified %": 0.1470588235294118,
+    "With deal %": 0.02757352941176471,
+    "Customer %": 0.009191176470588236
+   },
+   {
+    "ICP result": "Secondary ICP – Startup founder",
+    "Contacts": 350,
+    "Qualified / converted (sales)": 9,
+    "Disqualified (sales)": 9,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 339,
+    "Qualified %": 0.02571428571428571,
+    "Disqualified %": 0.02571428571428571,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "Not ICP – Startup (other role)",
+    "Contacts": 132,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": "<5",
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 0,
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 119,
+    "Qualified %": "–",
+    "Disqualified %": "–",
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "ICP result": "ICP – Corporate",
+    "Contacts": 76,
+    "Qualified / converted (sales)": 8,
+    "Disqualified (sales)": 10,
+    "With a deal": 16,
+    "Became customer": 11,
+    "Corporate, 10,000+ employees": 76,
+    "Strict ICP (corporate or government)": 76,
+    "Marketing contacts": 71,
+    "Qualified %": 0.1052631578947368,
+    "Disqualified %": 0.131578947368421,
+    "With deal %": 0.2105263157894737,
+    "Customer %": 0.1447368421052632
+   }
+  ],
+  "by_source": [
+   {
+    "Original source": "Paid social",
+    "Contacts": 8214,
+    "Qualified / converted (sales)": 14,
+    "Disqualified (sales)": 510,
+    "With a deal": "<5",
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": 449,
+    "Strict ICP (corporate or government)": 355,
+    "Marketing contacts": 7823,
+    "Qualified %": 0.001704407109812515,
+    "Disqualified %": 0.0620891161431702,
+    "With deal %": "–",
+    "Customer %": 0
+   },
+   {
+    "Original source": "Direct traffic",
+    "Contacts": 1312,
+    "Qualified / converted (sales)": 24,
+    "Disqualified (sales)": 123,
+    "With a deal": 9,
+    "Became customer": 5,
+    "Corporate, 10,000+ employees": 90,
+    "Strict ICP (corporate or government)": 71,
+    "Marketing contacts": 1197,
+    "Qualified %": 0.01829268292682927,
+    "Disqualified %": 0.09375,
+    "With deal %": 0.006859756097560976,
+    "Customer %": 0.003810975609756097
+   },
+   {
+    "Original source": "Offline sources",
+    "Contacts": 1193,
+    "Qualified / converted (sales)": 33,
+    "Disqualified (sales)": 11,
+    "With a deal": 97,
+    "Became customer": 55,
+    "Corporate, 10,000+ employees": 113,
+    "Strict ICP (corporate or government)": 86,
+    "Marketing contacts": 1119,
+    "Qualified %": 0.02766135792120704,
+    "Disqualified %": 0.009220452640402346,
+    "With deal %": 0.08130762782900251,
+    "Customer %": 0.04610226320201174
+   },
+   {
+    "Original source": "Organic search",
+    "Contacts": 756,
+    "Qualified / converted (sales)": 17,
+    "Disqualified (sales)": 66,
+    "With a deal": 10,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 60,
+    "Strict ICP (corporate or government)": 39,
+    "Marketing contacts": 694,
+    "Qualified %": 0.02248677248677249,
+    "Disqualified %": 0.0873015873015873,
+    "With deal %": 0.01322751322751323,
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Organic social",
+    "Contacts": 663,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 43,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 56,
+    "Strict ICP (corporate or government)": 20,
+    "Marketing contacts": 611,
+    "Qualified %": "–",
+    "Disqualified %": 0.06485671191553545,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Paid search",
+    "Contacts": 561,
+    "Qualified / converted (sales)": 5,
+    "Disqualified (sales)": 94,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 34,
+    "Strict ICP (corporate or government)": 22,
+    "Marketing contacts": 489,
+    "Qualified %": 0.008912655971479501,
+    "Disqualified %": 0.1675579322638146,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Other campaigns",
+    "Contacts": 451,
+    "Qualified / converted (sales)": 6,
+    "Disqualified (sales)": 30,
+    "With a deal": 9,
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 33,
+    "Strict ICP (corporate or government)": 18,
+    "Marketing contacts": 422,
+    "Qualified %": 0.01330376940133038,
+    "Disqualified %": 0.06651884700665188,
+    "With deal %": 0.01995565410199556,
+    "Customer %": "–"
+   },
+   {
+    "Original source": "Referrals",
+    "Contacts": 151,
+    "Qualified / converted (sales)": "<5",
+    "Disqualified (sales)": 14,
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": 14,
+    "Strict ICP (corporate or government)": 7,
+    "Marketing contacts": 131,
+    "Qualified %": "–",
+    "Disqualified %": 0.09271523178807947,
+    "With deal %": "–",
+    "Customer %": "–"
+   },
+   {
+    "Original source": "AI referrals",
+    "Contacts": 63,
+    "Qualified / converted (sales)": 0,
+    "Disqualified (sales)": 0,
+    "With a deal": 0,
+    "Became customer": 0,
+    "Corporate, 10,000+ employees": "<5",
+    "Strict ICP (corporate or government)": "<5",
+    "Marketing contacts": 56,
+    "Qualified %": 0,
+    "Disqualified %": 0,
+    "With deal %": 0,
+    "Customer %": 0
+   },
+   {
+    "Original source": "Email marketing",
+    "Contacts": 21,
+    "Qualified / converted (sales)": 0,
+    "Disqualified (sales)": "<5",
+    "With a deal": "<5",
+    "Became customer": "<5",
+    "Corporate, 10,000+ employees": "<5",
+    "Strict ICP (corporate or government)": 0,
+    "Marketing contacts": 19,
+    "Qualified %": 0,
+    "Disqualified %": "–",
+    "With deal %": "–",
+    "Customer %": "–"
+   }
+  ],
+  "persona_x_size": [
+   {
+    "Persona (corporate profile)": "C-level",
+    "Large (10,000+)": 22,
+    "Mid (1,000–9,999)": 26,
+    "Small (<1,000)": 68,
+    "Unknown": 0
+   },
+   {
+    "Persona (corporate profile)": "Empty",
+    "Large (10,000+)": 599,
+    "Mid (1,000–9,999)": 392,
+    "Small (<1,000)": 1029,
+    "Unknown": 48
+   },
+   {
+    "Persona (corporate profile)": "Founder",
+    "Large (10,000+)": 0,
+    "Mid (1,000–9,999)": 0,
+    "Small (<1,000)": 5,
+    "Unknown": 0
+   },
+   {
+    "Persona (corporate profile)": "Government / policy",
+    "Large (10,000+)": 0,
+    "Mid (1,000–9,999)": "<5",
+    "Small (<1,000)": 0,
+    "Unknown": 0
+   },
+   {
+    "Persona (corporate profile)": "Innovation / R&D / Digital",
+    "Large (10,000+)": 57,
+    "Mid (1,000–9,999)": 27,
+    "Small (<1,000)": 19,
+    "Unknown": 0
+   },
+   {
+    "Persona (corporate profile)": "Other title",
+    "Large (10,000+)": 175,
+    "Mid (1,000–9,999)": 100,
+    "Small (<1,000)": 165,
+    "Unknown": 11
+   }
+  ],
+  "persona_all": [
+   {
+    "Persona": "Empty",
+    "Contacts (all profiles)": 11112
+   },
+   {
+    "Persona": "Other title",
+    "Contacts (all profiles)": 1292
+   },
+   {
+    "Persona": "C-level",
+    "Contacts (all profiles)": 632
+   },
+   {
+    "Persona": "Innovation / R&D / Digital",
+    "Contacts (all profiles)": 218
+   },
+   {
+    "Persona": "Founder",
+    "Contacts (all profiles)": 124
+   },
+   {
+    "Persona": "Government / policy",
+    "Contacts (all profiles)": 7
+   }
+  ],
+  "size_all": [
+   {
+    "Company size": "Small (<1,000)",
+    "Contacts (all profiles)": 10369
+   },
+   {
+    "Company size": "Large (10,000+)",
+    "Contacts (all profiles)": 1371
+   },
+   {
+    "Company size": "Mid (1,000–9,999)",
+    "Contacts (all profiles)": 1272
+   },
+   {
+    "Company size": "Unknown",
+    "Contacts (all profiles)": 373
+   }
+  ],
+  "fit_score": [
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "ICP – Corporate",
+    "High": 67,
+    "Low": 6,
+    "Medium": "<5"
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "ICP – Government",
+    "High": 266,
+    "Low": 37,
+    "Medium": 241
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "Not ICP – Corporate (role or size)",
+    "High": 502,
+    "Low": 661,
+    "Medium": 907
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "Not ICP – Other profile",
+    "High": 298,
+    "Low": 6643,
+    "Medium": 901
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "Not ICP – Startup (other role)",
+    "High": 0,
+    "Low": 130,
+    "Medium": "<5"
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "Partial – Corporate (data missing)",
+    "High": 305,
+    "Low": 22,
+    "Medium": 271
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "Partial – Startup (no job title)",
+    "High": "<5",
+    "Low": 1768,
+    "Medium": "<5"
+   },
+   {
+    "ICP result vs HubSpot MQL fit score CDW": "Secondary ICP – Startup founder",
+    "High": 0,
+    "Low": 350,
+    "Medium": 0
+   }
+  ],
+  "forms": [
+   {
+    "Form": "CDW - Master Form",
+    "Submissions": 14180,
+    "Contacts": 11399
+   },
+   {
+    "Form": "CDW  - RFI - 2025 Company Performance Report (CPR)",
+    "Submissions": 1136,
+    "Contacts": 1043
+   },
+   {
+    "Form": "CDW  - RFI - 20 Year Book",
+    "Submissions": 654,
+    "Contacts": 618
+   },
+   {
+    "Form": "CDW  - RFI - 2022 Company Performance Report (CPR)",
+    "Submissions": 184,
+    "Contacts": 170
+   },
+   {
+    "Form": "CDW - QUIZ",
+    "Submissions": 150,
+    "Contacts": 143
+   },
+   {
+    "Form": "JTP | JAP_Resource Download",
+    "Submissions": 146,
+    "Contacts": 41
+   },
+   {
+    "Form": "CDW  - RFI - 2023 Company Performance Report (CPR)",
+    "Submissions": 136,
+    "Contacts": 134
+   },
+   {
+    "Form": "CDW  - RFI - 2024 Company Performance Report (CPR)",
+    "Submissions": 116,
+    "Contacts": 106
+   },
+   {
+    "Form": "JTP | JAP_Global Case Study 2025",
+    "Submissions": 59,
+    "Contacts": 57
+   },
+   {
+    "Form": "JTP | JAP_Company Performance Report 2025",
+    "Submissions": 54,
+    "Contacts": 52
+   },
+   {
+    "Form": "JAP_CaseStudy_All",
+    "Submissions": 24,
+    "Contacts": 23
+   },
+   {
+    "Form": "APAC - Nimena Trend Report",
+    "Submissions": 22,
+    "Contacts": 11
+   },
+   {
+    "Form": "JTP | JAP_VT Trend Report 2026_Ventures",
+    "Submissions": 21,
+    "Contacts": 21
+   },
+   {
+    "Form": "RFI_ Innovation Academy",
+    "Submissions": 19,
+    "Contacts": 17
+   },
+   {
+    "Form": "RFI | UK AICOE",
+    "Submissions": 17,
+    "Contacts": 17
+   },
+   {
+    "Form": "JAP_Company Performance Report 2024_eBook",
+    "Submissions": 16,
+    "Contacts": 10
+   },
+   {
+    "Form": "JAP_OpenInnovation",
+    "Submissions": 11,
+    "Contacts": 10
+   },
+   {
+    "Form": "JAP_Carveout_eBook",
+    "Submissions": 11,
+    "Contacts": 11
+   },
+   {
+    "Form": "JTP | JAP_Company Report 2024",
+    "Submissions": 6,
+    "Contacts": 6
+   },
+   {
+    "Form": "RFI | Lithuania Accelerator",
+    "Submissions": 6,
+    "Contacts": 5
+   },
+   {
+    "Form": "JTP | JAP_Guide To Open Innovation",
+    "Submissions": 6,
+    "Contacts": 5
+   },
+   {
+    "Form": "JTP | JAP_Unicorn Report 2022",
+    "Submissions": 5,
+    "Contacts": 5
+   },
+   {
+    "Form": "JAP_VR_F&B_23",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_Fintech Payment Report 2024_eBook",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "APAC - State of Malaysia Innovation Report",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Casestudy_allganize Smbc",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Ebook Suzuki Ai",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_CaseStudy_GlobalCaseStudy",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Global Case Study",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_KintetsuPLEN_CaseStudy",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_Suzuki-CommerceAI_CaseStudy",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_VR_Health2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "CaseStudy_Solarduck-Tokyu",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_VR_Insurtech2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Energy Supply Infrastructure Report",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Global Case Study 2024 2025",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Mobility Consortium",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Vr Insurtech2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Vr_foodbeverage2023",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Ebook Kyocera",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Casestudy_solarduck Tokyu",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Casestudy Suzuki Self",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "CDW - SLAM Startup Lists (January)",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_CaseStudy_SMBC",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_CaseStudy_Varinos-famione-dentsu",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "CDW - SLAM Startup Lists (April)",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_CaseStudy_nehan-JR",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_Insurtech_Ebook_Form_LP",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_PLEN-Rimtech_CaseStudy",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_SUZUKISELF_CaseStudy",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_VR_F&B2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_Smart Cities_Ebook_Form_LP",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_Unicorn Report 2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_VR_Energy2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_JRTOKAIRESONAI_CaseStudy",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Casestudy Dentsu Famione Varinos",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_VR_Space",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Casestudy_jr Nehan",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Ebook Plen",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Ebook Kintetsu",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Ebook Jpower Aces",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JAP_VR_Insurtech2024",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Casestudy Sleeptech",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Vr Foodandbeverage2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Vr Energy2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   },
+   {
+    "Form": "JTP | JAP_Vr Fintech2022",
+    "Submissions": "<5",
+    "Contacts": "<5"
+   }
+  ],
+  "job_titles": [
+   {
+    "Job title (lower case)": "chief executive officer",
+    "Contacts": 106,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "ceo",
+    "Contacts": 105,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "founder",
+    "Contacts": 68,
+    "Persona assigned": "Founder"
+   },
+   {
+    "Job title (lower case)": "director",
+    "Contacts": 44,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "managing director",
+    "Contacts": 42,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "founder & ceo",
+    "Contacts": 31,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "co-founder",
+    "Contacts": 25,
+    "Persona assigned": "Founder"
+   },
+   {
+    "Job title (lower case)": "president",
+    "Contacts": 25,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "partner",
+    "Contacts": 24,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "manager",
+    "Contacts": 23,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "investor",
+    "Contacts": 21,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "principal",
+    "Contacts": 20,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "associate",
+    "Contacts": 20,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "managing partner",
+    "Contacts": 19,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "co-founder & ceo",
+    "Contacts": 18,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "ventures associate",
+    "Contacts": 17,
+    "Persona assigned": "Innovation / R&D / Digital"
+   },
+   {
+    "Job title (lower case)": "program manager",
+    "Contacts": 14,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "business development manager",
+    "Contacts": 12,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "ceo & co-founder",
+    "Contacts": 12,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "analyst",
+    "Contacts": 12,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "owner",
+    "Contacts": 12,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "consultant",
+    "Contacts": 11,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "ceo & founder",
+    "Contacts": 10,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief technology officer",
+    "Contacts": 9,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief operating officer",
+    "Contacts": 9,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "project manager",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "senior manager",
+    "Contacts": 9,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "advisor",
+    "Contacts": 8,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "ventures analyst",
+    "Contacts": 8,
+    "Persona assigned": "Innovation / R&D / Digital"
+   },
+   {
+    "Job title (lower case)": "professor",
+    "Contacts": 8,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "marketing manager",
+    "Contacts": 8,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "investment analyst",
+    "Contacts": 8,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "cto",
+    "Contacts": 7,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "investment manager",
+    "Contacts": 7,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "associate professor",
+    "Contacts": 7,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "vice president",
+    "Contacts": 7,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "senior partner success manager",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "test",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "vp",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "partner success manager",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "senior associate",
+    "Contacts": 6,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "co-founder and ceo",
+    "Contacts": 6,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "innovation manager",
+    "Contacts": 6,
+    "Persona assigned": "Innovation / R&D / Digital"
+   },
+   {
+    "Job title (lower case)": "1",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "coo",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "chief information officer",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "assistant professor",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "-",
+    "Contacts": 5,
+    "Persona assigned": "Other title"
+   },
+   {
+    "Job title (lower case)": "open innovation manager",
+    "Contacts": 5,
+    "Persona assigned": "Innovation / R&D / Digital"
+   },
+   {
+    "Job title (lower case)": "general manager",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "executive director",
+    "Contacts": 5,
+    "Persona assigned": "C-level"
+   },
+   {
+    "Job title (lower case)": "venture capital analyst",
+    "Contacts": 5,
+    "Persona assigned": "Innovation / R&D / Digital"
+   }
+  ],
+  "assets": [
+   {
+    "Asset": "The Quantum Leap: Transforming Industries With Emerging Tech",
+    "Contacts": 4627,
+    "Corporate profile": 874,
+    "Corporate 10,000+": 310,
+    "Government": 182,
+    "Corporate share": 0.1888912902528636,
+    "Corporate 10,000+ share": 0.06699805489518046
+   },
+   {
+    "Asset": "Investing in Spain’s Grid Resilience | Plug and Play",
+    "Contacts": 1585,
+    "Corporate profile": 327,
+    "Corporate 10,000+": 101,
+    "Government": 101,
+    "Corporate share": 0.2063091482649842,
+    "Corporate 10,000+ share": 0.06372239747634069
+   },
+   {
+    "Asset": "Building Monitoring & Decarbonization in Buildings | Plug and Play",
+    "Contacts": 1214,
+    "Corporate profile": 228,
+    "Corporate 10,000+": 32,
+    "Government": 80,
+    "Corporate share": 0.1878088962108732,
+    "Corporate 10,000+ share": 0.02635914332784185
+   },
+   {
+    "Asset": "2025 Company Performance Report | Plug and Play",
+    "Contacts": 1043,
+    "Corporate profile": 174,
+    "Corporate 10,000+": 38,
+    "Government": 25,
+    "Corporate share": 0.1668264621284755,
+    "Corporate 10,000+ share": 0.0364333652924257
+   },
+   {
+    "Asset": "The Ultimate Enterprise AI Trend Report",
+    "Contacts": 862,
+    "Corporate profile": 171,
+    "Corporate 10,000+": 47,
+    "Government": 23,
+    "Corporate share": 0.1983758700696056,
+    "Corporate 10,000+ share": 0.05452436194895591
+   },
+   {
+    "Asset": "20-Year Anniversary Book | Plug and Play",
+    "Contacts": 618,
+    "Corporate profile": 105,
+    "Corporate 10,000+": 25,
+    "Government": 26,
+    "Corporate share": 0.1699029126213592,
+    "Corporate 10,000+ share": 0.04045307443365696
+   },
+   {
+    "Asset": "How Embedded AI Robotics is Transforming Industries & Daily Life",
+    "Contacts": 577,
+    "Corporate profile": 139,
+    "Corporate 10,000+": 58,
+    "Government": 12,
+    "Corporate share": 0.2409012131715771,
+    "Corporate 10,000+ share": 0.1005199306759099
+   },
+   {
+    "Asset": "French AI Startups to Watch in 2026 According to 16 VCs | Plug and Play",
+    "Contacts": 441,
+    "Corporate profile": 70,
+    "Corporate 10,000+": 22,
+    "Government": 13,
+    "Corporate share": 0.1587301587301587,
+    "Corporate 10,000+ share": 0.04988662131519275
+   },
+   {
+    "Asset": "The Ultimate AI Playbook | 10 Enterprise Deployments | Plug and Play",
+    "Contacts": 383,
+    "Corporate profile": 81,
+    "Corporate 10,000+": 18,
+    "Government": 6,
+    "Corporate share": 0.2114882506527415,
+    "Corporate 10,000+ share": 0.04699738903394256
+   },
+   {
+    "Asset": "Supply Chain 2025 Report | Plug and Play",
+    "Contacts": 268,
+    "Corporate profile": 73,
+    "Corporate 10,000+": 32,
+    "Government": 16,
+    "Corporate share": 0.2723880597014925,
+    "Corporate 10,000+ share": 0.1194029850746269
+   },
+   {
+    "Asset": "Plug and Play Investment Portfolio | Plug and Play",
+    "Contacts": 231,
+    "Corporate profile": 36,
+    "Corporate 10,000+": 7,
+    "Government": "<5",
+    "Corporate share": 0.1558441558441558,
+    "Corporate 10,000+ share": 0.0303030303030303
+   },
+   {
+    "Asset": "The Success Story of Mitsubishi Electric and Kamet AI",
+    "Contacts": 201,
+    "Corporate profile": 56,
+    "Corporate 10,000+": 18,
+    "Government": "<5",
+    "Corporate share": 0.2786069651741294,
+    "Corporate 10,000+ share": 0.08955223880597014
+   },
+   {
+    "Asset": "Humanoid Robotics 2025 Report | Plug and Play",
+    "Contacts": 201,
+    "Corporate profile": 79,
+    "Corporate 10,000+": 29,
+    "Government": "<5",
+    "Corporate share": 0.3930348258706468,
+    "Corporate 10,000+ share": 0.1442786069651741
+   },
+   {
+    "Asset": "Unicorn Report",
+    "Contacts": 172,
+    "Corporate profile": 36,
+    "Corporate 10,000+": 7,
+    "Government": 6,
+    "Corporate share": 0.2093023255813954,
+    "Corporate 10,000+ share": 0.04069767441860465
+   },
+   {
+    "Asset": "Innovation Assessment Report | Plug and Play",
+    "Contacts": 172,
+    "Corporate profile": 46,
+    "Corporate 10,000+": 15,
+    "Government": 8,
+    "Corporate share": 0.2674418604651163,
+    "Corporate 10,000+ share": 0.0872093023255814
+   },
+   {
+    "Asset": "The Intelligence Layer: AI Rebuilding Physical Economy | Plug and Play",
+    "Contacts": 144,
+    "Corporate profile": 30,
+    "Corporate 10,000+": 11,
+    "Government": 5,
+    "Corporate share": 0.2083333333333333,
+    "Corporate 10,000+ share": 0.0763888888888889
+   },
+   {
+    "Asset": "Innovation Assessment Archetypes | Plug and Play",
+    "Contacts": 143,
+    "Corporate profile": 29,
+    "Corporate 10,000+": 6,
+    "Government": 6,
+    "Corporate share": 0.2027972027972028,
+    "Corporate 10,000+ share": 0.04195804195804196
+   },
+   {
+    "Asset": "Plug and Play Company Report",
+    "Contacts": 137,
+    "Corporate profile": 21,
+    "Corporate 10,000+": "<5",
+    "Government": "<5",
+    "Corporate share": 0.1532846715328467,
+    "Corporate 10,000+ share": 0.0218978102189781
+   },
+   {
+    "Asset": "Our Health Program 2025 Overview | Plug and Play",
+    "Contacts": 129,
+    "Corporate profile": 27,
+    "Corporate 10,000+": 6,
+    "Government": "<5",
+    "Corporate share": 0.2093023255813954,
+    "Corporate 10,000+ share": 0.04651162790697674
+   },
+   {
+    "Asset": "The Future of Commerce 2025 Report | Plug and Play",
+    "Contacts": 120,
+    "Corporate profile": 26,
+    "Corporate 10,000+": "<5",
+    "Government": "<5",
+    "Corporate share": 0.2166666666666667,
+    "Corporate 10,000+ share": 0.03333333333333333
+   },
+   {
+    "Asset": "Plug and Play 2024 Company Performance Report",
+    "Contacts": 106,
+    "Corporate profile": 22,
+    "Corporate 10,000+": 6,
+    "Government": "<5",
+    "Corporate share": 0.2075471698113208,
+    "Corporate 10,000+ share": 0.05660377358490566
+   },
+   {
+    "Asset": "An Essential Guide to Corporate Innovation",
+    "Contacts": 103,
+    "Corporate profile": 40,
+    "Corporate 10,000+": 24,
+    "Government": 5,
+    "Corporate share": 0.3883495145631068,
+    "Corporate 10,000+ share": 0.2330097087378641
+   },
+   {
+    "Asset": "Impact of Gen AI on Key Industries | Plug and Play",
+    "Contacts": 100,
+    "Corporate profile": 20,
+    "Corporate 10,000+": 5,
+    "Government": 6,
+    "Corporate share": 0.2,
+    "Corporate 10,000+ share": 0.05
+   }
+  ]
+ },
+ "method": {
+  "Data": "HubSpot read-only pull, 8 Oct 2026. JTP = 8 'JTP' contact forms (Startups, Corporates, Governments, Universities, VCs, APAC, All profiles, Contact us). Content downloads = 66 CDW / RFI / resource forms. Period: submissions 1 Oct 2025 – 30 Sep 2026.",
+  "Unit": "Unique contacts (a contact with several submissions is counted once, profile and outcome as stored on the contact).",
+  "Profile": "JTP: 'Type of profile form'. Content: 'RFI Type of profile' (fallback: 'Type of profile form', then 'Ebook Type of Profile').",
+  "Persona": "From job title, first match wins: Innovation / R&D / Digital (innovation, R&D, CDO, chief digital, digital transformation, venture, scouting…); C-level (chief, CEO, COO, CFO, CTO, CIO, CMO, CSO, president, managing director, general manager…); Founder; Government / policy; Other title; Empty. Common Japanese title terms included.",
+  "Company size": "Employees (contact, then associated company); if empty, the employee / company size dropdowns. Revenue = mirror company or company annual revenue.",
+  "ICP (Buyer Persona 2024)": "ICP – Corporate: corporate profile + Innovation/R&D/Digital or C-level + 10,000+ employees (+ revenue ≥ $100M where known). ICP – Government: government profile. Secondary ICP – Startup founder: startup profile + founder or C-level title. Partial = profile fits but job title or size is missing. Not ICP = everything else.",
+  "Outcome": "Lead Status (SFDC): Qualified / Converted / SQL = qualified; Disqualified; Qualification; New. Deal = at least one associated deal. Customer = 'Date entered Customer' is set. Lifecycle stage is not used: 95% of JTP contacts are 'Sales Qualified Lead'.",
+  "Not included": "1,733 submissions on the two 'All profiles - dependent fields' forms have no contact record in HubSpot (per the HubSpot pull).",
+  "GDPR": "Raw contact data was processed only in a temporary workspace and deleted after the analysis. This file holds aggregated counts only; counts of 1–4 are shown as '<5' and rates based on them as '–'. No names, emails, company names or record IDs."
+ },
+ "database": {
+  "all_contacts": 1198185,
+  "all_contacts_source": "Part A1 – Properties (records with a value; totals: 1,198,185 contacts, 563,519 companies)",
+  "marketing_contacts": 590458,
+  "marketing_contacts_source": "HubSpot Account & Billing › Usage, 8 Oct 2026 (email audit)",
+  "marketing_tier": 630000,
+  "marketing_no_engagement_12m": 508812,
+  "marketing_never_opened": 433657,
+  "engagement_source": "HubSpot email audit, read-only searches on 8 Oct 2026 (no open and no click in the last 12 months, never-engaged included)",
+  "answered": {
+   "Type of profile form": 69472,
+   "RFI Type of profile": 43555,
+   "Ebook Type of Profile": 5903,
+   "Job title": 475487
+  },
+  "options": {
+   "Type of profile form (visible)": [
+    {
+     "option": "I work at a world class startup company",
+     "contacts": 42875
+    },
+    {
+     "option": "I work for a major corporation",
+     "contacts": 11569
+    },
+    {
+     "option": "I am an angel investor or VC",
+     "contacts": 5456
+    },
+    {
+     "option": "I work for a government or public sector entity (value: I work for a government institution)",
+     "contacts": 1549
+    },
+    {
+     "option": "I work for a university",
+     "contacts": 1339
+    },
+    {
+     "option": "Other",
+     "contacts": 634
+    },
+    {
+     "option": "I am a student",
+     "contacts": 160
+    }
+   ],
+   "Type of profile form (hidden, legacy)": [
+    {
+     "option": "Startup company",
+     "contacts": 2692
+    },
+    {
+     "option": "Corporation",
+     "contacts": 2476
+    },
+    {
+     "option": "NA",
+     "contacts": 272
+    },
+    {
+     "option": "0 - Open",
+     "contacts": 138
+    },
+    {
+     "option": "Garbled Japanese \"none\" value",
+     "contacts": 74
+    },
+    {
+     "option": "I work for a media company",
+     "contacts": 47
+    },
+    {
+     "option": "Summit Startup Leads",
+     "contacts": 28
+    },
+    {
+     "option": "8 - Not relevant",
+     "contacts": 11
+    },
+    {
+     "option": "8.1 - Not the right timing",
+     "contacts": 7
+    }
+   ],
+   "RFI Type of profile": [
+    {
+     "option": "RFI I work for a major corporation",
+     "contacts": 9945
+    },
+    {
+     "option": "Other",
+     "contacts": 9524
+    },
+    {
+     "option": "RFI I work at a world class startup company",
+     "contacts": 8023
+    },
+    {
+     "option": "RFI I am an angel investor or venture capitalist",
+     "contacts": 4853
+    },
+    {
+     "option": "I am looking for job opportunities",
+     "contacts": 3981
+    },
+    {
+     "option": "I am a student",
+     "contacts": 3316
+    },
+    {
+     "option": "RFI I work at a university",
+     "contacts": 2034
+    },
+    {
+     "option": "RFI I work for a government",
+     "contacts": 1879
+    }
+   ],
+   "Ebook Type of Profile": [
+    {
+     "option": "Corporate",
+     "contacts": 1681
+    },
+    {
+     "option": "Startup",
+     "contacts": 1241
+    },
+    {
+     "option": "Consultancy",
+     "contacts": 826
+    },
+    {
+     "option": "Student / Academic member",
+     "contacts": 771
+    },
+    {
+     "option": "Other",
+     "contacts": 670
+    },
+    {
+     "option": "VC / Investor",
+     "contacts": 554
+    },
+    {
+     "option": "Government",
+     "contacts": 160
+    }
+   ],
+   "Original Source": [
+    {
+     "option": "Offline Sources",
+     "contacts": 1004255
+    },
+    {
+     "option": "Other Campaigns",
+     "contacts": 60633
+    },
+    {
+     "option": "Direct Traffic",
+     "contacts": 52789
+    },
+    {
+     "option": "Organic Search",
+     "contacts": 33398
+    },
+    {
+     "option": "Paid Social",
+     "contacts": 16428
+    },
+    {
+     "option": "Paid Search",
+     "contacts": 12877
+    },
+    {
+     "option": "Referrals",
+     "contacts": 8900
+    },
+    {
+     "option": "Organic Social",
+     "contacts": 7168
+    },
+    {
+     "option": "Email Marketing",
+     "contacts": 1041
+    },
+    {
+     "option": "AI Referrals",
+     "contacts": 697
+    }
+   ],
+   "Lifecycle Stage": [
+    {
+     "option": "Lead",
+     "contacts": 576126
+    },
+    {
+     "option": "Sales Qualified Lead",
+     "contacts": 520193
+    },
+    {
+     "option": "Opportunity",
+     "contacts": 29251
+    },
+    {
+     "option": "Customer",
+     "contacts": 26631
+    },
+    {
+     "option": "Subscriber",
+     "contacts": 21131
+    },
+    {
+     "option": "Marketing Qualified Lead",
+     "contacts": 13161
+    },
+    {
+     "option": "Other",
+     "contacts": 119
+    },
+    {
+     "option": "Evangelist",
+     "contacts": 14
+    }
+   ],
+   "Lead Status": [
+    {
+     "option": "New",
+     "contacts": 3793
+    },
+    {
+     "option": "Qualification",
+     "contacts": 193
+    },
+    {
+     "option": "Assignment",
+     "contacts": 155
+    },
+    {
+     "option": "Disqualified",
+     "contacts": 85
+    },
+    {
+     "option": "Converted",
+     "contacts": "<5"
+    }
+   ],
+   "Number of Employees (dropdown)": [
+    {
+     "option": "1-5",
+     "contacts": 1330
+    },
+    {
+     "option": "5-25",
+     "contacts": 710
+    },
+    {
+     "option": "25-50",
+     "contacts": 207
+    },
+    {
+     "option": "50-100",
+     "contacts": 207
+    },
+    {
+     "option": "100-500",
+     "contacts": 223
+    },
+    {
+     "option": "500-1000",
+     "contacts": 133
+    },
+    {
+     "option": "1000+",
+     "contacts": 332
+    },
+    {
+     "option": "10,000+",
+     "contacts": 370
+    }
+   ],
+   "Company Size (dropdown)": [
+    {
+     "option": "1-10",
+     "contacts": 13405
+    },
+    {
+     "option": "11-100",
+     "contacts": 6308
+    },
+    {
+     "option": "101-500",
+     "contacts": 3120
+    },
+    {
+     "option": "501-1,000",
+     "contacts": 2299
+    },
+    {
+     "option": "1,001-10,000",
+     "contacts": 3221
+    },
+    {
+     "option": "10,001+",
+     "contacts": 2881
+    }
+   ]
+  }
+ }
+}
