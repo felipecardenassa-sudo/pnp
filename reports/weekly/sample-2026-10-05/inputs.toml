@@ -1,4 +1,6 @@
-# Weekly paid media report · inputs for the week of 5–11 Oct 2026 (folder name = the Monday).
+# FORMAT SAMPLE (not sent): built from the week of Tereza's 5–11 Oct report, paid and CRM parts only.
+# Real weekly folders are named after the Monday (reports/weekly/2026-10-12/ ...) and cover all of
+# Tereza's content: see .claude/skills/weekly-paid-report/report_spec.md.
 # Numbers in {{...}} are filled from the platform exports by build_weekly_report.py (keys: facts.json → fmt).
 # Rules: plain language, positives first, max 3 "worked", 3 "fix", 5 actions; HubSpot aggregates only.
 # TOML: keep every plain key above the first [[...]] or [...] section.

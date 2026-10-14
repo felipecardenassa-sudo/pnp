@@ -1,21 +1,23 @@
-"""Weekly paid media report for Plug and Play: platform exports + this week's inputs -> 2-page PDF,
+"""Weekly paid performance report for Plug and Play: platform exports + this week's inputs -> branded PDF,
 facts.json (every number, for checking and for drafting) and summary.md (text for Slack or email).
 
 Usage (from the repo root):
-  python3 -I tools/weekly_report/build_weekly_report.py --week 2026-10-05 \
+  python3 -I tools/weekly_report/build_weekly_report.py --week 2026-10-12 \
       --meta META_EXPORT.csv --google GOOGLE_EXPORT.csv \
-      --inputs reports/weekly/2026-10-05/inputs.toml --out reports/weekly/2026-10-05 --pdf
+      --inputs reports/weekly/2026-10-12/inputs.toml --out reports/weekly/2026-10-12 --pdf
 
 --week     Monday of the report week (weeks run Monday to Sunday, as in the tracker).
 --meta     Meta Ads Manager export, campaign x day (the same file as the tracker's weekly update).
 --google   Google Ads report, campaign x day (the same file as the tracker's weekly update).
---inputs   This week's typed inputs: HubSpot MQLs, notes, actions (see the 2026-10-05 example).
+--inputs   This week's typed inputs: HubSpot MQLs, notes, actions (see reports/weekly/sample-2026-10-05/).
 --other    ChatGPT / LinkedIn rows (default reports/weekly/other_channels.csv), like the tracker's Other channels tab.
 --config   Budget, exchange rates, labels and thresholds (default tools/weekly_report/config.toml).
 --pdf      Also print the PDF with Chromium.
 
 Text in the inputs can use {{key}} placeholders (for example {{meta.cpl}}); they are filled from the computed
 numbers, so the words and the tables always agree. facts.json lists every key under "fmt".
+
+Content to cover each week: .claude/skills/weekly-paid-report/report_spec.md (all of Tereza's report, made clearer).
 """
 import argparse, collections, csv, datetime as dt, html, json, os, re, subprocess, sys, tomllib
 
