@@ -243,11 +243,11 @@ slide("Summary", "The short version", f"""
  </div>
  <div class="card col"><div class="ch bad">{bang()}<h3>Not working</h3></div>
   {bullets(["<b>Meta is built for the old algorithm</b>: 30 ad sets on $160 a day, about 4 leads per ad set a week. Meta needs about 50 to learn.",
-            "<b>Splitting by country with job titles</b> cost $33.07 per lead: our biggest campaign this year ($71,634).",
+            "<b>Splitting by country didn't make us local</b>: the country ad sets ran the same English ads, at $33.07 per lead ($71,634).",
             "<b>Google</b>: 60% of spend lands on the homepage, which has no form, and 37% pays for our own name."], bang())}
  </div>
  <div class="card col"><div class="ch blue">{go()}<h3>What we change</h3></div>
-  {bullets(["<b>Meta</b>: 3 campaigns, 5 ad sets, 8–15 different creatives per ad set. The creative finds the audience.",
+  {bullets(["<b>Meta</b>: 3 campaigns, 5 ad sets, 8–15 different creatives per ad set, each with local-language versions.",
             "<b>Google</b>: brand apart, corporate ad groups from new keyword research, a form behind every ad.",
             "<b>Pages and tests</b>: one corporate landing page, and a 90-day plan that tests new formats every two weeks."], go())}
  </div>
@@ -272,7 +272,7 @@ slide("Meta · Andromeda", "Meta changed how it picks who sees our ads. Our set-
   <div class="ph bad">Our set-up today</div>
   <div class="mcs">{mini_camps}</div>
   <div class="cap">7 location campaigns × the same 5 topic ad sets · $10–$26 a day per campaign · about $4 a day per ad set</div>
-  {bullets(["Audiences narrowed by country, job title and interest", "The US &amp; Canada campaign overlaps the three US-state campaigns",
+  {bullets(["Split by location, job title and interest, with mostly the same English ads in each", "The US &amp; Canada campaign overlaps the three US-state campaigns",
             "About 8 ads per ad set, many of them copies of each other"], bang())}
   {kpis([("30", "ad sets", "bad"), ("≈$4", "a day per ad set", "bad"), ("≈8", "ads per ad set, many copies", "")])}
   <div class="big bad"><b>≈{LEADS_PER_ADSET_WEEK:.0f}</b><span>leads per ad set a week</span></div>
@@ -323,8 +323,48 @@ slide("Meta · our data", "Our own data: grouping beats splitting, 2.6× cheaper
 Saudi Arabia, which the grouped campaign also covered. <b>The report topic did the targeting better than country and job-title splits.</b></div>
 """, "s-data")
 
+# 5 · local creatives: what the country ad sets ran, and local the Andromeda way
+SAME_AD = [   # the same English ad: (ad set, spend, results) in the grouped topic ad set and in the country ad sets
+    ("Quantum video", [("Grouped", 1404.34, 188, "good"), ("UK", 6767.35, 332, "bad"), ("France", 4273.87, 118, "bad")]),
+    ("Spain grid ad", [("Grouped", 1587.28, 207, "good"), ("UK", 1513.90, 84, "bad"), ("Italy", 2122.82, 73, "bad")]),
+]
+assert [round(v / n, 2) for _, rows in SAME_AD for _, v, n, _ in rows] == [7.47, 20.38, 36.22, 7.67, 18.02, 29.08]
+same_ad_rows = "".join(f'<div class="sar"><b>{name}</b><div class="chps">{"".join(chip(s, usd(v / n, 2), t) for s, v, n, t in rows)}</div></div>'
+                       for name, rows in SAME_AD)
+lang_badges = '<span class="lb def">EN</span>' + "".join(f'<span class="lb">{x}</span>' for x in ["FR", "DE", "IT", "ES"])
+SAME_AD_RATIO = [v / n / (rows[0][1] / rows[0][2]) for _, rows in SAME_AD for _, v, n, _ in rows[1:]]   # country ad set vs grouped
+assert f"{min(SAME_AD_RATIO):.1f}–{max(SAME_AD_RATIO):.1f}" == "2.4–4.8"
+fan = "".join(f'<div class="fr"><span class="lb{" def" if x == "EN" else ""}">{x}</span><span>{who}</span></div>'
+              for x, who in [("FR", "French speakers"), ("DE", "German speakers"), ("IT", "Italian speakers"),
+                             ("ES", "Spanish speakers"), ("EN", "everyone else")])
+slide("Meta · local creatives", "Going local is right. The country split didn't make our ads local.", f"""
+<div class="vs">
+ <div class="card pnl">
+  <div class="ph bad">What the country ad sets ran</div>
+  {struct([("camp", "1", "EMEA campaign"), ("people", "4", "country ad sets:<br>UK, FR, IT, SA"), ("ad", "EN", "the same ads"), ("page", "EN", "the same pages")])}
+  <div class="sub">The same English ad · cost per lead</div>
+  {same_ad_rows}
+  <div class="sub">Our ads by language</div>
+  <div class="chps">{chip("English", "~240 live", "")}{chip("French, Italian, German, Arabic, Portuguese", "about 3 in all", "bad")}{chip("Spanish", "0", "bad")}</div>
+  <div class="big bad"><b>{min(SAME_AD_RATIO):.1f}–{max(SAME_AD_RATIO):.1f}×</b><span>the cost per lead of the same English ad in a country ad set</span></div>
+ </div>
+ <div class="mid">{arrow("arw lg")}</div>
+ <div class="card pnl">
+  <div class="ph good">Local, the Andromeda way</div>
+  {struct([("camp", "1", "prospecting campaign"), ("people", "1", "broad ad set<br>per region"), ("ad", "5", "language versions<br>in every ad"), ("page", "", "page in the<br>ad's language")])}
+  <div class="lvs"><div class="lva">{i_ad()}<b>One ad</b><span>a version per language</span></div>{arrow()}<div class="fan">{fan}</div>
+   <div class="lvc">Meta shows each person the version in their language</div></div>
+  {bullets(["<b>Hard limits</b>: countries, languages, age 25+, no past leads",
+            "<b>The creative targets</b>: language, persona, local topic and local proof (partners, cases, office events)",
+            f"<b>Own ad set for a market</b> only when its budget buys about 50 leads a week ({usd(NEED_EU)} a day at Europe's cost per lead)"], tick())}
+ </div>
+</div>
+<div class="band"><b>Local content beats generic 3:1 on cost per lead</b> (EMEA, H1 2026). For that, the ad and the page have to be local,
+not just the audience.</div>
+""", "s-local")
 
-# 5 · what's working
+
+# 6 · what's working
 def ccard(title, status, steps, k, who, why, improve):
     return (f'<div class="card cc"><div class="cct"><h3>{title}</h3><span class="st {status[1]}">{status[0]}</span></div>'
             f'{struct(steps)}{kpis(k)}<div class="who">{i_people()}<span>{who}</span></div>'
@@ -354,7 +394,7 @@ slide("Meta · working", "What's working on Meta", f"""
 </div>""", "s-work")
 
 
-# 6 · what's not working → what replaces it
+# 7 · what's not working → what replaces it
 def swap(icon, ptitle, ptext, ftitle, ftext):
     return (f'<div class="sw"><div class="card swp"><div class="swi bad">{ICON[icon](B.BAD)}</div><div><b>{ptitle}</b><span>{ptext}</span></div></div>'
             f'<div class="swa">{arrow("arw")}</div><div class="card swf"><div class="swi good">{ICON[icon](B.GOOD)}</div><div><b>{ftitle}</b><span>{ftext}</span></div></div></div>')
@@ -374,7 +414,7 @@ slide("Meta · not working", "What's not working on Meta, and what replaces it",
       "Pause now, then a weekly rule", "After $50 spent, pause any ad 20% above the average cost per lead")}
 """)
 
-# 7 · creatives
+# 8 · creatives
 best = [("static", "Quantum report", "static", "$6.86", "126"), ("video", "Quantum report", "short video", "$7.47", "188"),
         ("report", "AI trend report", "report ad", "$7.48", "56"), ("carousel", "Spain energy grid", "carousel", "$7.67", "207"),
         ("video", "AI &amp; robotics report", "product video, Europe", "$4.10", "73"), ("proof", "Press quote", "retargeting image", "$15.66", "165")]
@@ -386,13 +426,12 @@ slide("Meta · creatives", "Which creatives bring leads, and what we make next",
  <div class="card"><div class="sub">By format · Q1 2026 · cost per lead</div>
   <div class="fm">{tile("static", "Static", "$12.91", "good")}{tile("carousel", "Carousel", "$13.77", "good")}{tile("video", "Short video", "$20.54", "bad")}</div>
   <div class="fm2"><div class="good"><b>$9.23</b>video showing the product</div><div class="bad"><b>$20.79</b>video of a person talking</div></div>
-  <div class="loc"><b>3:1</b><span>local beats generic content on cost per lead (EMEA, H1 2026)</span></div>
   <div class="sub">Stop</div>{bullets(["Event and case-study videos and ebooks in narrow ad sets: $129–$190 per lead",
                                    "One quantum video copied into 12+ separate ads: it splits the learning"], bang())}
  </div>
  <div class="card"><div class="sub">What we make next · 8–15 concepts per ad set</div>
   <div class="nx">{tile("static", "Data-hook static", "×3")}{tile("carousel", "Report carousel", "×2")}{tile("video", "Product explainer", "×2")}
-  {tile("proof", "Case result or logos", "×2")}{tile("talk", "Talking head", "test")}{tile("globe", "FR · DE · ES · IT versions", "test")}</div>
+  {tile("proof", "Case result or logos", "×2")}{tile("talk", "Talking head", "test")}{tile("globe", "FR · DE · IT · ES version of each", "")}</div>
   <div class="sub">Each concept speaks to one persona</div>
   <div class="ps"><span>Innovation &amp; R&amp;D leaders</span><span>C-level</span><span>Digital leaders (CDO)</span><span>Governments</span></div>
   <div class="sub">Refresh</div>{bullets(["New ideas start in the test campaign: 2–5 ads each, 7 days", "New concepts every 2–3 weeks; winners stay, losers go"], go())}
@@ -400,7 +439,7 @@ slide("Meta · creatives", "Which creatives bring leads, and what we make next",
 </div>""", "s-crea")
 
 
-# 8 · new Meta structure (mock-up)
+# 9 · new Meta structure (mock-up)
 def gcell(row, col, inner, cls="", span=1):
     return f'<div class="gc {cls}" style="grid-row:{row} / span {span};grid-column:{col}">{inner}</div>'
 
@@ -428,8 +467,8 @@ meta_grid = "".join([
     '<div class="gh" style="grid-column:5">Creatives · what they see</div><div class="gh" style="grid-column:7">Landing page</div>',
     gcell(2, 1, camp_block("Prospecting", "CBO · $110 a day"), span=2), garrow(2, 2), garrow(3, 2),
     gcell(2, 3, set_block("Europe &amp; Middle East", "Broad · ≈$55 a day")), gcell(3, 3, set_block("US &amp; Canada", "Broad · ≈$55 a day")),
-    garrow(2, 4), garrow(3, 4), gcell(2, 5, f'<div class="tls">{meta_mix}</div>'), gcell(3, 5, '<div class="same">The same 8–15 concepts</div>'),
-    garrow(2, 6), garrow(3, 6), gcell(2, 7, page_block("Report pages", "+ corporate page"), span=2),
+    garrow(2, 4), garrow(3, 4), gcell(2, 5, f'<div><div class="tls">{meta_mix}</div><div class="lvl">Every ad in {lang_badges}</div></div>'), gcell(3, 5, '<div class="same">The same 8–15 concepts</div>'),
+    garrow(2, 6), garrow(3, 6), gcell(2, 7, page_block("Report pages", "in the ad's language"), span=2),
     gcell(4, 1, camp_block("Retargeting", "$20 a day")), garrow(4, 2), gcell(4, 3, set_block("Visitors and past leads", "Last 180 days")),
     garrow(4, 4), gcell(4, 5, '<div class="tls">' + tile("proof", "Press quote") + tile("proof", "Case result") + tile("proof", "Partner logos")
                        + tile("page", "Talk to us") + "</div>"), garrow(4, 6), gcell(4, 7, page_block("Corporate page")),
@@ -448,7 +487,7 @@ slide("Meta · new structure", "New Meta structure: 3 campaigns, 5 ad sets, the 
  <div><span>Total budget</span><b class="n">$160</b><em>a day, same</em></div>
 </div>""", "s-meta")
 
-# 9 · Google findings
+# 10 · Google findings
 # live structure: NA and EMEA Search 20260813 (cost in EUR since they started on 10 Aug) + the coworking campaign
 G_COST = 5256.66 + 4366.65
 G_AD_GROUPS = [("Brand", 2396.68 + 1208.63, "bad"), ("Startup collaboration", 2350.98 + 1656.44, "bad"),
@@ -490,7 +529,7 @@ slide("Google Search", "Google Search: what works and what doesn't", f"""
  </div>
 </div>""", "s-gfind")
 
-# 10 · new Google structure (mock-up)
+# 11 · new Google structure (mock-up)
 ag = lambda name: f'<div class="agc">{name}</div>'
 corp_groups = ag("Corporate innovation") + ag("Startup scouting") + ag("Open innovation &amp; pilots") + ag("Industry: supply chain, health, energy")
 google_grid = "".join([
@@ -517,7 +556,7 @@ slide("Google Search · new structure", "New Google structure: brand apart, corp
  <div><span>Total budget</span><b class="n">{eur(68)}</b><em>a day, same</em></div>
 </div>""", "s-goog")
 
-# 11 · landing pages today (annotated wireframes)
+# 12 · landing pages today (annotated wireframes)
 report_wf = wf("welcome…/embedded-ai-robotics",
                at(10, 6, 34, 7, "nav") + at(26, 30, 150, None, "hd", "How Embedded AI Robotics is Transforming Industries &amp; Daily Life")
                + lines(26, 84, 145, 3) + at(26, 116, 150, 144, "img") + form(186, 22, 148, 10, "Download now", step=20, hl=5)
@@ -550,7 +589,7 @@ slide("Landing pages", "Our landing pages today", f"""
            (3, "On phone, two chat pop-ups cover the headline", "bad"), (4, "156 links to leave the page", "bad")])}</div>
 </div>""")
 
-# 12 · proposed landing page
+# 13 · proposed landing page
 prop_wf = wf("welcome.plugandplaytechcenter.com/corporate-innovation",
              at(26, 12, 52, 10, "nav") + pin("A", 4, 8, "blue")
              + at(26, 50, 290, None, "hd xl", "Headline that names the buyer and the result") + lines(26, 120, 270, 3, gap=12)
@@ -585,7 +624,7 @@ slide("Landing pages · proposal", "The corporate landing page we propose", f"""
 </div>""")
 
 
-# 13 · 90-day plan
+# 14 · 90-day plan
 def tag(t):
     return f'<span class="tg {t.lower()}">{t}</span>'
 
@@ -605,12 +644,14 @@ slide("Plan", "90-day plan: build, learn, test, scale", f"""
      (["Pages"], "Paid forms: drop student and job-seeker options; add company size")])}
  {phase("Days 8–30", "Learn", "b", [
      (["Meta"], "No changes for 7 days, then budget moves of 20% at most"),
+     (["Meta"], "French, German, Italian and Spanish versions of the best 3–4 ads, inside the same ads"),
      (["Meta"], "Test 1: the same report as static, carousel and video"),
      (["Google"], "Corporate ad groups from the research; weekly search-term review"),
      (["Pages"], "Build the corporate landing page")])}
  {phase("Days 31–60", "Test", "p", [
      (["Meta"], "Test 2: talking head vs proof (case results, logos)"),
-     (["Meta"], "Test 3: French, German, Spanish and Italian versions"),
+     (["Meta"], "Test 3: local topic and proof per market (partners, cases, events) vs global"),
+     (["Pages"], "Local-language versions of the best report page"),
      (["Google"], "AI Max test once there are 30+ qualified conversions a month"),
      (["Data"], "Send qualified leads from the CRM to Meta and Google")])}
  {phase("Days 61–90", "Scale", "g", [
@@ -620,10 +661,11 @@ slide("Plan", "90-day plan: build, learn, test, scale", f"""
      (["Plan"], "2027 plan built on the results")])}
 </div>
 <div class="card dec"><div class="sub">To start, we need</div>
- <div class="g3 tight">
+ <div class="g4 tight">
   <p class="bl">{num(1)}<span><b>A yes to the new Meta and Google structures</b>, same total budget.</span></p>
   <p class="bl">{num(2)}<span><b>US budget</b>: the US ad set needs about {usd(NEED_US)} a day to learn ({usd(NEED_EU)} in Europe); the plan gives it $55.</span></p>
   <p class="bl">{num(3)}<span><b>Web team time</b> in weeks 2–4 for the corporate landing page.</span></p>
+  <p class="bl">{num(4)}<span><b>Local teams</b> to write or check the French, German, Italian and Spanish versions.</span></p>
  </div>
 </div>""")
 
@@ -879,6 +921,28 @@ b {{ color: {B.DARK_BLUE}; }}
 .cover .scope div {{ color: {B.TINT_2}; font-size: 11pt; }}
 .cover .scope b {{ display: block; color: #fff; font-size: 22pt; }}
 .cover .by {{ position: absolute; left: .9in; bottom: .55in; color: {B.TINT_2}; font-size: 11.5pt; }}
+/* local slide */
+.s-local .pnl {{ gap: 9px; }}
+.s-local .ph {{ margin-bottom: 0; }}
+.s-local .sub {{ margin: 4px 0 -3px; }}
+.s-local .bl {{ font-size: 12.5pt; margin-bottom: 6px; }}
+.s-local .big b {{ font-size: 30pt; white-space: nowrap; }}
+.s-local .big span {{ font-size: 12.5pt; }}
+.s-local .chp, .s-local .chp b {{ font-size: 11.5pt; }}
+.sar {{ display: grid; grid-template-columns: 1.6in 1fr; align-items: center; gap: 8px; }}
+.sar > b {{ font-size: 12.5pt; }}
+.lvs {{ display: grid; grid-template-columns: 1.5in 30px 1fr; align-items: center; gap: 6px 10px; background: {B.BG}; border-radius: 8px; padding: 10px 12px; }}
+.lva {{ background: #fff; border-radius: 8px; box-shadow: {B.SHADOW}; padding: 10px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 3px; }}
+.lva .ico {{ width: 28px; height: 28px; }}
+.lva b {{ font-size: 13pt; }}
+.lva span {{ font-size: 10pt; color: {B.GRAY}; }}
+.fan {{ display: grid; gap: 5px; }}
+.fr {{ display: flex; align-items: center; gap: 8px; font-size: 11.5pt; }}
+.fr .lb {{ width: 34px; text-align: center; }}
+.lvc {{ grid-column: 1 / -1; font-size: 11pt; color: {B.TEXT}; }}
+.lb {{ display: inline-block; font-size: 10pt; font-weight: 700; color: {B.DARK_BLUE}; background: {B.TINT}; border-radius: 6px; padding: 2px 7px; }}
+.lb.def {{ background: {B.DARK_BLUE}; color: #fff; }}
+.lvl {{ display: flex; align-items: center; gap: 4px; margin-top: 5px; font-size: 10pt; color: {B.GRAY}; font-weight: 700; }}
 /* per-slide sizing: fill the page with bigger visuals */
 .s-sum .col .bl {{ font-size: 15.5pt; margin-bottom: 16px; }}
 .s-sum .ch h3 {{ font-size: 16pt; }}
@@ -920,11 +984,11 @@ b {{ color: {B.DARK_BLUE}; }}
 .s-crea .bn span, .s-crea .bv span {{ font-size: 10pt; }}
 .s-crea .bv b {{ font-size: 20pt; }}
 .s-crea .fm {{ gap: 12px; margin: 18px 0 14px; }}
-.s-crea .fm .tl {{ font-size: 13pt; padding: 20px 6px 12px; }}
-.s-crea .fm .tl .ico {{ width: 40px; height: 40px; }}
+.s-crea .fm .tl {{ font-size: 13.5pt; padding: 26px 6px 16px; }}
+.s-crea .fm .tl .ico {{ width: 48px; height: 48px; }}
 .s-crea .fm .cnt {{ font-size: 12pt; top: -11px; }}
-.s-crea .fm2 div {{ font-size: 12pt; padding: 10px 12px; }}
-.s-crea .fm2 b {{ font-size: 25pt; }}
+.s-crea .fm2 div {{ font-size: 12.5pt; padding: 14px 12px; }}
+.s-crea .fm2 b {{ font-size: 28pt; }}
 .s-crea .nx {{ gap: 14px 10px; margin-top: 16px; }}
 .s-crea .nx .tl {{ font-size: 11.5pt; padding: 18px 6px 12px; }}
 .s-crea .nx .tl .ico {{ width: 36px; height: 36px; }}
@@ -938,7 +1002,7 @@ b {{ color: {B.DARK_BLUE}; }}
 .s-crea .sub {{ margin-top: 18px; }}
 .s-crea .sub:first-child {{ margin-top: 0; }}
 .s-meta .goal {{ font-size: 12.5pt; padding: 9px 14px; }}
-.s-meta .mg {{ row-gap: 12px; }}
+.s-meta .mg {{ row-gap: 10px; }}
 .s-meta .cb {{ padding: 14px; }}
 .s-meta .cb .ico {{ width: 26px; height: 26px; }}
 .s-meta .cb b {{ font-size: 15pt; }}
