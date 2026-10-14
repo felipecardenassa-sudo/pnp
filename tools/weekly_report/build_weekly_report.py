@@ -1054,7 +1054,8 @@ def auto_notes(f, cfg):
         "Leads: Meta = Results of lead campaigns; Google = Conversions of Search and Performance Max.",
         f"4-week average = {f['week']['avg_label']}. Budget as in the spend tracker: pace of the last 3 full weeks "
         f"({f['budget']['pace_window']}) without ended campaigns.",
-        f"HubSpot counts of 1–{lo - 1} show as <{lo} (GDPR). No ROAS: revenue isn't tracked by ad source.",
+        (f"HubSpot counts of 1–{lo - 1} show as <{lo} (GDPR). " if lo > 1 else "")
+        + "No ROAS: revenue isn't tracked by ad source.",
     ]
 
 

@@ -27,5 +27,5 @@ The list in `report_spec.md` → "Data needed each week": Meta and Google export
 - Plain language: the point first, positives before problems, one idea per bullet with its number and what to do about it.
 - Compare with last week **and** the 4-week average; call small numbers small (under 10 leads = low volume).
 - USD totals; Google and YouTube tables also in EUR. Write "Plug and Play" in full, never "PNP".
-- HubSpot is read-only, aggregates only, counts of 1–4 as "<5" unless Felipe confirms exact counts are fine for this internal report.
+- HubSpot is read-only and aggregates only. Counts are shown exactly, as Tereza did. When in doubt, do what Tereza's report did.
 - Leads = platform counts (Meta Results of lead campaigns, Google conversions); MQLs come from HubSpot. Never mix them.

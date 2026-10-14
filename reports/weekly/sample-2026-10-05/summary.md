@@ -11,8 +11,8 @@ Leads rose 16% to 124 at $13.17 each, but paid MQLs halved to 6.
 • EMEA prospecting is still the cheapest source. 26 leads at $5.47 each (4-week average $6.97).
 
 *To fix*
-• Leads are not turning into MQLs. 4.8 paid MQLs per 100 leads (11.2 last week). Paid social fell from 9 to <5 while Direct rose from 12 to 21: check the UTM tags on every ad.
-• Google and HubSpot don't match. Google counted 27 conversions; HubSpot shows <5 MQLs from paid search. Google is meant to count only HubSpot qualified leads since mid-September.
+• Leads are not turning into MQLs. 4.8 paid MQLs per 100 leads (11.2 last week). Paid social fell from 9 to 3 while Direct rose from 12 to 21: check the UTM tags on every ad.
+• Google and HubSpot don't match. Google counted 27 conversions; HubSpot shows 3 MQLs from paid search. Google is meant to count only HubSpot qualified leads since mid-September.
 • Western Europe prospecting slowed. 5 leads at $14.45 for a second week, against 14.5 a week at $6.85 before.
 
 *Next week*

@@ -25,6 +25,7 @@
 - HubSpot access is **read-only audit**. Never create, edit, delete, send or change anything there.
 - Follow GDPR:
   - Deliverables contain aggregates only, with counts of 1–4 shown as "<5".
+  - Exception (Felipe, 14 Oct 2026): the weekly performance report shows exact HubSpot counts, as Tereza's report did. For that report the rule is "do as Tereza did".
   - Raw contact exports stay in the scratchpad and are deleted afterwards. Never commit them.
 
 ## Brand – every deliverable follows the Plug and Play Global Brand Guidelines (Felipe, 14 Oct 2026)

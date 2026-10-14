@@ -3625,7 +3625,7 @@
   "min_spend_usd": 50,
   "low_volume_leads": 10,
   "zero_lead_spend_usd": 40,
-  "crm_min_count": 5
+  "crm_min_count": 1
  },
  "last_spend": {
   "meta_other": "2026-10-12",
@@ -4827,12 +4827,12 @@
   "crm.mql.organic-search.prev": "13",
   "crm.mql.organic-search.cur": "20",
   "crm.mql.paid-social.prev": "9",
-  "crm.mql.paid-social.cur": "<5",
-  "crm.mql.social-media.prev": "<5",
-  "crm.mql.social-media.cur": "<5",
-  "crm.mql.referrals.prev": "<5",
-  "crm.mql.referrals.cur": "<5",
-  "crm.mql.paid-search-other.prev": "<5",
-  "crm.mql.paid-search-other.cur": "<5"
+  "crm.mql.paid-social.cur": "3",
+  "crm.mql.social-media.prev": "3",
+  "crm.mql.social-media.cur": "3",
+  "crm.mql.referrals.prev": "1",
+  "crm.mql.referrals.cur": "2",
+  "crm.mql.paid-search-other.prev": "3",
+  "crm.mql.paid-search-other.cur": "3"
  }
 }

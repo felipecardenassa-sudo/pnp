@@ -16,7 +16,8 @@ change_pct = 20          # flag a cost-per-lead move of this many % against the 
 min_spend_usd = 50       # ...only for campaigns that spent at least this much in the week
 low_volume_leads = 10    # fewer leads than this in a week: changes are shown in grey as "low volume"
 zero_lead_spend_usd = 40 # a lead campaign that spent this much with no leads gets flagged
-crm_min_count = 5        # GDPR: CRM counts of 1–4 are shown as "<5"
+crm_min_count = 1        # 1 = HubSpot counts shown exactly, as in Tereza's report (Felipe's rule, 14 Oct 2026).
+                         # Set 5 to show counts of 1–4 as "<5" (the GDPR rule other deliverables follow).
 
 [meta]
 # Campaigns that never count as lead campaigns, whatever their result type.

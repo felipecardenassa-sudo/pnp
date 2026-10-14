@@ -20,7 +20,8 @@ Felipe owns the report from the week of **12–18 Oct 2026** (tracker task "Week
 - Same content as Tereza's report, clearer: the point first, tables instead of numbers in sentences, one idea per bullet, plain words.
 - USD totals everywhere. Google Ads and YouTube tables also show EUR, the platform's currency, so they match the Google Ads screen and Tereza's earlier reports.
 - Compare every metric with last week and the 4-week average; mark low volume.
-- HubSpot counts of 1–4 show as "<5" (CLAUDE.md GDPR rule), unless Felipe confirms the internal weekly report may show exact counts.
+- HubSpot counts are shown exactly, as in Tereza's report (Felipe's rule, 14 Oct 2026: "just do as Tereza did"). Aggregates only, never names or contact details.
+- When the spec leaves something open, do what Tereza's report did.
 - Brand rules from CLAUDE.md; PDF embeds the brand font only.
 - YouTube, Search Console and Semrush stay in this report (they were in Tereza's). The "leave YouTube out" rule is for audits, decks and plans.
 
